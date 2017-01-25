@@ -29,7 +29,8 @@ public class OI {
 	private static final int LEFT_Z_AXIS = 3;
 	private static final int RIGHT_Z_AXIS = 2;
 
-	private static final double DEADZONE = 0.15;
+	private static final double STICK_DEADZONE = 0.15;
+	private static final double STICK_MAX = 0.97;
 
 	// driver controller setup
 	private Joystick driverController = new Joystick(0);
@@ -79,34 +80,35 @@ public class OI {
 
 	
 	// Utility functions
+
 	
 	// driver controller
 	
-	public double getDriverRightVerticalAxis() {
-		return driverController.getRawAxis(RIGHT_VERT_AXIS);
+	public double getDriverRightY() {
+		return adjustStickInput(-driverController.getRawAxis(RIGHT_VERT_AXIS));
+	}
+	
+	public double getDriverRightX() {
+		return adjustStickInput(driverController.getRawAxis(RIGHT_HORIZ_AXIS));
+	}
+	
+	public double getDriverLeftY() {
+		return adjustStickInput(-driverController.getRawAxis(LEFT_VERT_AXIS));
 	}
 
-	public double getDriverRightHorizontalAxis() {
-		return driverController.getRawAxis(RIGHT_HORIZ_AXIS);
+	public double getDriverLeftX() {
+		return adjustStickInput(driverController.getRawAxis(LEFT_HORIZ_AXIS));
 	}
-
-	public double getDriverLeftVerticalAxis() {
-		return driverController.getRawAxis(LEFT_VERT_AXIS);
-	}
-
-	public double getDriverLeftHorizontalAxis() {
-		return driverController.getRawAxis(LEFT_HORIZ_AXIS);
-	}
-
-	public double getDriverLeftZAxis() {
+	
+	public double getDriverLeftTrigger() {
 		return driverController.getRawAxis(LEFT_Z_AXIS);
 	}
 
-	public double getDriverRightZAxis() {
+	public double getDriverRightTrigger() {
 		return driverController.getRawAxis(RIGHT_Z_AXIS);
 	}
 
-	public double getDriverZAxis() {
+	public double getDriverZ() {
 		return driverController.getRawAxis(LEFT_Z_AXIS) - driverController.getRawAxis(RIGHT_Z_AXIS);
 	}
 
@@ -127,31 +129,31 @@ public class OI {
 	
 	// operator controller
 	
-	public double getOperatorRightVerticalAxis() {
-		return operatorController.getRawAxis(RIGHT_VERT_AXIS);
+	public double getOperatorRightY() {
+		return adjustStickInput(-operatorController.getRawAxis(RIGHT_VERT_AXIS));
+	}
+	
+	public double getOperatorRightX() {
+		return adjustStickInput(operatorController.getRawAxis(RIGHT_HORIZ_AXIS));
+	}
+	
+	public double getOperatorLeftY() {
+		return adjustStickInput(-operatorController.getRawAxis(LEFT_VERT_AXIS));
 	}
 
-	public double getOperatorRightHorizontalAxis() {
-		return operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
+	public double getOperatorLeftX() {
+		return adjustStickInput(operatorController.getRawAxis(LEFT_HORIZ_AXIS));
 	}
-
-	public double getOperatorLeftVerticalAxis() {
-		return operatorController.getRawAxis(LEFT_VERT_AXIS);
-	}
-
-	public double getOperatorLeftHorizontalAxis() {
-		return operatorController.getRawAxis(LEFT_HORIZ_AXIS);
-	}
-
-	public double getOperatorLeftZAxis() {
+	
+	public double getOperatorLeftTrigger() {
 		return operatorController.getRawAxis(LEFT_Z_AXIS);
 	}
 
-	public double getOperatorRightZAxis() {
+	public double getOperatorRightTrigger() {
 		return operatorController.getRawAxis(RIGHT_Z_AXIS);
 	}
 
-	public double getOperatorZAxis() {
+	public double getOperatorZ() {
 		return operatorController.getRawAxis(LEFT_Z_AXIS) - operatorController.getRawAxis(RIGHT_Z_AXIS);
 	}
 
@@ -172,16 +174,36 @@ public class OI {
 	
 	// Miscellaneous utilities
 	
-	public double applyDeadZone(double value) {
-		if (Math.abs(value) < DEADZONE) {
+	private double adjustStickInput(double rawValue) {
+		return applySquare(applyMaxValue(applyDeadZone(rawValue)));
+	}
+	
+	private double applyDeadZone(double value) {
+		if (Math.abs(value) < STICK_DEADZONE) {
 			return 0.0;
 		} else if (value > 0) {
-			value = (value - DEADZONE) / (1 - DEADZONE);
+			value = (value - STICK_DEADZONE) / (1 - STICK_DEADZONE);
 		} else {
-			value = (value + DEADZONE) / (1 - DEADZONE);
+			value = (value + STICK_DEADZONE) / (1 - STICK_DEADZONE);
 		}
 
 		return value;
+	}
+	
+	private double applyMaxValue(double value){
+		if(value >= STICK_MAX){
+			return 1.0;
+		}
+		else if (value <= -STICK_MAX){
+			return -1.0;
+		}
+		else{
+			return value;
+		}
+	}
+
+	private double applySquare(double value) {
+		return Math.pow(value, 3)/Math.abs(value);
 	}
 }
 
