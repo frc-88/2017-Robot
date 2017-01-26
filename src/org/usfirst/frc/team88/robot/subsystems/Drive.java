@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -145,6 +146,100 @@ public class Drive extends Subsystem implements PIDOutput {
 			maxSpeed--;
 		}
 		return maxSpeed;
+	}
+
+	public void shift() {
+		if (shifter.get() == Value.kForward) {
+			shifter.set(Value.kReverse);
+			targetMaxSpeed = HIGH_MAX;
+			lTalons[0].setProfile(HIGH_PROFILE);
+			rTalons[0].setProfile(HIGH_PROFILE);
+		} else {
+			shifter.set(Value.kForward);
+			targetMaxSpeed = LOW_MAX;
+			lTalons[0].setProfile(LOW_PROFILE);
+			rTalons[0].setProfile(LOW_PROFILE);
+		}
+	}
+
+	public boolean isLowGear() {
+		if (shifter.get() == Value.kForward) {
+			return true;
+		} else
+			return false;
+	}
+
+	public void disableRampRate() {
+		lTalons[0].setVoltageRampRate(0.0);
+		rTalons[0].setVoltageRampRate(0.0);
+	}
+
+	public void enableRampRate() {
+		lTalons[0].setVoltageRampRate(RAMPRATE);
+		rTalons[0].setVoltageRampRate(RAMPRATE);
+	}
+
+
+	public void resetEncoders() {
+		lTalons[0].setPosition(0);
+		rTalons[0].setPosition(0);
+	}
+
+	public double getAvgPosition() {
+		return (lTalons[0].getPosition() + rTalons[0].getPosition()) / 2.0;
+	}
+
+	public double getAvgSpeed() {
+		double speed = (lTalons[0].getSpeed() + rTalons[0].getSpeed()) / 2;
+
+		return speed;
+	}
+
+	public boolean isAutoShift() {
+		return autoShift;
+	}
+
+	public void toggleAutoShift() {
+		autoShift = !autoShift;
+	}
+
+	public double getYaw() {
+		return navx.getYaw();
+	}
+	
+	public void zeroYaw(){
+		navx.zeroYaw();
+	}
+
+	public void updateDashboard() {
+		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
+		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
+		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
+		SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
+		SmartDashboard.putNumber("LeftError: ", lTalons[0].getClosedLoopError());
+		SmartDashboard.putNumber("LeftCurrent", lTalons[0].getOutputCurrent());
+		SmartDashboard.putNumber("LeftVoltage", lTalons[0].getOutputVoltage());
+
+		SmartDashboard.putNumber("RightPosition: ", rTalons[0].getPosition());
+		SmartDashboard.putNumber("RightEncVel: ", rTalons[0].getEncVelocity());
+		SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
+		SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
+		SmartDashboard.putNumber("RightError: ", rTalons[0].getClosedLoopError());
+		SmartDashboard.putNumber("RightCurrent", rTalons[0].getOutputCurrent());
+		SmartDashboard.putNumber("RightVoltage", rTalons[0].getOutputVoltage());
+
+		SmartDashboard.putNumber("targetMaxspeed", targetMaxSpeed);
+		SmartDashboard.putNumber("maxSpeed", getMaxSpeed());
+		SmartDashboard.putBoolean("lowGear", isLowGear());
+
+		// NavX stuff
+		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
+		SmartDashboard.putBoolean("IMU_IsCalibrating", navx.isCalibrating());
+		SmartDashboard.putNumber("IMU_Yaw", navx.getYaw());
+		SmartDashboard.putNumber("IMU_Pitch", navx.getPitch());
+		SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
+		SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
+		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
 	}
 	
 	@Override

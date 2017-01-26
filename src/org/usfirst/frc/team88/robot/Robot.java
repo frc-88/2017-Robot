@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Drive drive = new Drive();
+	public static Drive drive;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		drive = new Drive();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
