@@ -214,7 +214,6 @@ public class Drive extends Subsystem implements PIDOutput {
 			rightOutput = outputMagnitude;
 		}
 
-		updateDashboard();
 		setTarget(leftOutput, rightOutput);
 	}
 
