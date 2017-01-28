@@ -191,7 +191,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			else if(curve > -minimum && curve < 0){
 				curve = -minimum;
 			}
-			SmartDashboard.putNumber("The Curve Value", curve);
+
 			leftOutput = curve;
 			rightOutput = -curve;
 		} else if (curve < 0) {
@@ -291,6 +291,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
+		/*
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
@@ -321,6 +322,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
 		
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
+		*/
 	}
 	
 	@Override
