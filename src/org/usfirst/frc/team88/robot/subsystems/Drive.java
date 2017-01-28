@@ -61,8 +61,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		// init talons
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
 		initTalons(lTalons, RobotMap.driveLeft, false, true, false);
-		rTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(rTalons, RobotMap.driveRight, false, true, false);
+		rTalons = new CANTalon[RobotMap.driveRight.length];
+		initTalons(rTalons, RobotMap.driveRight, true, false, false);
 		setClosedLoopSpeed();
 		
 		// init shifter
@@ -104,7 +104,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			} else {
 				// follower
 				talons[i].changeControlMode(CANTalon.TalonControlMode.Follower);
-				talons[i].set(lTalons[0].getDeviceID());
+				talons[i].set(talons[0].getDeviceID());
 				talons[i].enableBrakeMode(brakeMode);
 			}
 		}
@@ -319,6 +319,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
 		SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
 		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
+		
+		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 	}
 	
 	@Override
