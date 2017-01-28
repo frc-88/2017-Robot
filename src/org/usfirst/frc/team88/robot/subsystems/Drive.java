@@ -44,6 +44,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_MAX = 0.5;
 	private final static double ROTATE_MIN = 0.06;
 
+	public final static double DFT_SENSITIVITY = 0.2;
+
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
 	private AHRS navx;
@@ -137,6 +139,83 @@ public class Drive extends Subsystem implements PIDOutput {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * The below was based on (ie, copied from) very similar code in the WPILib
+	 * RobotDrive class on 1/18/2017
+	 * 
+	 * Drive the motors at "outputMagnitude" and "curve". Both outputMagnitude
+	 * and curve are -1.0 to +1.0 values, where 0.0 represents stopped and not
+	 * turning. {@literal curve < 0 will turn left
+	 * and curve > 0} will turn right.
+	 *
+	 * <p>
+	 * The algorithm for steering provides a constant turn radius for any normal
+	 * speed range, both forward and backward. Increasing sensitivity causes
+	 * sharper turns for fixed values of curve.
+	 *
+	 * <p>
+	 * This function will most likely be used in an autonomous routine.
+	 *
+	 * @param outputMagnitude
+	 *            The speed setting for the outside wheel in a turn, forward or
+	 *            backwards, +1 to -1.
+	 * @param curve
+	 *            The rate of turn, constant for different forward speeds. Set
+	 *            {@literal
+	 *                        curve < 0 for left turn or curve > 0 for right turn.}
+	 *            Set curve = e^(-r/w) to get a turn radius r for wheelbase w of
+	 *            your robot. Conversely, turn radius r = -ln(curve)*w for a
+	 *            given value of curve and wheelbase w.
+	 */
+	public void driveCurve(double outputMagnitude, double curve) {
+		driveCurve(outputMagnitude, curve, DFT_SENSITIVITY);
+
+	}
+
+	public void driveCurve(double outputMagnitude, double curve, double sensitivity) {
+		final double leftOutput;
+		final double rightOutput;
+		final double minimum = 0.15;
+		final double minRange = 0.008;
+
+		if (outputMagnitude == 0) {
+			if(curve < minRange && curve > -minRange){
+				curve = 0;
+			}
+			else if(curve < minimum && curve > 0){
+				curve = minimum;
+			}
+			else if(curve > -minimum && curve < 0){
+				curve = -minimum;
+			}
+			SmartDashboard.putNumber("The Curve Value", curve);
+			leftOutput = curve;
+			rightOutput = -curve;
+		} else if (curve < 0) {
+			double value = Math.log(-curve);
+			double ratio = (value - sensitivity) / (value + sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude / ratio;
+			rightOutput = outputMagnitude;
+		} else if (curve > 0) {
+			double value = Math.log(curve);
+			double ratio = (value - sensitivity) / (value + sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude / ratio;
+		} else {
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude;
+		}
+
+		updateDashboard();
+		setTarget(leftOutput, rightOutput);
 	}
 
 	private double getMaxSpeed() {
