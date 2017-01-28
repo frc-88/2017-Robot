@@ -1,6 +1,11 @@
 
 package org.usfirst.frc.team88.robot;
 
+import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
+import org.usfirst.frc.team88.robot.commands.DriveShift;
+import org.usfirst.frc.team88.robot.commands.DriveTank;
+import org.usfirst.frc.team88.robot.commands.DriveToggleAutoShift;
+import org.usfirst.frc.team88.robot.commands.DriveZeroYaw;
 import org.usfirst.frc.team88.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -36,6 +41,17 @@ public class Robot extends IterativeRobot {
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+
+        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData(drive);
+
+        SmartDashboard.putData("Drive Tank", new DriveTank());
+		SmartDashboard.putData("Drive Field Orientated", new DriveFieldOrientated());
+		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
+		SmartDashboard.putData("Toggle Autoshift", new DriveToggleAutoShift());
+		SmartDashboard.putData("Manual Shift", new DriveShift());
+		
+
 	}
 
 	/**
