@@ -12,7 +12,7 @@ public class DriveFieldOrientated extends Command {
 	private static final int DRIVING = 1;
 	private static final int PREP = 2;
 	private static final int SHIFT = 3;
-	private static final double SHIFTSPEED = 500.0;
+	private static final double SHIFTSPEED = 400.0;
 	public final static double SENSITIVITY = 0.5;
 
 	private int state;

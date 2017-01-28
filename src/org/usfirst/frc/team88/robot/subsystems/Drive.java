@@ -23,15 +23,15 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double LOW_P = 0.065;
 	private final static double LOW_I = 0.0;
 	private final static double LOW_D = 0.0;
-	private final static double LOW_F = 0.6;
+	private final static double LOW_F = 3.0;
 	private final static int LOW_IZONE = 0;
-	private final static double LOW_MAX = 600;
+	private final static double LOW_MAX = 460;
 
 	private final static int HIGH_PROFILE = 1;
 	private final static double HIGH_P = 0.065;
 	private final static double HIGH_I = 0.0;
 	private final static double HIGH_D = 0.0;
-	private final static double HIGH_F = 0.6;
+	private final static double HIGH_F = 3.0;
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1400;
 
@@ -60,9 +60,9 @@ public class Drive extends Subsystem implements PIDOutput {
 	public Drive() {
 		// init talons
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(lTalons, RobotMap.driveLeft, false, true, false);
+		initTalons(lTalons, RobotMap.driveLeft, false, false, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, true, false, false);
+		initTalons(rTalons, RobotMap.driveRight, true, true, false);
 		setClosedLoopSpeed();
 		
 		// init shifter
@@ -291,7 +291,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
-		/*
+		
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
@@ -322,7 +322,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
 		
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
-		*/
+		
 	}
 	
 	@Override
