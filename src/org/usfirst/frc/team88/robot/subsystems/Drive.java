@@ -126,14 +126,17 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 	
 	public void setTarget(double left, double right) {
+		double currentMaxSpeed;
+		
 		switch (controlMode) {
 		case PercentVbus:
 			lTalons[0].set(left);
 			rTalons[0].set(-right);
 			break;
 		case Speed:
-			lTalons[0].set(left * getMaxSpeed());
-			rTalons[0].set(right * getMaxSpeed());
+			currentMaxSpeed = getMaxSpeed();
+			lTalons[0].set(left * currentMaxSpeed);
+			rTalons[0].set(right * currentMaxSpeed);
 			break;
 		case Position:
 		case Disabled:
@@ -219,6 +222,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	private double getMaxSpeed() {
+		// note that this adjusts maxSpeed every time it is called
+		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
 			maxSpeed++;
 		} else if (targetMaxSpeed < maxSpeed) {
@@ -309,7 +314,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("RightVoltage", rTalons[0].getOutputVoltage());
 
 		SmartDashboard.putNumber("targetMaxspeed", targetMaxSpeed);
-		SmartDashboard.putNumber("maxSpeed", getMaxSpeed());
+		SmartDashboard.putNumber("maxSpeed", maxSpeed);
 		SmartDashboard.putBoolean("lowGear", isLowGear());
 
 		// NavX stuff
