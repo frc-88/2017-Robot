@@ -175,7 +175,7 @@ public class OI {
 	// Miscellaneous utilities
 	
 	private double adjustStickInput(double rawValue) {
-		return applySquare(applyMaxValue(applyDeadZone(rawValue)));
+		return applyDeadZone(rawValue);
 	}
 	
 	private double applyDeadZone(double value) {

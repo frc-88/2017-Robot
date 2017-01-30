@@ -1,6 +1,7 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
 import org.usfirst.frc.team88.robot.RobotMap;
+import org.usfirst.frc.team88.robot.commands.DriveTank;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -22,15 +23,15 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double LOW_P = 0.065;
 	private final static double LOW_I = 0.0;
 	private final static double LOW_D = 0.0;
-	private final static double LOW_F = 0.6;
+	private final static double LOW_F = 3.0;
 	private final static int LOW_IZONE = 0;
-	private final static double LOW_MAX = 600;
+	private final static double LOW_MAX = 460;
 
 	private final static int HIGH_PROFILE = 1;
 	private final static double HIGH_P = 0.065;
 	private final static double HIGH_I = 0.0;
 	private final static double HIGH_D = 0.0;
-	private final static double HIGH_F = 0.6;
+	private final static double HIGH_F = 3.0;
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1400;
 
@@ -43,6 +44,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_TOLERANCE = 3.0;
 	private final static double ROTATE_MAX = 0.5;
 	private final static double ROTATE_MIN = 0.06;
+
+	public final static double DFT_SENSITIVITY = 0.2;
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
@@ -57,9 +60,9 @@ public class Drive extends Subsystem implements PIDOutput {
 	public Drive() {
 		// init talons
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(lTalons, RobotMap.driveLeft, false, true, false);
-		rTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(rTalons, RobotMap.driveRight, false, true, false);
+		initTalons(lTalons, RobotMap.driveLeft, false, false, false);
+		rTalons = new CANTalon[RobotMap.driveRight.length];
+		initTalons(rTalons, RobotMap.driveRight, true, true, false);
 		setClosedLoopSpeed();
 		
 		// init shifter
@@ -101,7 +104,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			} else {
 				// follower
 				talons[i].changeControlMode(CANTalon.TalonControlMode.Follower);
-				talons[i].set(lTalons[0].getDeviceID());
+				talons[i].set(talons[0].getDeviceID());
 				talons[i].enableBrakeMode(brakeMode);
 			}
 		}
@@ -137,6 +140,82 @@ public class Drive extends Subsystem implements PIDOutput {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * The below was based on (ie, copied from) very similar code in the WPILib
+	 * RobotDrive class on 1/18/2017
+	 * 
+	 * Drive the motors at "outputMagnitude" and "curve". Both outputMagnitude
+	 * and curve are -1.0 to +1.0 values, where 0.0 represents stopped and not
+	 * turning. {@literal curve < 0 will turn left
+	 * and curve > 0} will turn right.
+	 *
+	 * <p>
+	 * The algorithm for steering provides a constant turn radius for any normal
+	 * speed range, both forward and backward. Increasing sensitivity causes
+	 * sharper turns for fixed values of curve.
+	 *
+	 * <p>
+	 * This function will most likely be used in an autonomous routine.
+	 *
+	 * @param outputMagnitude
+	 *            The speed setting for the outside wheel in a turn, forward or
+	 *            backwards, +1 to -1.
+	 * @param curve
+	 *            The rate of turn, constant for different forward speeds. Set
+	 *            {@literal
+	 *                        curve < 0 for left turn or curve > 0 for right turn.}
+	 *            Set curve = e^(-r/w) to get a turn radius r for wheelbase w of
+	 *            your robot. Conversely, turn radius r = -ln(curve)*w for a
+	 *            given value of curve and wheelbase w.
+	 */
+	public void driveCurve(double outputMagnitude, double curve) {
+		driveCurve(outputMagnitude, curve, DFT_SENSITIVITY);
+
+	}
+
+	public void driveCurve(double outputMagnitude, double curve, double sensitivity) {
+		final double leftOutput;
+		final double rightOutput;
+		final double minimum = 0.15;
+		final double minRange = 0.008;
+
+		if (outputMagnitude == 0) {
+			if(curve < minRange && curve > -minRange){
+				curve = 0;
+			}
+			else if(curve < minimum && curve > 0){
+				curve = minimum;
+			}
+			else if(curve > -minimum && curve < 0){
+				curve = -minimum;
+			}
+
+			leftOutput = curve;
+			rightOutput = -curve;
+		} else if (curve < 0) {
+			double value = Math.log(-curve);
+			double ratio = (value - sensitivity) / (value + sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude / ratio;
+			rightOutput = outputMagnitude;
+		} else if (curve > 0) {
+			double value = Math.log(curve);
+			double ratio = (value - sensitivity) / (value + sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude / ratio;
+		} else {
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude;
+		}
+
+		setTarget(leftOutput, rightOutput);
 	}
 
 	private double getMaxSpeed() {
@@ -212,6 +291,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
+		
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
@@ -240,6 +320,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
 		SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
 		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
+		
+		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
+		
 	}
 	
 	@Override
@@ -262,8 +345,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new DriveTank());
 	}
 
 }
