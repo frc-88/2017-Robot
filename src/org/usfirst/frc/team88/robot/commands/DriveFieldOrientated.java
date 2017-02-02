@@ -12,10 +12,9 @@ public class DriveFieldOrientated extends Command {
 	private static final int DRIVING = 1;
 	private static final int PREP = 2;
 	private static final int SHIFT = 3;
-	private static final double SHIFTSPEED = 400.0;
 	public final static double SENSITIVITY = 0.5;
-	private static final double LOWSHIFTSPEED = 300.0;
-	private static final double HIGHSHIFTSPEED = 400.0;
+	private static final double DOWNSHIFTSPEED = 300.0;
+	private static final double UPSHIFTSPEED = 400.0;
 	
 	private int state;
 	private int lastShift;
@@ -67,8 +66,8 @@ public class DriveFieldOrientated extends Command {
 			// Comment out in order to use open loop and set the state to
 			// permanent drive
 			if (Robot.drive.isAutoShift() && (lastShift > (Robot.drive.isLowGear() ? 50 : 5)
-					&& ((speed > HIGHSHIFTSPEED && Robot.drive.isLowGear() == true)
-							|| (speed < LOWSHIFTSPEED && Robot.drive.isLowGear() == false)))) {
+					&& ((speed > UPSHIFTSPEED && Robot.drive.isLowGear() == true)
+							|| (speed < DOWNSHIFTSPEED && Robot.drive.isLowGear() == false)))) {
 				state = PREP;
 			}
 			break;
