@@ -32,7 +32,7 @@ public class OI {
 	private static final int LEFT_Z_AXIS = 3;
 	private static final int RIGHT_Z_AXIS = 2;
 
-	private static final double STICK_DEADZONE = 0.15;
+	private static final double STICK_DEADZONE = 0.3;
 	private static final double STICK_MAX = 0.97;
 
 	// driver controller setup
