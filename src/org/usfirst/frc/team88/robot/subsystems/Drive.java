@@ -181,7 +181,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void driveCurve(double outputMagnitude, double curve, double sensitivity) {
 		final double leftOutput;
 		final double rightOutput;
-		final double minimum = 0.15;
+		final double minimum = 0.02;
 		final double minRange = 0.008;
 
 		if (outputMagnitude == 0) {
@@ -352,5 +352,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveTank());
 	}
+	
+	
 
 }
