@@ -36,10 +36,10 @@ public class DriveFieldOrientated extends Command {
 
 		switch (state) {
 		case DRIVING:
-			magnitude = Robot.oi.getDriverLeftY();
+			magnitude = Robot.oi.applyDeadZone(Robot.oi.applySquare(Robot.oi.getDriverLeftY()));
 
-			x = Robot.oi.getDriverRightX();
-			y = Robot.oi.getDriverRightY();
+			x = Robot.oi.applyDeadZone(Robot.oi.getDriverRightX());
+			y = Robot.oi.applyDeadZone(Robot.oi.getDriverRightY());
 
 			if (x == 0 && y == 0) {
 				angle = 0;

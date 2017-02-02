@@ -91,19 +91,19 @@ public class OI {
 	// driver controller
 	
 	public double getDriverRightY() {
-		return adjustStickInput(-driverController.getRawAxis(RIGHT_VERT_AXIS));
+		return -driverController.getRawAxis(RIGHT_VERT_AXIS);
 	}
 	
 	public double getDriverRightX() {
-		return adjustStickInput(driverController.getRawAxis(RIGHT_HORIZ_AXIS));
+		return driverController.getRawAxis(RIGHT_HORIZ_AXIS);
 	}
 	
 	public double getDriverLeftY() {
-		return adjustStickInput(-driverController.getRawAxis(LEFT_VERT_AXIS));
+		return -driverController.getRawAxis(LEFT_VERT_AXIS);
 	}
 
 	public double getDriverLeftX() {
-		return adjustStickInput(driverController.getRawAxis(LEFT_HORIZ_AXIS));
+		return driverController.getRawAxis(LEFT_HORIZ_AXIS);
 	}
 	
 	public double getDriverLeftTrigger() {
@@ -136,19 +136,19 @@ public class OI {
 	// operator controller
 	
 	public double getOperatorRightY() {
-		return adjustStickInput(-operatorController.getRawAxis(RIGHT_VERT_AXIS));
+		return -operatorController.getRawAxis(RIGHT_VERT_AXIS);
 	}
 	
 	public double getOperatorRightX() {
-		return adjustStickInput(operatorController.getRawAxis(RIGHT_HORIZ_AXIS));
+		return operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
 	}
 	
 	public double getOperatorLeftY() {
-		return adjustStickInput(-operatorController.getRawAxis(LEFT_VERT_AXIS));
+		return -operatorController.getRawAxis(LEFT_VERT_AXIS);
 	}
 
 	public double getOperatorLeftX() {
-		return adjustStickInput(operatorController.getRawAxis(LEFT_HORIZ_AXIS));
+		return operatorController.getRawAxis(LEFT_HORIZ_AXIS);
 	}
 	
 	public double getOperatorLeftTrigger() {
@@ -180,11 +180,7 @@ public class OI {
 	
 	// Miscellaneous utilities
 	
-	private double adjustStickInput(double rawValue) {
-		return applyDeadZone(rawValue);
-	}
-	
-	private double applyDeadZone(double value) {
+	public double applyDeadZone(double value) {
 		if (Math.abs(value) < STICK_DEADZONE) {
 			return 0.0;
 		} else if (value > 0) {
@@ -196,7 +192,7 @@ public class OI {
 		return value;
 	}
 	
-	private double applyMaxValue(double value){
+	public double applyMaxValue(double value){
 		if(value >= STICK_MAX){
 			return 1.0;
 		}
@@ -208,7 +204,7 @@ public class OI {
 		}
 	}
 
-	private double applySquare(double value) {
+	public double applySquare(double value) {
 		return Math.pow(value, 3)/Math.abs(value);
 	}
 }
