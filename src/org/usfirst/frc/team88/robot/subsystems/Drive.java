@@ -1,5 +1,6 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
+import org.usfirst.frc.team88.robot.Robot;
 import org.usfirst.frc.team88.robot.RobotMap;
 import org.usfirst.frc.team88.robot.commands.DriveTank;
 
@@ -49,8 +50,16 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
-	private AHRS navx;
 	private PIDController rotateController;
+	
+	private AHRS navx;
+	private final static double COLLISION_THRESHOLD = 0.5f;
+	private double lastAccelX = 0;
+	private double lastAccelY = 0;
+	private double currentAccelX;
+	private double currentAccelY;
+	private double currentJerkX;
+	private double currentJerkY;
 
 	private double maxSpeed;
 	private double targetMaxSpeed;
@@ -74,6 +83,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		// init navx
 		navx = new AHRS(SerialPort.Port.kMXP);
+		
 
 		// init rotateController
 		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
@@ -287,6 +297,25 @@ public class Drive extends Subsystem implements PIDOutput {
 		autoShift = !autoShift;
 	}
 
+	public double getJerkX(){
+		currentAccelX = navx.getWorldLinearAccelX();
+		currentJerkX = currentAccelX - lastAccelX;
+		lastAccelX = currentAccelX;
+		return currentJerkX;
+	}
+	
+	public double getJerkY(){
+		currentAccelY = navx.getWorldLinearAccelY();
+		currentJerkY = currentAccelY - lastAccelY;
+		lastAccelY = currentAccelY;
+		return currentJerkY;
+	}
+	
+	public boolean collisionDetected(){
+		return ((Math.abs(getJerkX()) > COLLISION_THRESHOLD) ||
+				(Math.abs(getJerkY()) > COLLISION_THRESHOLD));
+	}
+	
 	public double getYaw() {
 		return navx.getYaw();
 	}
@@ -325,6 +354,10 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
 		SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
 		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
+		SmartDashboard.putNumber("Jerk_Y", getJerkY());
+		SmartDashboard.putNumber("Jerk_X", getJerkX());
+		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
+
 		
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		
