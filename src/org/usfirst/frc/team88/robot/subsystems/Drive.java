@@ -26,7 +26,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double LOW_D = 0.0;
 	private final static double LOW_F = 3.0;
 	private final static int LOW_IZONE = 0;
-	private final static double LOW_MAX = 460;
+	private final static double LOW_MAX = 500;
 
 	private final static int HIGH_PROFILE = 1;
 	private final static double HIGH_P = 0.065;
@@ -34,7 +34,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double HIGH_D = 0.0;
 	private final static double HIGH_F = 3.0;
 	private final static int HIGH_IZONE = 0;
-	private final static double HIGH_MAX = 1400;
+	private final static double HIGH_MAX = 1000;
 
 	private final static double RAMPRATE = 60;
 
@@ -235,9 +235,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		// note that this adjusts maxSpeed every time it is called
 		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
-			maxSpeed++;
+			maxSpeed += 0.1;
 		} else if (targetMaxSpeed < maxSpeed) {
-			maxSpeed--;
+			maxSpeed -= 0.1;
 		}
 		return maxSpeed;
 	}
