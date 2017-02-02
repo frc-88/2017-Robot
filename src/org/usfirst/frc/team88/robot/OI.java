@@ -205,7 +205,7 @@ public class OI {
 	}
 
 	public double applySquare(double value) {
-		return Math.pow(value, 3)/Math.abs(value);
+		return value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value);
 	}
 }
 

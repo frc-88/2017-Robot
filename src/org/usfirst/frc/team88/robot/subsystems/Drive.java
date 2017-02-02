@@ -235,9 +235,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		// note that this adjusts maxSpeed every time it is called
 		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
-			maxSpeed++;
+			maxSpeed += 0.1;
 		} else if (targetMaxSpeed < maxSpeed) {
-			maxSpeed--;
+			maxSpeed -= 0.1;
 		}
 		return maxSpeed;
 	}
