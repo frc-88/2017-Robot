@@ -1,5 +1,8 @@
 package org.usfirst.frc.team88.robot;
 
+import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
+import org.usfirst.frc.team88.robot.commands.DriveTank;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -29,7 +32,7 @@ public class OI {
 	private static final int LEFT_Z_AXIS = 3;
 	private static final int RIGHT_Z_AXIS = 2;
 
-	private static final double STICK_DEADZONE = 0.15;
+	private static final double STICK_DEADZONE = 0.3;
 	private static final double STICK_MAX = 0.97;
 
 	// driver controller setup
@@ -76,6 +79,9 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
+		driverButtonLeftBumper.whenPressed(new DriveTank());
+		driverButtonRightBumper.whenPressed(new DriveFieldOrientated());
+		
 	}
 
 	
