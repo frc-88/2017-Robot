@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveFieldOrientated extends Command {
+public class DriveSplitArcade extends Command {
 	private static final int DRIVING = 1;
 	private static final int PREP = 2;
 	private static final int SHIFT = 3;
@@ -19,7 +19,7 @@ public class DriveFieldOrientated extends Command {
 	private int state;
 	private int lastShift;
 
-	public DriveFieldOrientated() {
+	public DriveSplitArcade() {
 		requires(Robot.drive);
 	}
 
@@ -36,29 +36,14 @@ public class DriveFieldOrientated extends Command {
 
 		switch (state) {
 		case DRIVING:
-			magnitude = Robot.oi.applySquare(Robot.oi.getDriverLeftY());
+			magnitude = Robot.oi.applySquare(Robot.oi.getDriverZ());
 			
-			x = Robot.oi.getDriverRightX();
-			y = Robot.oi.getDriverRightY();
-
-			if (x == 0 && y == 0) {
-				angle = 0;
-				curve = 0;
-			} else {
-				angle = Math.toDegrees(Math.atan2(x, y));
-				curve = angle - Robot.drive.getYaw();
-			}
-
-			if (curve > 180) {
-				curve = curve - 360;
-			} else if (curve < -180) {
-				curve = curve + 360;
-			}
-
+			curve = Robot.oi.applyDeadZone(Robot.oi.getDriverLeftX());
+			
 			if(magnitude < 0){
-				Robot.drive.driveCurve(magnitude, -curve / 180.0, SENSITIVITY);
+				Robot.drive.driveCurve(magnitude, -curve, SENSITIVITY);
 			} else{
-				Robot.drive.driveCurve(magnitude, curve / 180.0, SENSITIVITY);
+				Robot.drive.driveCurve(magnitude, curve, SENSITIVITY);
 			}
 			speed = Math.abs(Robot.drive.getAvgSpeed());
 			lastShift++;

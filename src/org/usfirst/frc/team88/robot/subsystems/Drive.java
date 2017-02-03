@@ -29,14 +29,14 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double LOW_MAX = 500;
 
 	private final static int HIGH_PROFILE = 1;
-	private final static double HIGH_P = 0.065;
+	private final static double HIGH_P = 0.0;
 	private final static double HIGH_I = 0.0;
 	private final static double HIGH_D = 0.0;
-	private final static double HIGH_F = 3.0;
+	private final static double HIGH_F = 0.35;
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1000;
 
-	private final static double RAMPRATE = 60;
+	private final static double RAMPRATE = 45;
 
 	private final static double ROTATE_P = 0.007;
 	private final static double ROTATE_I = 0.00003;
@@ -235,9 +235,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		// note that this adjusts maxSpeed every time it is called
 		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
-			maxSpeed += 0.1;
+			maxSpeed += 10;
 		} else if (targetMaxSpeed < maxSpeed) {
-			maxSpeed -= 0.1;
+			maxSpeed -= 10;
 		}
 		return maxSpeed;
 	}
@@ -283,6 +283,14 @@ public class Drive extends Subsystem implements PIDOutput {
 		return (lTalons[0].getPosition() + rTalons[0].getPosition()) / 2.0;
 	}
 
+	public double getLeftSpeed() {
+		return lTalons[0].getSpeed();
+	}
+	
+	public double getRightSpeed() {
+		return rTalons[0].getSpeed();
+	}
+	
 	public double getAvgSpeed() {
 		double speed = (lTalons[0].getSpeed() + rTalons[0].getSpeed()) / 2;
 

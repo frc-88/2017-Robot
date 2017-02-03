@@ -3,6 +3,7 @@ package org.usfirst.frc.team88.robot;
 
 import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
 import org.usfirst.frc.team88.robot.commands.DriveShift;
+import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
 import org.usfirst.frc.team88.robot.commands.DriveTank;
 import org.usfirst.frc.team88.robot.commands.DriveToggleAutoShift;
 import org.usfirst.frc.team88.robot.commands.DriveZeroYaw;
@@ -53,7 +54,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Toggle Autoshift", new DriveToggleAutoShift());
 		SmartDashboard.putData("Manual Shift", new DriveShift());
-		
+		SmartDashboard.putData("Rocket League", new DriveSplitArcade());
 
 	}
 
