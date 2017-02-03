@@ -18,6 +18,7 @@ public class DriveSplitArcade extends Command {
 	
 	private int state;
 	private int lastShift;
+	private int count;
 
 	public DriveSplitArcade() {
 		requires(Robot.drive);
@@ -53,12 +54,18 @@ public class DriveSplitArcade extends Command {
 			if (Robot.drive.isAutoShift() && (lastShift > (Robot.drive.isLowGear() ? 50 : 5)
 					&& ((speed > UPSHIFTSPEED && Robot.drive.isLowGear() == true)
 							|| (speed < DOWNSHIFTSPEED && Robot.drive.isLowGear() == false)))) {
+				count = 0;
 				state = PREP;
 			}
 			break;
 
 		case PREP:
-			state = SHIFT;
+    		Robot.drive.setTarget(0, 0);
+    		
+    		if (count++ > 2) {
+    			state = SHIFT;
+    		}
+    		
 			break;
 
 		case SHIFT:
