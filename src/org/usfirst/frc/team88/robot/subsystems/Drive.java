@@ -36,7 +36,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1000;
 
-	private final static double RAMPRATE = 45;
+	private final static double RAMPRATE = 30;
 
 	private final static double ROTATE_P = 0.007;
 	private final static double ROTATE_I = 0.00003;
@@ -105,7 +105,7 @@ public class Drive extends Subsystem implements PIDOutput {
 				talons[i].setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 				talons[i].configEncoderCodesPerRev(360);
 				talons[i].configNominalOutputVoltage(+0.0f, -0.0f);
-				talons[i].configPeakOutputVoltage(+12.0f, -12.0f);
+				talons[i].configPeakOutputVoltage(+11.0f, -11.0f);
 				talons[i].reverseSensor(reverseSensor);
 				talons[i].reverseOutput(reverseOutput);
 				talons[i].enableBrakeMode(brakeMode);
@@ -237,7 +237,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		if (targetMaxSpeed > maxSpeed) {
 			maxSpeed += 50;
 		} else if (targetMaxSpeed < maxSpeed) {
-			maxSpeed -= 50;
+			maxSpeed -= 0;
 		}
 		return maxSpeed;
 	}
