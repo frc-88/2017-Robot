@@ -105,7 +105,7 @@ public class Drive extends Subsystem implements PIDOutput {
 				talons[i].setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 				talons[i].configEncoderCodesPerRev(360);
 				talons[i].configNominalOutputVoltage(+0.0f, -0.0f);
-				talons[i].configPeakOutputVoltage(+11.0f, -11.0f);
+				talons[i].configPeakOutputVoltage(+10.0f, -10.0f);
 				talons[i].reverseSensor(reverseSensor);
 				talons[i].reverseOutput(reverseOutput);
 				talons[i].enableBrakeMode(brakeMode);
