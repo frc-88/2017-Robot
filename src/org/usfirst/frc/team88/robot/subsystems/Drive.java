@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -47,10 +48,10 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_MIN = 0.06;
 
 	public final static double DFT_SENSITIVITY = 0.2;
+	public PIDController rotateController;
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
-	private PIDController rotateController;
 	
 	private AHRS navx;
 	private final static double COLLISION_THRESHOLD = 0.5f;
@@ -65,6 +66,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double targetMaxSpeed;
 	private boolean autoShift;
 	private CANTalon.TalonControlMode controlMode;
+	NetworkTable robotTable;
+	NetworkTable jetsonTable;
 	
 	public Drive() {
 		// init talons
@@ -91,6 +94,10 @@ public class Drive extends Subsystem implements PIDOutput {
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
 		rotateController.setContinuous(true);
+		
+		// init NetworkTables
+		robotTable = NetworkTable.getTable("robot");
+		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 		
 	}
 
@@ -297,6 +304,10 @@ public class Drive extends Subsystem implements PIDOutput {
 		return speed;
 	}
 
+	public double getAvgCurrent() {
+		return (lTalons[0].getOutputCurrent() + rTalons[0].getOutputCurrent()) / 2;
+	}
+
 	public boolean isAutoShift() {
 		return autoShift;
 	}
@@ -332,6 +343,14 @@ public class Drive extends Subsystem implements PIDOutput {
 		navx.zeroYaw();
 	}
 
+	public double getDistance() {
+		return jetsonTable.getNumber("Distance",0.0);
+	}
+	
+	public double getAngle() {
+		return jetsonTable.getNumber("Angle",0.0);
+	}
+	
 	public void updateDashboard() {
 		
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
@@ -366,9 +385,13 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Jerk_X", getJerkX());
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
 
-		
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		
+		robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
+		robotTable.putBoolean("inLow", isLowGear());
+		
+		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
+		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));
 	}
 	
 	@Override

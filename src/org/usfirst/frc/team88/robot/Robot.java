@@ -52,6 +52,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Manual Shift", new DriveShift());
 		SmartDashboard.putData("Rocket League", new DriveSplitArcade());
 
+		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
+		SmartDashboard.putData("Rotate to 90", new DriveRotateToAngle(90.0));
+		SmartDashboard.putData("Rotate to 180", new DriveRotateToAngle(180.0));
+		SmartDashboard.putData("Rotate to -90", new DriveRotateToAngle(-90.0));
+
+		SmartDashboard.putData("Rotate to Target", new DriveRotateToTarget());
 	}
 
 	/**
