@@ -39,13 +39,13 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 30;
 
-	private final static double ROTATE_P = 0.007;
-	private final static double ROTATE_I = 0.00003;
+	private final static double ROTATE_P = 0.002;
+	private final static double ROTATE_I = 0.00004;
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
-	private final static double ROTATE_TOLERANCE = 3.0;
-	private final static double ROTATE_MAX = 0.5;
-	private final static double ROTATE_MIN = 0.06;
+	private final static double ROTATE_TOLERANCE = 2.0;
+	private final static double ROTATE_MAX = 0.2;
+	private final static double ROTATE_MIN = 0.02;
 
 	public final static double DFT_SENSITIVITY = 0.2;
 	public PIDController rotateController;
@@ -410,6 +410,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			output = 0 - ROTATE_MAX;
 		}
 
+		updateDashboard();
 		setTarget(output, -output);	
 	}
 

@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
 
 	public static Drive drive;
 	public static Shooter shooter;
+	public static Jetson jetson;
 	public static OI oi;
 	public static Subsystem player;
 
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		drive = new Drive();
 		shooter = new Shooter();
+		jetson = new Jetson();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -58,6 +60,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Rotate to -90", new DriveRotateToAngle(-90.0));
 
 		SmartDashboard.putData("Rotate to Target", new DriveRotateToTarget());
+		
+		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
+		SmartDashboard.putData("Jetson Off", new JetsonPowerOff());
 	}
 
 	/**
