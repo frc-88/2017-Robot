@@ -387,7 +387,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		
-		robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
+		//robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
 		robotTable.putBoolean("inLow", isLowGear());
 		
 		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
