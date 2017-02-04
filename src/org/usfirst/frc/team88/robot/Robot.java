@@ -1,18 +1,13 @@
 
 package org.usfirst.frc.team88.robot;
 
-import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
-import org.usfirst.frc.team88.robot.commands.DriveShift;
-import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
-import org.usfirst.frc.team88.robot.commands.DriveTank;
-import org.usfirst.frc.team88.robot.commands.DriveToggleAutoShift;
-import org.usfirst.frc.team88.robot.commands.DriveZeroYaw;
-import org.usfirst.frc.team88.robot.subsystems.Drive;
-import org.usfirst.frc.team88.robot.subsystems.Shooter;
+import org.usfirst.frc.team88.robot.commands.*;
+import org.usfirst.frc.team88.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Shooter shooter;
 	public static OI oi;
+	public static Subsystem player;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
