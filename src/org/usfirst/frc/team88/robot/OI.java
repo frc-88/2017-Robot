@@ -2,6 +2,8 @@ package org.usfirst.frc.team88.robot;
 
 import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
 import org.usfirst.frc.team88.robot.commands.DriveTank;
+//import org.usfirst.frc.team88.robot.commands.PlaySound;
+//import org.usfirst.frc.team88.robot.subsystems.Player;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -81,6 +83,7 @@ public class OI {
 		// Add these commands here
 		driverButtonLeftBumper.whenPressed(new DriveTank());
 		driverButtonRightBumper.whenPressed(new DriveFieldOrientated());
+	//	driverButtonY.whenPressed(new PlaySound("HIGH GEAR.wav"));
 		
 	}
 
@@ -205,7 +208,9 @@ public class OI {
 	}
 
 	public double applySquare(double value) {
-		return value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value);
+		double output;
+		output = (value == 0.0 ? 0.0 : Math.pow(value, 3)/Math.abs(value));
+		return (Math.abs(output) < 0.05 ? 0.0 : output);
 	}
 }
 

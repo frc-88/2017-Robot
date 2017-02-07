@@ -12,12 +12,13 @@ public class DriveTank extends Command {
 	private double right;
 	private int state;
 	private int lastShift;
+	private int count;
 	private double speed;
 	private static final int DRIVING = 1;
 	private static final int PREP = 2;
 	private static final int SHIFT = 3;
 	private static final double DOWNSHIFTSPEED = 300.0;
-	private static final double UPSHIFTSPEED = 400.0;
+	private static final double UPSHIFTSPEED = 350.0;
 	
     public DriveTank() {
     	requires(Robot.drive);
@@ -36,8 +37,8 @@ public class DriveTank extends Command {
     	
     	switch (state){
     	case DRIVING:
-        	left = Robot.oi.applySquare(Robot.oi.applyDeadZone(Robot.oi.getDriverLeftY()));
-        	right = Robot.oi.applySquare(Robot.oi.applyDeadZone(Robot.oi.getDriverRightY()));
+        	left = Robot.oi.applySquare(Robot.oi.getDriverLeftY());
+        	right = Robot.oi.applySquare(Robot.oi.getDriverRightY());
         	
         	speed = Math.abs(Robot.drive.getAvgSpeed());
         	
@@ -48,12 +49,18 @@ public class DriveTank extends Command {
         	if (Robot.drive.isAutoShift() && (lastShift > (Robot.drive.isLowGear() ? 50 : 5) && 
         			((speed > UPSHIFTSPEED && Robot.drive.isLowGear() == true)||
          			 (speed < DOWNSHIFTSPEED && Robot.drive.isLowGear() == false)))){
+        		count = 0;
         		state = PREP;
         	}
     		break;
     		
     	case PREP:
-    		state = SHIFT;
+    		Robot.drive.setTarget(0, 0);
+    		
+    		if (count++ > 2) {
+    			state = SHIFT;
+    		}
+    		
     		break;
     		
     	case SHIFT:

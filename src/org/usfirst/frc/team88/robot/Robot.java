@@ -1,17 +1,13 @@
 
 package org.usfirst.frc.team88.robot;
 
-import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
-import org.usfirst.frc.team88.robot.commands.DriveShift;
-import org.usfirst.frc.team88.robot.commands.DriveTank;
-import org.usfirst.frc.team88.robot.commands.DriveToggleAutoShift;
-import org.usfirst.frc.team88.robot.commands.DriveZeroYaw;
-import org.usfirst.frc.team88.robot.subsystems.Drive;
-import org.usfirst.frc.team88.robot.subsystems.Shooter;
+import org.usfirst.frc.team88.robot.commands.*;
+import org.usfirst.frc.team88.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +23,9 @@ public class Robot extends IterativeRobot {
 
 	public static Drive drive;
 	public static Shooter shooter;
+	public static Jetson jetson;
 	public static OI oi;
+	public static Subsystem player;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -40,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		drive = new Drive();
 		shooter = new Shooter();
+		jetson = new Jetson();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -53,8 +52,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Toggle Autoshift", new DriveToggleAutoShift());
 		SmartDashboard.putData("Manual Shift", new DriveShift());
-		
+		SmartDashboard.putData("Rocket League", new DriveSplitArcade());
 
+		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
+		SmartDashboard.putData("Rotate to 90", new DriveRotateToAngle(90.0));
+		SmartDashboard.putData("Rotate to 180", new DriveRotateToAngle(180.0));
+		SmartDashboard.putData("Rotate to -90", new DriveRotateToAngle(-90.0));
+
+		SmartDashboard.putData("Rotate to Target", new DriveRotateToTarget());
+		
+		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
+		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
 	}
 
 	/**
