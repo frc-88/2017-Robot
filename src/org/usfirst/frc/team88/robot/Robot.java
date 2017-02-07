@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Rotate to Target", new DriveRotateToTarget());
 		
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
-		SmartDashboard.putData("Jetson Off", new JetsonPowerOff());
+		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
 	}
 
 	/**

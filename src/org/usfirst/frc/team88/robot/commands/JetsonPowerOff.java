@@ -9,7 +9,7 @@ public class JetsonPowerOff extends CommandGroup {
 
     public JetsonPowerOff() {
     	addSequential(new JetsonPower(false));
-    	addSequential(new Delay(5));
+    	addSequential(new Delay(10));
     	addSequential(new JetsonPower(true));
     }
 }
