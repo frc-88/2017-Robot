@@ -71,10 +71,12 @@ public class Drive extends Subsystem implements PIDOutput {
 	
 	public Drive() {
 		// init talons
+		// left talons are reversed for comp bot
+		// right talons are reversed for practice bot
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(lTalons, RobotMap.driveLeft, false, false, false);
+		initTalons(lTalons, RobotMap.driveLeft, true, true, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, true, true, false);
+		initTalons(rTalons, RobotMap.driveRight, false, false, false);
 		setClosedLoopSpeed();
 		
 		// init shifter
