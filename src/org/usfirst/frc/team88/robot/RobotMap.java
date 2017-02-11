@@ -9,8 +9,21 @@ package org.usfirst.frc.team88.robot;
 public class RobotMap {
 
 	// Drive
-	public static final int[] driveLeft = {0, 1, 2, 4};
-	public static final int[] driveRight = {15, 11, 13, 14};
+	public static final int[] driveLeft = {13, 9, 10, 15};
+	public static final int[] driveRight = {12, 8, 11, 14};
+	
+	//Intake
+	public static final int intakeMotor = 5;
+	
+	//Shooter
+	public static final int shooterMotor = 0;
+	public static final int feederMotor = 4;
+	
+	//Hanger
+	public static final int hangerMotor = 1;
+	
+	//Agitators
+	public static final int[] agitatorMotors = {2, 3}; 
 	
 	public static final int shifterSolenoidLow = 0;
 	public static final int shifterSolenoidHigh = 1;
