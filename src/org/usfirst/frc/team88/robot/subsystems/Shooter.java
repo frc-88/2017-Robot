@@ -18,11 +18,15 @@ public class Shooter extends Subsystem {
 	private static final double FLY_I = 0.0;
 	private static final double FLY_D = 0.0;
 	private static final double FLY_F = 3.0;
+	private static final double FLY_THRESHOLD = 50.0;
+	
 	private static final double FEEDER_P = 0.0;
 	private static final double FEEDER_I = 0.0;
 	private static final double FEEDER_D = 0.0;
 	private static final double FEEDER_F = 3.0;
+	
 	private static final double HOOD_INIT = 0.5;
+	private static final double HOOD_THRESHOLD = 0.05;
 
 	private CANTalon flywheelTalon, feederTalon;
 	private Servo hoodServo;
@@ -43,7 +47,7 @@ public class Shooter extends Subsystem {
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);
 		feederTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		feederTalon.configEncoderCodesPerRev(80);
+		feederTalon.configEncoderCodesPerRev(80);  // 80 is probably wrong
 		feederTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		feederTalon.configPeakOutputVoltage(+12.0f, -12.0f);
 		feederTalon.reverseSensor(false);
@@ -66,9 +70,18 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setHood(double target) {
+		// TODO add min and max for our top and bottom limits
 		hoodServo.set(target);
 	}
 	
+	public boolean flywheelOnTarget() {
+		return (Math.abs(flywheelTalon.getSetpoint() - flywheelTalon.getSpeed()) < FLY_THRESHOLD);
+	}
+	
+	public boolean hoodOnTarget(double target) {
+		return (Math.abs(hoodServo.getPosition() - target) < HOOD_THRESHOLD);
+	}
+
 	public void updateDashboard() {
 		SmartDashboard.putNumber("FlywheelCurrent", flywheelTalon.getOutputCurrent());
 		SmartDashboard.putNumber("FlywheelVoltage", flywheelTalon.getOutputVoltage());

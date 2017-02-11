@@ -22,13 +22,6 @@ public class ShooterSendData extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*
-		SmartDashboard.putDouble("Left Input", Robot.oi.getDriverLeftVerticalAxis());
-		SmartDashboard.putDouble("Right Input", Robot.oi.getDriverRightVerticalAxis());
-		SmartDashboard.putDouble("Left Maxed", Robot.oi.applyMaxValue(Robot.oi.getDriverLeftVerticalAxis()));
-		SmartDashboard.putDouble("Right Maxed", Robot.oi.applyMaxValue(Robot.oi.getDriverRightVerticalAxis()));
-		*/
-    	
 		Robot.shooter.updateDashboard();
     }
 

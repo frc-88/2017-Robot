@@ -19,8 +19,8 @@ public class ShooterStopAll extends InstantCommand {
 
 	// Called once when the command executes
 	protected void initialize() {
-		Robot.shooter.setFlywheel(0.0);
 		Robot.shooter.setFeeder(0.0);
+		Robot.shooter.setFlywheel(0.0);
 	}
 
 }
