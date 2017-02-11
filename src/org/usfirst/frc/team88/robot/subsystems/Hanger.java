@@ -29,10 +29,8 @@ public class Hanger extends Subsystem {
 	}
 	
 	public void updateDashboard(){
-		SmartDashboard.putNumber("HangerMotorSpeed", hangerMotor.getSpeed());
-		SmartDashboard.putNumber("HangerMotorSetPoint", hangerMotor.getSetpoint());
-		SmartDashboard.putNumber("HangerMotorError", hangerMotor.getError());
-		SmartDashboard.putNumber("HangerMotorPosition", hangerMotor.getPosition());
+		SmartDashboard.putNumber("HangerMotorCurrent", hangerMotor.getOutputCurrent());
+		SmartDashboard.putNumber("HangerMotorVoltage", hangerMotor.getOutputVoltage());
 	}
 
     // Put methods for controlling this subsystem
