@@ -398,7 +398,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			robotTable.putString("sound", "JohnStewart");
 		}
 		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
-			robotTable.putString("sound", ""); //Need to get a file and insert the name here
+			robotTable.putString("sound", "turret-target"); //Need to get a file and insert the name here
 		}
 		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
 		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));
