@@ -3,8 +3,8 @@ package org.usfirst.frc.team88.robot.subsystems;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import com.jcabi.ssh.SSHByPassword;
-import com.jcabi.ssh.Shell;
+//import com.jcabi.ssh.SSHByPassword;
+//import com.jcabi.ssh.Shell;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,9 +30,9 @@ public class Jetson extends Subsystem {
 
 	public void powerOff() throws Exception {
 
-		Shell shell = new SSHByPassword("vision-frc88.local", 22, "ubuntu", "ubuntu");
+	//	Shell shell = new SSHByPassword("vision-frc88.local", 22, "ubuntu", "ubuntu");
 
-		new Shell.Plain(shell).exec("sudo shutdown");
+		//new Shell.Plain(shell).exec("sudo shutdown");
 
 	}
 

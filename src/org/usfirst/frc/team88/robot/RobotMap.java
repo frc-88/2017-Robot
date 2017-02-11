@@ -11,22 +11,26 @@ public class RobotMap {
 	// Drive
 	public static final int[] driveLeft = {13, 9, 10, 15};
 	public static final int[] driveRight = {12, 8, 11, 14};
+	public static final int shifterSolenoidLow = 4;
+	public static final int shifterSolenoidHigh = 5;
+	
+	//Shooter
+	public static final int flywheelMotor = 0;
+	public static final int feederMotor = 4;
+	public static final int hoodServo = 0;
 	
 	//Intake
 	public static final int intakeMotor = 5;
-	
-	//Shooter
-	public static final int shooterMotor = 0;
-	public static final int feederMotor = 4;
-	
-	//Hanger
-	public static final int hangerMotor = 1;
+	public static final int sliderSolenoidIn = 2;
+	public static final int sliderSolenoidOut = 3;
 	
 	//Agitators
 	public static final int[] agitatorMotors = {2, 3}; 
 	
-	public static final int shifterSolenoidLow = 0;
-	public static final int shifterSolenoidHigh = 1;
-
-	public static int shooterServo = 0;
+	//Hanger
+	public static final int hangerMotor = 1;
+	
+	//Gear Pusher
+	public static final int pusherSolenoidIn = 0;
+	public static final int pusherSolenoidOut = 1;
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,7 +53,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
-	
+
 	private AHRS navx;
 	private final static double COLLISION_THRESHOLD = 0.5f;
 	private double lastAccelX = 0;
@@ -68,7 +69,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private CANTalon.TalonControlMode controlMode;
 	NetworkTable robotTable;
 	NetworkTable jetsonTable;
-	
+
 	public Drive() {
 		// init talons
 		// left talons are reversed for comp bot
@@ -78,7 +79,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		rTalons = new CANTalon[RobotMap.driveRight.length];
 		initTalons(rTalons, RobotMap.driveRight, false, false, false);
 		setClosedLoopSpeed();
-		
+
 		// init shifter
 		shifter = new DoubleSolenoid(RobotMap.shifterSolenoidLow, RobotMap.shifterSolenoidHigh);
 		shifter.set(Value.kForward);
@@ -88,7 +89,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		// init navx
 		navx = new AHRS(SerialPort.Port.kMXP);
-		
+
 
 		// init rotateController
 		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
@@ -96,11 +97,11 @@ public class Drive extends Subsystem implements PIDOutput {
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
 		rotateController.setContinuous(true);
-		
+
 		// init NetworkTables
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
-		
+
 	}
 
 	private void initTalons(CANTalon[] talons, int[] ids, boolean reverseSensor, boolean reverseOutput,
@@ -143,10 +144,10 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons[0].changeControlMode(controlMode);
 		rTalons[0].changeControlMode(controlMode);
 	}
-	
+
 	public void setTarget(double left, double right) {
 		double currentMaxSpeed;
-		
+
 		switch (controlMode) {
 		case PercentVbus:
 			lTalons[0].set(left);
@@ -295,11 +296,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	public double getLeftSpeed() {
 		return lTalons[0].getSpeed();
 	}
-	
+
 	public double getRightSpeed() {
 		return rTalons[0].getSpeed();
 	}
-	
+
 	public double getAvgSpeed() {
 		double speed = (lTalons[0].getSpeed() + rTalons[0].getSpeed()) / 2;
 
@@ -324,23 +325,24 @@ public class Drive extends Subsystem implements PIDOutput {
 		lastAccelX = currentAccelX;
 		return currentJerkX;
 	}
-	
+
 	public double getJerkY(){
 		currentAccelY = navx.getWorldLinearAccelY();
 		currentJerkY = currentAccelY - lastAccelY;
 		lastAccelY = currentAccelY;
 		return currentJerkY;
 	}
-	
+
 	public boolean collisionDetected(){
+
 		return ((Math.abs(getJerkX()) > COLLISION_THRESHOLD) ||
 				(Math.abs(getJerkY()) > COLLISION_THRESHOLD));
 	}
-	
+
 	public double getYaw() {
 		return navx.getYaw();
 	}
-	
+
 	public void zeroYaw(){
 		navx.zeroYaw();
 	}
@@ -348,13 +350,13 @@ public class Drive extends Subsystem implements PIDOutput {
 	public double getDistance() {
 		return jetsonTable.getNumber("Distance",0.0);
 	}
-	
+
 	public double getAngle() {
 		return jetsonTable.getNumber("Angle",0.0);
 	}
-	
+
 	public void updateDashboard() {
-		
+
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
@@ -388,14 +390,45 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
-		
+
 		//robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
 		robotTable.putBoolean("inLow", isLowGear());
-		
+		robotTable.putBoolean("collision", collisionDetected());
+		if(twentySecondsLeft()){
+			robotTable.putString("sound", "JohnStewart");
+		}
+		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
+			robotTable.putString("sound", "turret-target"); //Need to get a file and insert the name here
+		}
 		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
 		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));
 	}
-	
+
+	public boolean inRange(double distance, double angle){
+		final double RANGE = 100.0;
+		final double FIRING_ARC = 90.0;
+
+		if(distance <= RANGE && Math.abs(angle) <= FIRING_ARC){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean twentySecondsLeft(){
+		DriverStation driverStation = DriverStation.getInstance();
+
+		double timeLeft = driverStation.getMatchTime();
+
+		if(timeLeft<=20){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 	@Override
 	public void pidWrite(double output) {
 		if (output > ROTATE_MAX) {
@@ -419,7 +452,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveTank());
 	}
-	
-	
+
+
 
 }

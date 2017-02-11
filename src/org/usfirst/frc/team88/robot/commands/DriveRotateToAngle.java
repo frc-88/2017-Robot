@@ -1,7 +1,5 @@
 package org.usfirst.frc.team88.robot.commands;
 
-import java.io.*;
-
 import org.usfirst.frc.team88.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

@@ -7,7 +7,6 @@ import org.usfirst.frc.team88.robot.subsystems.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,8 +23,11 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Shooter shooter;
 	public static Jetson jetson;
+	public static Intake intake;
+	public static Agitator agitator;
+	public static Hanger hanger;
+	public static GearPusher gearPusher;
 	public static OI oi;
-	public static Subsystem player;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -39,6 +41,10 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		shooter = new Shooter();
 		jetson = new Jetson();
+		intake = new Intake();
+		agitator = new Agitator();
+		hanger = new Hanger();
+		gearPusher = new GearPusher();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -63,6 +69,26 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
 		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
+		
+		SmartDashboard.putData("Shooter Shoot", new ShooterShoot());
+		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
+		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
+		SmartDashboard.putData("Set Hood", new ShooterSetHood());
+		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
+		
+		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
+		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
+		SmartDashboard.putData("Intake In", new IntakeIn());
+		SmartDashboard.putData("Intake Out", new IntakeOut());
+		
+		SmartDashboard.putData("Hanger Start", new HangerStart());
+		SmartDashboard.putData("Hanger Stop", new HangerStop());
+		
+		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
+		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		
+		SmartDashboard.putData("Start Agitator", new AgitatorStart());
+		SmartDashboard.putData("Stop Agitator", new AgitatorStop());
 	}
 
 	/**
