@@ -71,6 +71,16 @@ public class Shooter extends Subsystem {
 
 	public void setHood(double target) {
 		// TODO add min and max for our top and bottom limits
+		final double HOOD_MAX = 1.0; //Nonsense
+		final double HOOD_MIN = 0.0; //Nonsense
+		
+		if(target>HOOD_MAX){
+			target = HOOD_MAX;
+		}
+		else if(target<HOOD_MIN){
+			target = HOOD_MIN;
+		}
+		
 		hoodServo.set(target);
 	}
 	

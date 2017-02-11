@@ -11,8 +11,8 @@ public class RobotMap {
 	// Drive
 	public static final int[] driveLeft = {13, 9, 10, 15};
 	public static final int[] driveRight = {12, 8, 11, 14};
-	public static final int shifterSolenoidLow = 0;
-	public static final int shifterSolenoidHigh = 1;
+	public static final int shifterSolenoidLow = 4;
+	public static final int shifterSolenoidHigh = 5;
 	
 	//Shooter
 	public static final int flywheelMotor = 0;
@@ -31,6 +31,6 @@ public class RobotMap {
 	public static final int hangerMotor = 1;
 	
 	//Gear Pusher
-	public static final int pusherSolenoidIn = 111111111; //Nonsense value, fill in the real one later
-	public static final int pusherSolenoidOut = 222222;   //Another nonsense value
+	public static final int pusherSolenoidIn = 0;
+	public static final int pusherSolenoidOut = 1;
 }
