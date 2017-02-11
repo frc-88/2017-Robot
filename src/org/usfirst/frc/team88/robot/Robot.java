@@ -24,8 +24,8 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Shooter shooter;
 	public static Jetson jetson;
+	public static Intake intake;
 	public static OI oi;
-	public static Subsystem player;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		shooter = new Shooter();
 		jetson = new Jetson();
+		intake = new Intake();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -63,6 +64,17 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
 		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
+		
+		SmartDashboard.putData("Shooter Shoot", new ShooterShoot());
+		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
+		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
+		SmartDashboard.putData("Set Hood", new ShooterSetHood());
+		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
+		
+		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
+		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
+		SmartDashboard.putData("Intake In", new IntakeIn());
+		SmartDashboard.putData("Intake Out", new IntakeOut());
 	}
 
 	/**

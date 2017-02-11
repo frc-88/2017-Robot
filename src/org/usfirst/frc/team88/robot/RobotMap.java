@@ -21,8 +21,8 @@ public class RobotMap {
 	
 	//Intake
 	public static final int intakeMotor = 5;
-	public static final int sliderSolenoidLow = 2;
-	public static final int sliderSolenoidHigh = 3;
+	public static final int sliderSolenoidIn = 2;
+	public static final int sliderSolenoidOut = 3;
 	
 	//Agitators
 	public static final int[] agitatorMotors = {2, 3}; 
