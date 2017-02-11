@@ -3,13 +3,14 @@ package org.usfirst.frc.team88.robot.commands;
 import org.usfirst.frc.team88.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ShooterHood extends Command {
+public class ShooterSendData extends Command {
 
-    public ShooterHood() {
+    public ShooterSendData() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
@@ -21,7 +22,14 @@ public class ShooterHood extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.setHood(Robot.oi.getDriverRightTrigger());
+    	/*
+		SmartDashboard.putDouble("Left Input", Robot.oi.getDriverLeftVerticalAxis());
+		SmartDashboard.putDouble("Right Input", Robot.oi.getDriverRightVerticalAxis());
+		SmartDashboard.putDouble("Left Maxed", Robot.oi.applyMaxValue(Robot.oi.getDriverLeftVerticalAxis()));
+		SmartDashboard.putDouble("Right Maxed", Robot.oi.applyMaxValue(Robot.oi.getDriverRightVerticalAxis()));
+		*/
+    	
+		Robot.shooter.updateDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()
