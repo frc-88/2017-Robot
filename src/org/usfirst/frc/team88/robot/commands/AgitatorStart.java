@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class IntakeStart extends InstantCommand {
+public class AgitatorStart extends InstantCommand {
 
-	private Preferences prefs;
+	Preferences prefs;
 	
-    public IntakeStart() {
+    public AgitatorStart() {
         super();
-        requires(Robot.intake);
+        requires(Robot.agitator);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -23,9 +23,10 @@ public class IntakeStart extends InstantCommand {
     protected void initialize() {
     	prefs = Preferences.getInstance();
 
-		double speed = prefs.getDouble("intakeSpeed", 0.0);
+		double speed1 = prefs.getDouble("agitatorSpeed1", 0.0);
+		double speed2 = prefs.getDouble("agitatorSpeed2", 0.0);
 
-		Robot.intake.setIntakeSpeed(speed);
+		Robot.agitator.setMotorsSpeed(speed1, speed2);
     }
 
 }

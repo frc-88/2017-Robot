@@ -2,30 +2,23 @@ package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class IntakeStart extends InstantCommand {
+public class GearPusherIn extends InstantCommand {
 
-	private Preferences prefs;
-	
-    public IntakeStart() {
+    public GearPusherIn() {
         super();
-        requires(Robot.intake);
+        requires(Robot.gearPusher);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	prefs = Preferences.getInstance();
-
-		double speed = prefs.getDouble("intakeSpeed", 0.0);
-
-		Robot.intake.setIntakeSpeed(speed);
+    	Robot.gearPusher.pusherIn();
     }
 
 }

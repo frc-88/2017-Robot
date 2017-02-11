@@ -2,30 +2,24 @@ package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class IntakeStart extends InstantCommand {
+public class AgitatorStop extends InstantCommand {
 
-	private Preferences prefs;
-	
-    public IntakeStart() {
+    public AgitatorStop() {
         super();
-        requires(Robot.intake);
+        requires(Robot.agitator);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	prefs = Preferences.getInstance();
-
-		double speed = prefs.getDouble("intakeSpeed", 0.0);
-
-		Robot.intake.setIntakeSpeed(speed);
+    	Robot.agitator.stopMotor1();
+    	Robot.agitator.stopMotor2();
     }
 
 }

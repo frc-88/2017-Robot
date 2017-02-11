@@ -30,5 +30,7 @@ public class RobotMap {
 	//Hanger
 	public static final int hangerMotor = 1;
 	
-
+	//Gear Pusher
+	public static final int pusherSolenoidIn = 111111111; //Nonsense value, fill in the real one later
+	public static final int pusherSolenoidOut = 222222;   //Another nonsense value
 }

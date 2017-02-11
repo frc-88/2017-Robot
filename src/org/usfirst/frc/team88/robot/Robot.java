@@ -25,6 +25,9 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Jetson jetson;
 	public static Intake intake;
+	public static Agitator agitator;
+	public static Hanger hanger;
+	public static GearPusher gearPusher;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -40,6 +43,9 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		jetson = new Jetson();
 		intake = new Intake();
+		agitator = new Agitator();
+		hanger = new Hanger();
+		gearPusher = new GearPusher();
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new AutoCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -75,6 +81,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
 		SmartDashboard.putData("Intake In", new IntakeIn());
 		SmartDashboard.putData("Intake Out", new IntakeOut());
+		
+		SmartDashboard.putData("Hanger Start", new HangerStart());
+		SmartDashboard.putData("Hanger Stop", new HangerStop());
+		
+		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
+		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		
+		SmartDashboard.putData("Start Agitator", new AgitatorStart());
+		SmartDashboard.putData("Stop Agitator", new AgitatorStop());
 	}
 
 	/**
