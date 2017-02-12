@@ -27,13 +27,16 @@ public class ShooterSetHood extends InstantCommand {
 
 	// Called once when the command executes
 	protected void initialize() {
+		double position;
 		Preferences prefs = Preferences.getInstance();
 
 		if (target < 0) {
-			target = prefs.getDouble("hoodPosition", 0.5);
+			position = prefs.getDouble("hoodPosition", 0.5);
+		} else {
+			position = target;
 		}
 
-		Robot.shooter.setHood(target);
+		Robot.shooter.setHood(position);
 	}
 
 }

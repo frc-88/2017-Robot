@@ -21,8 +21,8 @@ public class RobotMap {
 	
 	//Intake
 	public static final int intakeMotor = 5;
-	public static final int sliderSolenoidIn = 2;
-	public static final int sliderSolenoidOut = 3;
+	public static final int sliderSolenoidIn = 3;
+	public static final int sliderSolenoidOut = 2;
 	
 	//Agitators
 	public static final int agitatorMotor = 2;   //might be 3
@@ -33,4 +33,8 @@ public class RobotMap {
 	//Gear Pusher
 	public static final int pusherSolenoidIn = 0;
 	public static final int pusherSolenoidOut = 1;
+	
+	// unused solenoid
+	public static final int unusedSolenoidIn = 6;
+	public static final int unusedSolenoidOut = 7;
 }

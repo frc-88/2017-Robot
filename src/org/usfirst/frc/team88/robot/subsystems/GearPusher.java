@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class GearPusher extends Subsystem {
-	DoubleSolenoid pusher;
+	DoubleSolenoid pusher, unused;
 	
 	public GearPusher(){
 		pusher = new DoubleSolenoid(RobotMap.pusherSolenoidIn, RobotMap.pusherSolenoidOut);
+		unused = new DoubleSolenoid(RobotMap.unusedSolenoidIn, RobotMap.unusedSolenoidOut);
 		pusher.set(Value.kForward);
+		unused.set(Value.kOff);
 	}
 	
 	public void pusherIn(){
