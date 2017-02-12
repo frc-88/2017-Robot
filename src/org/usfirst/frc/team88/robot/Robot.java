@@ -51,7 +51,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 
         SmartDashboard.putData(Scheduler.getInstance());
-        SmartDashboard.putData(drive);
 
         SmartDashboard.putData("Drive Tank", new DriveTank());
 		SmartDashboard.putData("Drive Field Orientated", new DriveFieldOrientated());
