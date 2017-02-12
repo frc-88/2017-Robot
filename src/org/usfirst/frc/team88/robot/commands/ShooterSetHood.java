@@ -29,7 +29,7 @@ public class ShooterSetHood extends InstantCommand {
 	protected void initialize() {
 		Preferences prefs = Preferences.getInstance();
 
-		if (target == -1) {
+		if (target < 0) {
 			target = prefs.getDouble("hoodPosition", 0.5);
 		}
 

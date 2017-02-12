@@ -12,46 +12,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Agitator extends Subsystem {
-	private CANTalon agitatorMotor1;
-	private CANTalon agitatorMotor2;
+	private CANTalon agitatorMotor;
 
 	public Agitator(){
-		agitatorMotor1 = new CANTalon(RobotMap.agitatorMotors[0]);
-		agitatorMotor1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		agitatorMotor1.enableBrakeMode(false);
-
-		agitatorMotor2 = new CANTalon(RobotMap.agitatorMotors[1]);
-		agitatorMotor2.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		agitatorMotor2.enableBrakeMode(false);
+		agitatorMotor = new CANTalon(RobotMap.agitatorMotor);
+		agitatorMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		agitatorMotor.enableBrakeMode(false);
 	}
 
-	public void setMotor1Speed(double speed){
-		agitatorMotor1.set(speed);
+	public void setSpeed(double speed){
+		agitatorMotor.set(speed);
 	}
 
-	public void setMotor2Speed(double speed){
-		agitatorMotor2.set(speed);
-	}
-	
-	public void setMotorsSpeed(double motor1Speed, double motor2Speed){
-		agitatorMotor1.set(motor1Speed);
-		agitatorMotor2.set(motor2Speed);
-	}
-	
-	public void stopMotor1(){
-		agitatorMotor1.set(0.0);
-	}
-	
-	public void stopMotor2(){
-		agitatorMotor2.set(0.0);
-	}
-	
 	public void updateDashboard(){
-		SmartDashboard.putNumber("AgitatorMotor1Current", agitatorMotor1.getOutputCurrent());
-		SmartDashboard.putNumber("AgitatorMotor1Voltage", agitatorMotor1.getOutputVoltage());
-		
-		SmartDashboard.putNumber("AgitatorMotor2Current", agitatorMotor2.getOutputCurrent());
-		SmartDashboard.putNumber("AgitatorMotor2Voltage", agitatorMotor2.getOutputVoltage());
+		SmartDashboard.putNumber("AgitatorCurrent", agitatorMotor.getOutputCurrent());
+		SmartDashboard.putNumber("AgitatorVoltage", agitatorMotor.getOutputVoltage());
 	}
 
 	// Put methods for controlling this subsystem
