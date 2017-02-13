@@ -13,7 +13,7 @@ public class Auto40Ball extends CommandGroup {
 		// addSequential(new DriveDistance(1.7));
 		addSequential(new DriveDistanceArc(4.2));
 		addSequential(new Delay(0.5));
-		addSequential(new DriveDistanceReverse(-1));
+		addSequential(new DriveDistance(-1));
 		addSequential(new DriveTurnRight90());
 	}
 }

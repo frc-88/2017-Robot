@@ -54,18 +54,23 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Drive Tank", new DriveTank());
 		SmartDashboard.putData("Drive Field Orientated", new DriveFieldOrientated());
-		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
+		SmartDashboard.putData("Drive Split Arcade", new DriveSplitArcade());
 		SmartDashboard.putData("Toggle Autoshift", new DriveToggleAutoShift());
 		SmartDashboard.putData("Manual Shift", new DriveShift());
-		SmartDashboard.putData("Rocket League", new DriveSplitArcade());
-
+	
+		SmartDashboard.putData("Drive Distance", new DriveDistance());
+		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
+	
+		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
 		SmartDashboard.putData("Rotate to 90", new DriveRotateToAngle(90.0));
 		SmartDashboard.putData("Rotate to 180", new DriveRotateToAngle(180.0));
 		SmartDashboard.putData("Rotate to -90", new DriveRotateToAngle(-90.0));
-
 		SmartDashboard.putData("Rotate to Target", new DriveRotateToTarget());
 		
+		SmartDashboard.putData("Turn Left 90", new DriveTurnLeft90());
+		SmartDashboard.putData("Turn Right 90", new DriveTurnRight90());
+
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
 		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
 		
@@ -73,8 +78,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
 		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
-		SmartDashboard.putData("Set Hood 0.8", new ShooterSetHood(0.8));
-		SmartDashboard.putData("Set Hood 0.2", new ShooterSetHood(0.2));
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
 		
 		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
@@ -90,6 +93,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Start Agitator", new AgitatorStart());
 		SmartDashboard.putData("Stop Agitator", new AgitatorStop());
+		
+		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
 	}
 
 	/**
