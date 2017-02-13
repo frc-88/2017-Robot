@@ -23,10 +23,9 @@ public class AgitatorStart extends InstantCommand {
     protected void initialize() {
     	prefs = Preferences.getInstance();
 
-		double speed1 = prefs.getDouble("agitatorSpeed1", 0.0);
-		double speed2 = prefs.getDouble("agitatorSpeed2", 0.0);
+		double speed = prefs.getDouble("agitatorSpeed", 0.0);
 
-		Robot.agitator.setMotorsSpeed(speed1, speed2);
+		Robot.agitator.setSpeed(speed);
     }
 
 }

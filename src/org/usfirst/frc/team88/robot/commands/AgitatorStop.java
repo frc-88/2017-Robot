@@ -18,8 +18,7 @@ public class AgitatorStop extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.agitator.stopMotor1();
-    	Robot.agitator.stopMotor2();
+		Robot.agitator.setSpeed(0.0);
     }
 
 }

@@ -51,7 +51,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 
         SmartDashboard.putData(Scheduler.getInstance());
-        SmartDashboard.putData(drive);
 
         SmartDashboard.putData("Drive Tank", new DriveTank());
 		SmartDashboard.putData("Drive Field Orientated", new DriveFieldOrientated());
@@ -74,6 +73,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
 		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
+		SmartDashboard.putData("Set Hood 0.8", new ShooterSetHood(0.8));
+		SmartDashboard.putData("Set Hood 0.2", new ShooterSetHood(0.2));
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
 		
 		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
