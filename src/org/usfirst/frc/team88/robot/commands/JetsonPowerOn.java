@@ -9,7 +9,11 @@ public class JetsonPowerOn extends CommandGroup {
 
     public JetsonPowerOn() {
     	addSequential(new JetsonPower(false));
-    	addSequential(new Delay(5));
+    	addSequential(new Delay(0.2));
+    	addSequential(new JetsonPower(true));
+    	addSequential(new Delay(0.2));
+    	addSequential(new JetsonPower(false));
+    	addSequential(new Delay(2.0));
     	addSequential(new JetsonPower(true));
     }
 }
