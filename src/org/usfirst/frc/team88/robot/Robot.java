@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
 	
 		SmartDashboard.putData("Drive Distance", new DriveDistance());
 		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
+		SmartDashboard.putData("Drive Distance F2", new DriveDistanceForward(5.0));
 	
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));

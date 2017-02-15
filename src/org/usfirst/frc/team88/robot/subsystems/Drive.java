@@ -23,10 +23,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drive extends Subsystem implements PIDOutput {
 	// Constants
 	private final static int LOW_PROFILE = 0;
-	private final static double LOW_P = 0.065;
+	private final static double LOW_P = 1.0;
 	private final static double LOW_I = 0.0;
 	private final static double LOW_D = 0.0;
-	private final static double LOW_F = 3.0;
+	private final static double LOW_F = 1.0;
 	private final static int LOW_IZONE = 0;
 	private final static double LOW_MAX = 500;
 
@@ -34,7 +34,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double HIGH_P = 0.0;
 	private final static double HIGH_I = 0.0;
 	private final static double HIGH_D = 0.0;
-	private final static double HIGH_F = 0.35;
+	private final static double HIGH_F = 0.2;
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1000;
 
@@ -46,7 +46,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 2.0;
 	private final static double ROTATE_MAX = 0.2;
-	private final static double ROTATE_MIN = 0.02;
+	private final static double ROTATE_MIN = 0.03;
 
 	public final static double DFT_SENSITIVITY = 0.2;
 	public PIDController rotateController;
@@ -77,7 +77,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
 		initTalons(lTalons, RobotMap.driveLeft, true, true, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, false, false, false);
+		initTalons(rTalons, RobotMap.driveRight, true, false, false);
 		setClosedLoopSpeed();
 
 		// init shifter

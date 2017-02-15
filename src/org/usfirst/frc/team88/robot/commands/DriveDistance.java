@@ -18,7 +18,7 @@ public class DriveDistance extends Command {
 	private static final int END = 5;
 
 	private static final double MAX_SPEED = 1.0;
-	private static final double ACCELERATION_SCALE = 0.08;
+	private static final double ACCELERATION_SCALE = 0.01;
 
 	private int state;
 	private boolean usePrefs = false;
@@ -109,7 +109,7 @@ public class DriveDistance extends Command {
 			break;
 
 		case STOP: // stop
-			Robot.drive.driveCurve(0.0, 0.0);
+			Robot.drive.driveCurve(0.0, curve);
 			state = END;
 			break;
 
