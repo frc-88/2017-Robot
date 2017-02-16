@@ -86,6 +86,7 @@ public class OI {
 		operatorButtonRightBumper.whenPressed(new ShooterStartFeeder());
 		operatorButtonB.whenPressed(new BattleMode());
 		operatorButtonA.whenPressed(new ScavengerMode());
+		operatorButtonStart.whenPressed(new ShooterStopAll());
 
 
 	}
