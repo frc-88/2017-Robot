@@ -40,15 +40,15 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 45;
 
-	private final static double ROTATE_P = 0.002;
+	private final static double ROTATE_P = 0.004;
 	private final static double ROTATE_I = 0.00004;
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 2.0;
-	private final static double ROTATE_MAX = 0.2;
+	private final static double ROTATE_MAX = 0.4;
 	private final static double ROTATE_MIN = 0.03;
 
-	public final static double DFT_SENSITIVITY = 0.2;
+	public final static double DFT_SENSITIVITY = 0.15;
 	public PIDController rotateController;
 
 	private final CANTalon[] lTalons, rTalons;
@@ -319,6 +319,11 @@ public class Drive extends Subsystem implements PIDOutput {
 		autoShift = !autoShift;
 	}
 
+	public void enableBrakeMode(boolean value) {
+		lTalons[0].enableBrakeMode(value);
+		rTalons[0].enableBrakeMode(value);
+	}
+	
 	public double getJerkX(){
 		currentAccelX = navx.getWorldLinearAccelX();
 		currentJerkX = currentAccelX - lastAccelX;

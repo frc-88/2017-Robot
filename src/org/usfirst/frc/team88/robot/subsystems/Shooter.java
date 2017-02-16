@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
 
-	private static final double FLY_P = 0.0;
-	private static final double FLY_I = 0.0;
+	private static final double FLY_P = 1.5;
+	private static final double FLY_I = 0.0002;
 	private static final double FLY_D = 0.0;
-	private static final double FLY_F = 3.0;
+	private static final double FLY_F = 1.78;
 	private static final double FLY_THRESHOLD = 50.0;
 	
 	private static final double FEEDER_P = 0.0;
@@ -43,6 +43,7 @@ public class Shooter extends Subsystem {
 		flywheelTalon.enableBrakeMode(false);
 		flywheelTalon.setPID(FLY_P, FLY_I, FLY_D, FLY_F, 0, 0, 0);
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+		flywheelTalon.setVoltageRampRate(60.0);
 
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);
