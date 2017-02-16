@@ -34,11 +34,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double HIGH_P = 0.0;
 	private final static double HIGH_I = 0.0;
 	private final static double HIGH_D = 0.0;
-	private final static double HIGH_F = 0.2;
+	private final static double HIGH_F = 0.7;
 	private final static int HIGH_IZONE = 0;
 	private final static double HIGH_MAX = 1000;
 
-	private final static double RAMPRATE = 30;
+	private final static double RAMPRATE = 45;
 
 	private final static double ROTATE_P = 0.002;
 	private final static double ROTATE_I = 0.00004;
