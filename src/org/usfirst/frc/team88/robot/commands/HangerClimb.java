@@ -22,6 +22,7 @@ public class HangerClimb extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.hanger.setClimberSpeed(Robot.oi.getOperatorLeftTrigger());
+    	Robot.hanger.updateDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()
