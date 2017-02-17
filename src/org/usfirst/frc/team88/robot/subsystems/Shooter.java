@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
 
-	private static final double FLY_P = 0.0;
-	private static final double FLY_I = 0.0;
-	private static final double FLY_D = 0.0;
-	private static final double FLY_F = 3.0;
+	private static final double FLY_P = 13.5;
+	private static final double FLY_I = 0.00;
+	private static final double FLY_D = 2000.0;
+	private static final double FLY_F = 1.78;
 	private static final double FLY_THRESHOLD = 50.0;
 	
-	private static final double FEEDER_P = 0.0;
+	private static final double FEEDER_P = 0.05;
 	private static final double FEEDER_I = 0.0;
 	private static final double FEEDER_D = 0.0;
-	private static final double FEEDER_F = 3.0;
+	private static final double FEEDER_F = 0.078;
 	
 	private static final double HOOD_INIT = 0.5;
 	private static final double HOOD_THRESHOLD = 0.05;
@@ -43,14 +43,14 @@ public class Shooter extends Subsystem {
 		flywheelTalon.enableBrakeMode(false);
 		flywheelTalon.setPID(FLY_P, FLY_I, FLY_D, FLY_F, 0, 0, 0);
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+		flywheelTalon.setVoltageRampRate(60.0);
 
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);
-		feederTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		feederTalon.configEncoderCodesPerRev(80);  // 80 is probably wrong
+		feederTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 		feederTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		feederTalon.configPeakOutputVoltage(+12.0f, -12.0f);
-		feederTalon.reverseSensor(false);
+		feederTalon.reverseSensor(true);
 		feederTalon.reverseOutput(false);
 		feederTalon.enableBrakeMode(false);
 		feederTalon.setPID(FEEDER_P, FEEDER_I, FEEDER_D, FEEDER_F, 0, 0, 0);
@@ -62,6 +62,11 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setFlywheel(double target) {
+		if (target == 0.0) {
+			flywheelTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		} else {
+			flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+		}
 		flywheelTalon.set(target);
 	}
 

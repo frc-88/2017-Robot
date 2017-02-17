@@ -22,6 +22,7 @@ public class Intake extends Subsystem {
 		intakeMotor = new CANTalon(RobotMap.intakeMotor);
 		intakeMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		intakeMotor.enableBrakeMode(false);
+		intakeMotor.setVoltageRampRate(30);
 		
 		slider = new DoubleSolenoid(RobotMap.sliderSolenoidIn, RobotMap.sliderSolenoidOut);
 		slider.set(Value.kForward);

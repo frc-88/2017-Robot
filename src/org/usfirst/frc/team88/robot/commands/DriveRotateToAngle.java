@@ -23,6 +23,7 @@ public class DriveRotateToAngle extends Command {
     	Robot.drive.rotateController.reset();
     	Robot.drive.rotateController.setSetpoint(targetAngle);
     	Robot.drive.rotateController.enable();    	
+        Robot.drive.enableBrakeMode(true);
 		
     }
 
@@ -41,6 +42,7 @@ public class DriveRotateToAngle extends Command {
     protected void end() {
 		Robot.drive.rotateController.disable();
 		Robot.drive.enableRampRate();
+        Robot.drive.enableBrakeMode(false);
    }
 
     // Called when another command which requires one or more of the same
@@ -48,6 +50,7 @@ public class DriveRotateToAngle extends Command {
     protected void interrupted() {
 		Robot.drive.rotateController.disable();    	
 		Robot.drive.enableRampRate();
+        Robot.drive.enableBrakeMode(false);
    }
    
 }

@@ -46,8 +46,10 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		gearPusher = new GearPusher();
 		oi = new OI();
-		// chooser.addDefault("Default Auto", new AutoCommand());
+		
+		chooser.addDefault("Drive Forward", new DriveDistance(2.0));
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		
 		SmartDashboard.putData("Auto mode", chooser);
 
         SmartDashboard.putData(Scheduler.getInstance());
@@ -91,6 +93,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
 		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("Start Agitator", new AgitatorStart());
 		SmartDashboard.putData("Stop Agitator", new AgitatorStop());

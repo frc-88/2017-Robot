@@ -1,10 +1,6 @@
 package org.usfirst.frc.team88.robot;
 
-import org.usfirst.frc.team88.robot.commands.DriveFieldOrientated;
-import org.usfirst.frc.team88.robot.commands.DriveTank;
-//import org.usfirst.frc.team88.robot.commands.PlaySound;
-//import org.usfirst.frc.team88.robot.subsystems.Player;
-import org.usfirst.frc.team88.robot.commands.PlaySound;
+import org.usfirst.frc.team88.robot.commands.*;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -85,23 +81,32 @@ public class OI {
 		driverButtonLeftBumper.whenPressed(new DriveTank());
 		driverButtonRightBumper.whenPressed(new DriveFieldOrientated());
 		driverButtonY.whenPressed(new PlaySound("hopper"));
-		
+
+		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
+		operatorButtonRightBumper.whenPressed(new ShooterStartFeeder());
+		operatorButtonB.whenPressed(new BattleMode());
+		operatorButtonA.whenPressed(new ScavengerMode());
+		operatorButtonStart.whenPressed(new ShooterStopAll());
+		//operatorButtonY.whenPressed(new GearPusherOut());
+		//operatorButtonY.whenReleased(new GearPusherIn());
+		operatorButtonY.whenPressed(new GearEject());
+
 	}
 
-	
+
 	// Utility functions
 
-	
+
 	// driver controller
-	
+
 	public double getDriverRightY() {
 		return -driverController.getRawAxis(RIGHT_VERT_AXIS);
 	}
-	
+
 	public double getDriverRightX() {
 		return driverController.getRawAxis(RIGHT_HORIZ_AXIS);
 	}
-	
+
 	public double getDriverLeftY() {
 		return -driverController.getRawAxis(LEFT_VERT_AXIS);
 	}
@@ -109,7 +114,7 @@ public class OI {
 	public double getDriverLeftX() {
 		return driverController.getRawAxis(LEFT_HORIZ_AXIS);
 	}
-	
+
 	public double getDriverLeftTrigger() {
 		return driverController.getRawAxis(LEFT_Z_AXIS);
 	}
@@ -136,17 +141,17 @@ public class OI {
 	}
 
 
-	
+
 	// operator controller
-	
+
 	public double getOperatorRightY() {
 		return -operatorController.getRawAxis(RIGHT_VERT_AXIS);
 	}
-	
+
 	public double getOperatorRightX() {
 		return operatorController.getRawAxis(RIGHT_HORIZ_AXIS);
 	}
-	
+
 	public double getOperatorLeftY() {
 		return -operatorController.getRawAxis(LEFT_VERT_AXIS);
 	}
@@ -154,7 +159,7 @@ public class OI {
 	public double getOperatorLeftX() {
 		return operatorController.getRawAxis(LEFT_HORIZ_AXIS);
 	}
-	
+
 	public double getOperatorLeftTrigger() {
 		return operatorController.getRawAxis(LEFT_Z_AXIS);
 	}
@@ -180,10 +185,10 @@ public class OI {
 		operatorController.setRumble(RumbleType.kRightRumble, rumble);
 	}
 
-	
-	
+
+
 	// Miscellaneous utilities
-	
+
 	public double applyDeadZone(double value) {
 		if (Math.abs(value) < STICK_DEADZONE) {
 			return 0.0;
@@ -195,7 +200,7 @@ public class OI {
 
 		return value;
 	}
-	
+
 	public double applyMaxValue(double value){
 		if(value >= STICK_MAX){
 			return 1.0;
