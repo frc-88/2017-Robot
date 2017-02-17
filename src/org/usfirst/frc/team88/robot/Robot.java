@@ -47,8 +47,8 @@ public class Robot extends IterativeRobot {
 		gearPusher = new GearPusher();
 		oi = new OI();
 		
-		chooser.addDefault("Drive Forward", new DriveDistance(2.0));
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("40 Ball", new Auto40Ball());
+		chooser.addObject("Drive Forward", new DriveDistance(2.0));
 		
 		SmartDashboard.putData("Auto mode", chooser);
 
