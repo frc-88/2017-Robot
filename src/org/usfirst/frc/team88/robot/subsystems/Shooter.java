@@ -20,10 +20,10 @@ public class Shooter extends Subsystem {
 	private static final double FLY_F = 1.78;
 	private static final double FLY_THRESHOLD = 50.0;
 	
-	private static final double FEEDER_P = 0.0;
+	private static final double FEEDER_P = 0.05;
 	private static final double FEEDER_I = 0.0;
 	private static final double FEEDER_D = 0.0;
-	private static final double FEEDER_F = 0.1;
+	private static final double FEEDER_F = 0.078;
 	
 	private static final double HOOD_INIT = 0.5;
 	private static final double HOOD_THRESHOLD = 0.05;
