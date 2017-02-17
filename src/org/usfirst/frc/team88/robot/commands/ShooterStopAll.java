@@ -12,6 +12,7 @@ public class ShooterStopAll extends InstantCommand {
 	public ShooterStopAll() {
 		super();
 		requires(Robot.shooter);
+		requires(Robot.agitator);
 
 	}
 
@@ -19,6 +20,7 @@ public class ShooterStopAll extends InstantCommand {
 	protected void initialize() {
 		Robot.shooter.setFeeder(0.0);
 		Robot.shooter.setFlywheel(0.0);
+		Robot.agitator.setSpeed(0.0);
 	}
 
 }

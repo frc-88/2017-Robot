@@ -14,6 +14,7 @@ public class ShooterStartFeeder extends InstantCommand {
 	public ShooterStartFeeder() {
 		super();
 		requires(Robot.shooter);
+		requires(Robot.agitator);
 
 	}
 
@@ -21,9 +22,11 @@ public class ShooterStartFeeder extends InstantCommand {
 	protected void initialize() {
 		prefs = Preferences.getInstance();
 
-		double speed = prefs.getDouble("feederSpeed", 0.0);
+		double feederSpeed = prefs.getDouble("feederSpeed", 0.0);
+		double agitatorSpeed = prefs.getDouble("agitatorSpeed", 0.0);
 
-		Robot.shooter.setFeeder(speed);
+		Robot.shooter.setFeeder(feederSpeed);
+		Robot.agitator.setSpeed(agitatorSpeed);
 	}
 
 }
