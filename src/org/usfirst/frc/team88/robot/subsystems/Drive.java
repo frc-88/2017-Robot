@@ -69,8 +69,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	private CANTalon.TalonControlMode controlMode;
 	NetworkTable robotTable;
 	NetworkTable jetsonTable;
-
+	DriverStation ds;
+	
 	public Drive() {
+		ds = DriverStation.getInstance();
+
 		// init talons
 		// left talons are reversed for comp bot
 		// right talons are reversed for practice bot
@@ -396,6 +399,8 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 
+		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
+		
 		//robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("collision", collisionDetected());

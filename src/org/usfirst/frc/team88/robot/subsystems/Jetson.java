@@ -20,7 +20,7 @@ public class Jetson extends Subsystem {
 		power = new DigitalOutput(0);
 		power.set(true);
 		
-		powerOn();
+		//powerOn();
 	}
 
 	public void setPower(boolean value) {
