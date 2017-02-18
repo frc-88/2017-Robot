@@ -88,7 +88,6 @@ public class OI {
 		operatorButtonB.whenPressed(new BattleMode());
 		operatorButtonA.whenPressed(new ScavengerMode());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
-		operatorButtonX.whenPressed(new HangerClimb());
 		operatorButtonY.whenPressed(new GearEject());
 
 	}
