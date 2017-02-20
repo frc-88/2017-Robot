@@ -362,7 +362,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		if (jetsonTable.getNumber("DistanceB",-1.0) != -1.0) {
 			distance = jetsonTable.getNumber("DistanceB",0.0); 
 		} else if (jetsonTable.getNumber("DistanceG",-1.0) != -1.0) {
-			distance = jetsonTable.getNumber("DistanceB",0.0);
+			distance = jetsonTable.getNumber("DistanceG",0.0);
 		} else {
 			distance = -1.0;
 		}
