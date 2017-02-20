@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class ShooterStartFeeder extends InstantCommand {
+public class ShooterStartAgitator extends InstantCommand {
 
-	public ShooterStartFeeder() {
+	public ShooterStartAgitator() {
 		super();
 		requires(Robot.shooter);
 	}
@@ -18,8 +18,8 @@ public class ShooterStartFeeder extends InstantCommand {
 	// Called once when the command executes
 	protected void initialize() {
 		Preferences prefs = Preferences.getInstance();
-		double speed = prefs.getDouble("feederSpeed", 0.0);
+		double speed = prefs.getDouble("agitatorSpeed", 0.0);
 
-		Robot.shooter.setFeeder(speed);
+		Robot.shooter.setAgitator(speed);
 	}
 }

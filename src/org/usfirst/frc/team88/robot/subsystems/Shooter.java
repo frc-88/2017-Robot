@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 	private static final double HOOD_INIT = 0.5;
 	private static final double HOOD_THRESHOLD = 0.05;
 
-	private CANTalon flywheelTalon, feederTalon;
+	private CANTalon flywheelTalon, feederTalon, agitatorTalon;
 	private Servo hoodServo;
 
 	public Shooter() {
@@ -56,6 +56,11 @@ public class Shooter extends Subsystem {
 		feederTalon.setPID(FEEDER_P, FEEDER_I, FEEDER_D, FEEDER_F, 0, 0, 0);
 		feederTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 
+		// initialize agitator
+		agitatorTalon = new CANTalon(RobotMap.agitatorMotor);
+		agitatorTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		agitatorTalon.enableBrakeMode(false);
+
 		// initialize hood
 		hoodServo = new Servo(RobotMap.hoodServo);
 		setHood(HOOD_INIT);
@@ -73,7 +78,11 @@ public class Shooter extends Subsystem {
 	public void setFeeder(double target) {
 		feederTalon.set(target);
 	}
-
+	
+	public void setAgitator(double speed){
+		agitatorTalon.set(speed);
+	}
+	
 	public void setHood(double target) {
 		// TODO add min and max for our top and bottom limits
 		final double HOOD_MAX = 1.0; //Nonsense
@@ -113,7 +122,10 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("FeederSetPoint", feederTalon.getSetpoint());
 		SmartDashboard.putNumber("FeederError", feederTalon.getError());
 		SmartDashboard.putNumber("FeederPosition", feederTalon.getPosition());
-		
+
+		SmartDashboard.putNumber("AgitatorCurrent", agitatorTalon.getOutputCurrent());
+		SmartDashboard.putNumber("AgitatorVoltage", agitatorTalon.getOutputVoltage());
+
 		SmartDashboard.putNumber("HoodPosition", hoodServo.getPosition());
 		
 		SmartDashboard.putString("ShooterSpeed", flywheelTalon.getSpeed() + ":" + feederTalon.getSpeed());

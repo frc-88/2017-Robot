@@ -84,7 +84,7 @@ public class OI {
 		driverButtonY.whenPressed(new PlaySound("hopper"));
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
-		operatorButtonRightBumper.whenPressed(new ShooterStartFeeder());
+		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
 		operatorButtonB.whenPressed(new BattleMode());
 		operatorButtonA.whenPressed(new ScavengerMode());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
