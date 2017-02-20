@@ -30,11 +30,9 @@ public class RobotMap {
 	//Hanger
 	public static final int hangerMotor = 1;
 	
-	//Gear Pusher
+	//Gearage
 	public static final int pusherSolenoidIn = 1;
 	public static final int pusherSolenoidOut = 0;
-	
-	// unused solenoid
-	public static final int unusedSolenoidIn = 6;
-	public static final int unusedSolenoidOut = 7;
+	public static final int receiverSolenoidIn = 6;
+	public static final int receiverSolenoidOut = 7;
 }

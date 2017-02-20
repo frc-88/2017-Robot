@@ -20,7 +20,7 @@ public class DriveDistanceArc extends Command {
 	private static final double MAX_SPEED = 1.0;
 	private static final double ACCELERATION_SCALE = 0.08;
 	private final static double SENSITIVITY = 0.5;
-	private final static double CURVE = 0.4;
+	private static double CURVE;
 
 	private int state;
 	private double inputDistance;
@@ -35,6 +35,13 @@ public class DriveDistanceArc extends Command {
 	
 	public DriveDistanceArc(double distance) {
 		requires(Robot.drive);
+		CURVE = 0.4;
+		inputDistance = distance;
+	}
+	
+	public DriveDistanceArc(double distance, double arc){
+		requires(Robot.drive);
+		CURVE = arc;
 		inputDistance = distance;
 	}
 

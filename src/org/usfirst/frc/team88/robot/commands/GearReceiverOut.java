@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class GearPusherIn extends InstantCommand {
+public class GearReceiverOut extends InstantCommand {
 
-    public GearPusherIn() {
+    public GearReceiverOut() {
         super();
         requires(Robot.gearage);
         // Use requires() here to declare subsystem dependencies
@@ -18,7 +18,7 @@ public class GearPusherIn extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.gearage.pusherIn();
+    	Robot.gearage.receiverOut();
     }
 
 }
