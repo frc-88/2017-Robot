@@ -115,6 +115,8 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("FeederPosition", feederTalon.getPosition());
 		
 		SmartDashboard.putNumber("HoodPosition", hoodServo.getPosition());
+		
+		SmartDashboard.putString("ShooterSpeed", flywheelTalon.getSpeed() + ":" + feederTalon.getSpeed());
 	}
 
 	public void initDefaultCommand() {
