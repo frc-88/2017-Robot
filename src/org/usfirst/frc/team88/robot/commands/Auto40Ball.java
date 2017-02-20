@@ -62,6 +62,7 @@ public class Auto40Ball extends CommandGroup {
 
 			addParallel(new ShooterStartFeeder());
 			addParallel(new ShooterStartAgitator());
+			break;
 			
 		case "Beta":
 			addSequential(new DriveDistance(betaDistanceA));
@@ -78,6 +79,7 @@ public class Auto40Ball extends CommandGroup {
 	
 			addParallel(new ShooterStartFeeder());
 			addParallel(new ShooterStartAgitator());
+			break;
 			
 		case "Gamma":
 			addSequential(new DriveDistance(gammaDistanceA));
@@ -94,6 +96,7 @@ public class Auto40Ball extends CommandGroup {
 	
 			addParallel(new ShooterStartFeeder());
 			addParallel(new ShooterStartAgitator());
+			break;
 			
 		case "Delta":
 			addSequential(new DriveDistance(deltaDistanceA));
@@ -115,6 +118,7 @@ public class Auto40Ball extends CommandGroup {
 	
 			addParallel(new ShooterStartFeeder());
 			addParallel(new ShooterStartAgitator());
+			break;
 			
 		}	
 		
