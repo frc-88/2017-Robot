@@ -24,7 +24,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Jetson jetson;
 	public static Intake intake;
-	public static Agitator agitator;
 	public static Hanger hanger;
 	public static GearPusher gearPusher;
 	public static OI oi;
@@ -42,7 +41,6 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		jetson = new Jetson();
 		intake = new Intake();
-		agitator = new Agitator();
 		hanger = new Hanger();
 		gearPusher = new GearPusher();
 		oi = new OI();
@@ -77,9 +75,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
 		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
 		
-		SmartDashboard.putData("Shooter Shoot", new ShooterShoot());
 		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
 		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
+		SmartDashboard.putData("Start Agitator", new ShooterStartAgitator());
+		SmartDashboard.putData("Stop Flywheel", new ShooterStopFlywheel());
+		SmartDashboard.putData("Stop Feeder", new ShooterStopFeeder());
+		SmartDashboard.putData("Stop Agitator", new ShooterStopAgitator());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
 		
@@ -94,9 +95,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
 		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
 		SmartDashboard.putData("Gear Eject",new GearEject());
-		
-		SmartDashboard.putData("Start Agitator", new AgitatorStart());
-		SmartDashboard.putData("Stop Agitator", new AgitatorStop());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
 	}
