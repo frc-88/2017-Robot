@@ -9,6 +9,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -363,6 +364,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
+		Preferences prefs = Preferences.getInstance();
 		int i;
 		
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
@@ -413,6 +415,11 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
 		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));
+		
+		jetsonTable.putNumber("visionH", prefs.getDouble("visionH", -1.0));
+		jetsonTable.putNumber("visionS", prefs.getDouble("visionS", -1.0));
+		jetsonTable.putNumber("visionV", prefs.getDouble("visionV", -1.0));
+		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", -1.0));
 	}
 
 	public boolean inRange(double distance, double angle){
