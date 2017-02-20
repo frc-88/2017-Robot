@@ -85,11 +85,14 @@ public class OI {
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
+		operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
+
 		operatorButtonB.whenPressed(new BattleMode());
 		operatorButtonA.whenPressed(new ScavengerMode());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
 		operatorButtonY.whenPressed(new GearEject());
-
+		operatorButtonX.whenPressed(new GearReceiverIn());
+		operatorButtonX.whenReleased(new GearReceiverOut());
 	}
 
 

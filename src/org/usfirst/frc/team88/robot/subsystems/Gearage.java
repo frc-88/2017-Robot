@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class GearPusher extends Subsystem {
-	DoubleSolenoid pusher, unused;
+public class Gearage extends Subsystem {
+	DoubleSolenoid pusher, receiver;
 	
-	public GearPusher(){
+	public Gearage(){
 		pusher = new DoubleSolenoid(RobotMap.pusherSolenoidIn, RobotMap.pusherSolenoidOut);
-		unused = new DoubleSolenoid(RobotMap.unusedSolenoidIn, RobotMap.unusedSolenoidOut);
+		receiver = new DoubleSolenoid(RobotMap.receiverSolenoidIn, RobotMap.receiverSolenoidOut);
 		pusher.set(Value.kForward);
-		unused.set(Value.kOff);
+		receiver.set(Value.kForward);
 	}
 	
 	public void pusherIn(){
@@ -26,8 +26,14 @@ public class GearPusher extends Subsystem {
 	public void pusherOut(){
 		pusher.set(Value.kReverse);
 	}
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	
+	public void receiverIn(){
+		receiver.set(Value.kForward);
+	}
+	
+	public void receiverOut(){
+		receiver.set(Value.kReverse);
+	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

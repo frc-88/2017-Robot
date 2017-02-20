@@ -11,14 +11,14 @@ public class GearPusherOut extends InstantCommand {
 
     public GearPusherOut() {
         super();
-        requires(Robot.gearPusher);
+        requires(Robot.gearage);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.gearPusher.pusherOut();
+    	Robot.gearage.pusherOut();
     }
 
 }

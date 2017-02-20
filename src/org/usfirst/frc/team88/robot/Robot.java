@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static Jetson jetson;
 	public static Intake intake;
 	public static Hanger hanger;
-	public static GearPusher gearPusher;
+	public static Gearage gearage;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		jetson = new Jetson();
 		intake = new Intake();
 		hanger = new Hanger();
-		gearPusher = new GearPusher();
+		gearage = new Gearage();
 		oi = new OI();
 		
 		chooser.addDefault("40 Ball", new Auto40Ball());
@@ -94,6 +94,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
 		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
+		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
