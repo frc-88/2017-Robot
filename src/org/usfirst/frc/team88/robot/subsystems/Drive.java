@@ -69,8 +69,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	private CANTalon.TalonControlMode controlMode;
 	NetworkTable robotTable;
 	NetworkTable jetsonTable;
-
+	DriverStation ds;
+	
 	public Drive() {
+		ds = DriverStation.getInstance();
+
 		// init talons
 		// left talons are reversed for comp bot
 		// right talons are reversed for practice bot
@@ -361,25 +364,29 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
-
+		int i;
+		
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
 		SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
 		SmartDashboard.putNumber("LeftError: ", lTalons[0].getClosedLoopError());
-		SmartDashboard.putNumber("LeftCurrent", lTalons[0].getOutputCurrent());
-		SmartDashboard.putNumber("LeftVoltage", lTalons[0].getOutputVoltage());
+		for (i=0; i<lTalons.length; i++) {
+			SmartDashboard.putNumber("LeftCurrent"+i, lTalons[i].getOutputCurrent());
+			SmartDashboard.putNumber("LeftVoltage"+i, lTalons[i].getOutputVoltage());
+		}
 
 		SmartDashboard.putNumber("RightPosition: ", rTalons[0].getPosition());
 		SmartDashboard.putNumber("RightEncVel: ", rTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
 		SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
 		SmartDashboard.putNumber("RightError: ", rTalons[0].getClosedLoopError());
-		SmartDashboard.putNumber("RightCurrent", rTalons[0].getOutputCurrent());
-		SmartDashboard.putNumber("RightVoltage", rTalons[0].getOutputVoltage());
+		for (i=0; i<rTalons.length; i++) {
+			SmartDashboard.putNumber("RightCurrent"+i, rTalons[i].getOutputCurrent());
+			SmartDashboard.putNumber("RightVoltage"+i, rTalons[i].getOutputVoltage());
+		}
 
-		SmartDashboard.putNumber("targetMaxspeed", targetMaxSpeed);
-		SmartDashboard.putNumber("maxSpeed", maxSpeed);
+		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		SmartDashboard.putBoolean("lowGear", isLowGear());
 
 		// NavX stuff
@@ -394,8 +401,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Jerk_X", getJerkX());
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
 
-		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
-
+		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
+		
 		//robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("collision", collisionDetected());
@@ -403,7 +410,7 @@ public class Drive extends Subsystem implements PIDOutput {
 			robotTable.putString("sound", "JohnStewart");
 		}
 		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
-			robotTable.putString("sound", "turret-target"); //Need to get a file and insert the name here
+			robotTable.putString("sound", "targetLock"); //Need to get a file and insert the name here
 		}
 		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
 		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));

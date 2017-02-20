@@ -1,7 +1,7 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
 import org.usfirst.frc.team88.robot.RobotMap;
-import org.usfirst.frc.team88.robot.commands.HangerSendData;
+import org.usfirst.frc.team88.robot.commands.HangerClimb;
 
 import com.ctre.CANTalon;
 
@@ -45,7 +45,7 @@ public class Hanger extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new HangerSendData());
+    	setDefaultCommand(new HangerClimb());
     }
 }
 

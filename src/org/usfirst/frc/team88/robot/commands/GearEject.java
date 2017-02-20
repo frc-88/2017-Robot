@@ -9,7 +9,8 @@ public class GearEject extends CommandGroup {
 
     public GearEject() {
     	addSequential(new GearPusherOut());
-    	addSequential(new Delay(0.13));
+    	//Delay Should be played with to make the pusher out be longer so as to get onto the peg with one press
+    	addSequential(new Delay(0.17));
     	addSequential(new GearPusherIn());
     }
 }
