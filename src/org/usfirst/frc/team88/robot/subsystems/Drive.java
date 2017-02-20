@@ -357,11 +357,29 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public double getDistance() {
-		return jetsonTable.getNumber("Distance",0.0);
+		double distance;
+		
+		if (jetsonTable.getNumber("DistanceB",-1.0) != -1.0) {
+			distance = jetsonTable.getNumber("DistanceB",0.0); 
+		} else if (jetsonTable.getNumber("DistanceG",-1.0) != -1.0) {
+			distance = jetsonTable.getNumber("DistanceB",0.0);
+		} else {
+			distance = -1.0;
+		}
+		
+		return distance;
 	}
 
 	public double getAngle() {
-		return jetsonTable.getNumber("Angle",0.0);
+		double angle = 0.0;
+		
+		if (jetsonTable.getNumber("DistanceB",-1.0) != -1.0) {
+			angle = jetsonTable.getNumber("AngleB",0.0); 
+		} else if (jetsonTable.getNumber("DistanceG",-1.0) != -1.0) {
+			angle = jetsonTable.getNumber("Gamma",0.0);
+		}
+		
+		return angle;
 	}
 
 	public void updateDashboard() {
@@ -414,9 +432,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
 			robotTable.putString("sound", "targetLock"); //Need to get a file and insert the name here
 		}
-		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB",0.0));
+		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB",-1.0));
 		SmartDashboard.putNumber("J AngleB", jetsonTable.getNumber("AngleB",0.0));
-		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG",0.0));
+		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG",-1.0));
 		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta",0.0));
 		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma",0.0));
 		
