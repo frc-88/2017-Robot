@@ -13,32 +13,32 @@ public class Auto40Ball extends CommandGroup {
 		DriverStation ds = DriverStation.getInstance();
 		Preferences prefs = Preferences.getInstance();
 		
-		String version = prefs.getString("40 Ball Version", "Alpha");
+		String version = prefs.getString("40BallVersion", "Alpha");
 		Boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
 		
-		double hopperDelay = prefs.getDouble("Hopper Delay", 0.0);
-		double gearDelay = prefs.getDouble("Gear Delay", 0.0);
+		double hopperDelay = prefs.getDouble("HopperDelay", 0.0);
+		double gearDelay = prefs.getDouble("GearDelay", 0.0);
 		
-		double alphaDistanceA = prefs.getDouble("Alpha Distance A", 0.0);
-		double alphaDistanceB = prefs.getDouble("Alpha Distance B", 0.0);
-		double alphaDistanceC = prefs.getDouble("Alpha Distance C", 0.0);
+		double alphaDistanceA = prefs.getDouble("AlphaDistanceA", 0.0);
+		double alphaDistanceB = prefs.getDouble("AlphaDistanceB", 0.0);
+		double alphaDistanceC = prefs.getDouble("AlphaDistanceC", 0.0);
 		
-		double betaDistanceA = prefs.getDouble("Beta Distance A", 0.0);
-		double betaDistanceB = prefs.getDouble("Beta Distance B", 0.0);
-		double betaCurveB = prefs.getDouble("Beta Curve B", 0.0);
-		double betaDistanceC = prefs.getDouble("Beta Distance C", 0.0);
+		double betaDistanceA = prefs.getDouble("BetaDistanceA", 0.0);
+		double betaDistanceB = prefs.getDouble("BetaDistanceB", 0.0);
+		double betaCurveB = prefs.getDouble("BetaCurveB", 0.0);
+		double betaDistanceC = prefs.getDouble("BetaDistanceC", 0.0);
 		
-		double gammaDistanceA = prefs.getDouble("Gamma Distance A", 0.0);
-		double gammaDistanceB = prefs.getDouble("Gamma Distance B", 0.0);
-		double gammaCurveB = prefs.getDouble("Gamma Curve B", 0.0);
-		double gammaDistanceC = prefs.getDouble("Gamma Distance C", 0.0);
-		double gammaCurveC = prefs.getDouble("Gamma Curve C", 0.0);
+		double gammaDistanceA = prefs.getDouble("GammaDistanceA", 0.0);
+		double gammaDistanceB = prefs.getDouble("GammaDistanceB", 0.0);
+		double gammaCurveB = prefs.getDouble("GammaCurveB", 0.0);
+		double gammaDistanceC = prefs.getDouble("GammaDistanceC", 0.0);
+		double gammaCurveC = prefs.getDouble("GammaCurveC", 0.0);
 		
-		double deltaDistanceA = prefs.getDouble("Delta Distance A", 0.0);
-		double deltaDistanceB = prefs.getDouble("Delta Distance B", 0.0);
-		double deltaCurveB = prefs.getDouble("Delta Curve B", 0.0);
-		double deltaDistanceC = prefs.getDouble("Delta Distance C", 0.0);
-		double deltaCurveC = prefs.getDouble("Delta Curve C", 0.0);
+		double deltaDistanceA = prefs.getDouble("DeltaDistanceA", 0.0);
+		double deltaDistanceB = prefs.getDouble("DeltaDistanceB", 0.0);
+		double deltaCurveB = prefs.getDouble("DeltaCurve B", 0.0);
+		double deltaDistanceC = prefs.getDouble("DeltaDistanceC", 0.0);
+		double deltaCurveC = prefs.getDouble("DeltaCurveC", 0.0);
 		
 		addParallel(new GearReceiverOut());
 		addParallel(new PlaySound("hopper"));
@@ -103,7 +103,7 @@ public class Auto40Ball extends CommandGroup {
 			
 			addParallel(new ShooterStartFlywheel());
 						
-//			addSequential(new DriveDeliverGear());
+			addSequential(new DriveDeliverGear());
 			addSequential(new GearEject());
 			addSequential(new Delay(gearDelay));
 			

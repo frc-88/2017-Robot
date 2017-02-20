@@ -1,6 +1,7 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
 import org.usfirst.frc.team88.robot.RobotMap;
+import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
 import org.usfirst.frc.team88.robot.commands.DriveTank;
 
 import com.ctre.CANTalon;
@@ -413,13 +414,17 @@ public class Drive extends Subsystem implements PIDOutput {
 		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
 			robotTable.putString("sound", "targetLock"); //Need to get a file and insert the name here
 		}
-		SmartDashboard.putNumber("J Distance", jetsonTable.getNumber("Distance",0.0));
-		SmartDashboard.putNumber("J Angle", jetsonTable.getNumber("Angle",0.0));
+		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB",0.0));
+		SmartDashboard.putNumber("J AngleB", jetsonTable.getNumber("AngleB",0.0));
+		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG",0.0));
+		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta",0.0));
+		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma",0.0));
 		
 		jetsonTable.putNumber("visionH", prefs.getDouble("visionH", -1.0));
 		jetsonTable.putNumber("visionS", prefs.getDouble("visionS", -1.0));
 		jetsonTable.putNumber("visionV", prefs.getDouble("visionV", -1.0));
 		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", -1.0));
+		jetsonTable.putBoolean("camSwitch", prefs.getBoolean("camSwitch", true));
 	}
 
 	public boolean inRange(double distance, double angle){
@@ -468,7 +473,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveTank());
+		setDefaultCommand(new DriveSplitArcade());
 	}
 
 
