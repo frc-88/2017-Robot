@@ -44,8 +44,8 @@ public class DriveDeliverGear extends Command {
 			state = END;
 		}
 		
+		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
-		Robot.drive.resetEncoders();
 		speed = 0.0;
     }
 

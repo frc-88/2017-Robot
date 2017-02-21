@@ -2,7 +2,6 @@ package org.usfirst.frc.team88.robot.subsystems;
 
 import org.usfirst.frc.team88.robot.RobotMap;
 import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
-import org.usfirst.frc.team88.robot.commands.DriveTank;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -252,14 +251,28 @@ public class Drive extends Subsystem implements PIDOutput {
 		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
 			maxSpeed += 50;
-			if (maxSpeed > targetMaxSpeed)
+			if (maxSpeed > targetMaxSpeed) {
 				maxSpeed = targetMaxSpeed;
+			}
 		} else if (targetMaxSpeed < maxSpeed) {
 			maxSpeed -= 50;
-			if (maxSpeed < targetMaxSpeed)
+			if (maxSpeed < targetMaxSpeed) {
 				maxSpeed = targetMaxSpeed;
+			}
 		}
 		return maxSpeed;
+	}
+
+	public void resetDrive() {
+		setTarget(0, 0);
+
+		if (!isLowGear()) {
+			shift();
+		}
+		maxSpeed = targetMaxSpeed;
+
+		setClosedLoopSpeed();
+		resetEncoders();
 	}
 
 	public void shift() {
