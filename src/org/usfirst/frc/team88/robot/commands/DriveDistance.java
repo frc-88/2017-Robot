@@ -56,9 +56,13 @@ public class DriveDistance extends Command {
 			direction = -1.0;
 			targetDistance = -targetDistance;
 		} else {
-			state = END;
+			state = STOP;
 		}
 
+		if (!Robot.drive.isLowGear()) {
+			Robot.drive.shift();
+		}
+		Robot.drive.setClosedLoopSpeed();
 		Robot.drive.disableRampRate();
 		Robot.drive.resetEncoders();
 		targetYaw = Robot.drive.getYaw();
@@ -110,7 +114,7 @@ public class DriveDistance extends Command {
 			break;
 
 		case STOP: // stop
-			Robot.drive.driveCurve(0.0, curve);
+			Robot.drive.driveCurve(0.0, 0.0);
 			state = END;
 			break;
 
