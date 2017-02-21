@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Hanger extends Subsystem {
 	private CANTalon hangerMotor;
-	private final double currentDraw = 30.0;
+	private static final double CURRENT_LIMIT = 40.0;
+	
 	NetworkTable robotTable;
 	public Hanger(){
 		hangerMotor = new CANTalon(RobotMap.hangerMotor);
@@ -34,9 +35,8 @@ public class Hanger extends Subsystem {
 	public void updateDashboard(){
 		SmartDashboard.putNumber("HangerMotorCurrent", hangerMotor.getOutputCurrent());
 		SmartDashboard.putNumber("HangerMotorVoltage", hangerMotor.getOutputVoltage());
-		if(hangerMotor.getOutputCurrent() > currentDraw){
-			robotTable.putString("sound", "prepare-flight");
-		}
+		
+		robotTable.putBoolean("readyForTakeoff", hangerMotor.getOutputCurrent() > CURRENT_LIMIT);
 	}
 
     // Put methods for controlling this subsystem

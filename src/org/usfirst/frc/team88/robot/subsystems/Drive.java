@@ -23,6 +23,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Subsystem implements PIDOutput {
 	// Constants
+	private final static double BOILER_RANGE = 12.0;
+	private final static double BOILER_TOLERANCE = 1.0;
+	private final static double GEAR_RANGE = 15.0;
+	private final static double GEAR_TOLERANCE = 5.0;
+
 	private final static int LOW_PROFILE = 0;
 	private final static double LOW_P = 1.0;
 	private final static double LOW_I = 0.0;
@@ -71,7 +76,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	NetworkTable robotTable;
 	NetworkTable jetsonTable;
 	DriverStation ds;
-	
+
 	public Drive() {
 		ds = DriverStation.getInstance();
 
@@ -93,7 +98,6 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		// init navx
 		navx = new AHRS(SerialPort.Port.kMXP);
-
 
 		// init rotateController
 		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
@@ -209,13 +213,11 @@ public class Drive extends Subsystem implements PIDOutput {
 		final double minRange = 0.008;
 
 		if (outputMagnitude == 0) {
-			if(curve < minRange && curve > -minRange){
+			if (curve < minRange && curve > -minRange) {
 				curve = 0;
-			}
-			else if(curve < minimum && curve > 0){
+			} else if (curve < minimum && curve > 0) {
 				curve = minimum;
-			}
-			else if(curve > -minimum && curve < 0){
+			} else if (curve > -minimum && curve < 0) {
 				curve = -minimum;
 			}
 
@@ -250,10 +252,12 @@ public class Drive extends Subsystem implements PIDOutput {
 		// and so should only be called once per setTarget call
 		if (targetMaxSpeed > maxSpeed) {
 			maxSpeed += 50;
-			if (maxSpeed > targetMaxSpeed) maxSpeed = targetMaxSpeed;
+			if (maxSpeed > targetMaxSpeed)
+				maxSpeed = targetMaxSpeed;
 		} else if (targetMaxSpeed < maxSpeed) {
 			maxSpeed -= 50;
-			if (maxSpeed < targetMaxSpeed) maxSpeed = targetMaxSpeed;
+			if (maxSpeed < targetMaxSpeed)
+				maxSpeed = targetMaxSpeed;
 		}
 		return maxSpeed;
 	}
@@ -288,7 +292,6 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons[0].setVoltageRampRate(RAMPRATE);
 		rTalons[0].setVoltageRampRate(RAMPRATE);
 	}
-
 
 	public void resetEncoders() {
 		lTalons[0].setPosition(0);
@@ -329,73 +332,46 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons[0].enableBrakeMode(value);
 		rTalons[0].enableBrakeMode(value);
 	}
-	
-	public double getJerkX(){
+
+	public double getJerkX() {
 		currentAccelX = navx.getWorldLinearAccelX();
 		currentJerkX = currentAccelX - lastAccelX;
 		lastAccelX = currentAccelX;
 		return currentJerkX;
 	}
 
-	public double getJerkY(){
+	public double getJerkY() {
 		currentAccelY = navx.getWorldLinearAccelY();
 		currentJerkY = currentAccelY - lastAccelY;
 		lastAccelY = currentAccelY;
 		return currentJerkY;
 	}
 
-	public boolean collisionDetected(){
+	public boolean collisionDetected() {
 
-		return ((Math.abs(getJerkX()) > COLLISION_THRESHOLD) ||
-				(Math.abs(getJerkY()) > COLLISION_THRESHOLD));
+		return ((Math.abs(getJerkX()) > COLLISION_THRESHOLD) || (Math.abs(getJerkY()) > COLLISION_THRESHOLD));
 	}
 
 	public double getYaw() {
 		return navx.getYaw();
 	}
 
-	public void zeroYaw(){
+	public void zeroYaw() {
 		navx.zeroYaw();
-	}
-
-	public double getDistance() {
-		double distance;
-		
-		if (jetsonTable.getNumber("DistanceB",-1.0) != -1.0) {
-			distance = jetsonTable.getNumber("DistanceB",0.0); 
-		} else if (jetsonTable.getNumber("DistanceG",-1.0) != -1.0) {
-			distance = jetsonTable.getNumber("DistanceG",0.0);
-		} else {
-			distance = -1.0;
-		}
-		
-		return distance;
-	}
-
-	public double getAngle() {
-		double angle = 0.0;
-		
-		if (jetsonTable.getNumber("DistanceB",-1.0) != -1.0) {
-			angle = jetsonTable.getNumber("AngleB",0.0); 
-		} else if (jetsonTable.getNumber("DistanceG",-1.0) != -1.0) {
-			angle = jetsonTable.getNumber("Gamma",0.0);
-		}
-		
-		return angle;
 	}
 
 	public void updateDashboard() {
 		Preferences prefs = Preferences.getInstance();
 		int i;
-		
+
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
 		SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
 		SmartDashboard.putNumber("LeftError: ", lTalons[0].getClosedLoopError());
-		for (i=0; i<lTalons.length; i++) {
-			SmartDashboard.putNumber("LeftCurrent"+i, lTalons[i].getOutputCurrent());
-			SmartDashboard.putNumber("LeftVoltage"+i, lTalons[i].getOutputVoltage());
+		for (i = 0; i < lTalons.length; i++) {
+			SmartDashboard.putNumber("LeftCurrent" + i, lTalons[i].getOutputCurrent());
+			SmartDashboard.putNumber("LeftVoltage" + i, lTalons[i].getOutputVoltage());
 		}
 
 		SmartDashboard.putNumber("RightPosition: ", rTalons[0].getPosition());
@@ -403,9 +379,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
 		SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
 		SmartDashboard.putNumber("RightError: ", rTalons[0].getClosedLoopError());
-		for (i=0; i<rTalons.length; i++) {
-			SmartDashboard.putNumber("RightCurrent"+i, rTalons[i].getOutputCurrent());
-			SmartDashboard.putNumber("RightVoltage"+i, rTalons[i].getOutputVoltage());
+		for (i = 0; i < rTalons.length; i++) {
+			SmartDashboard.putNumber("RightCurrent" + i, rTalons[i].getOutputCurrent());
+			SmartDashboard.putNumber("RightVoltage" + i, rTalons[i].getOutputVoltage());
 		}
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
@@ -424,50 +400,70 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
 
 		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
-		
-		//robotTable.putNumber("driveAvgCurrent", getAvgCurrent());
+
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("collision", collisionDetected());
-		if(twentySecondsLeft()){
-			robotTable.putString("sound", "JohnStewart");
-		}
-		if(inRange(0.0, 0.0)){//Need to get the distance and angle from the Jetson
-			robotTable.putString("sound", "targetLock"); //Need to get a file and insert the name here
-		}
-		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB",-1.0));
-		SmartDashboard.putNumber("J AngleB", jetsonTable.getNumber("AngleB",0.0));
-		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG",-1.0));
-		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta",0.0));
-		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma",0.0));
-		
-		jetsonTable.putNumber("visionH", prefs.getDouble("visionH", -1.0));
-		jetsonTable.putNumber("visionS", prefs.getDouble("visionS", -1.0));
-		jetsonTable.putNumber("visionV", prefs.getDouble("visionV", -1.0));
+		robotTable.putBoolean("lessthan20", twentySecondsLeft());
+		robotTable.putBoolean("boilerLock", boilerInRange());
+		robotTable.putBoolean("gearLock", gearInRange());
+
+		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB", -1.0));
+		SmartDashboard.putNumber("J AngleB", jetsonTable.getNumber("AngleB", 0.0));
+		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG", -1.0));
+		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta", 0.0));
+		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma", 0.0));
+
+		jetsonTable.putNumber("visionBH", prefs.getDouble("visionGH", -1.0));
+		jetsonTable.putNumber("visionBS", prefs.getDouble("visionGS", -1.0));
+		jetsonTable.putNumber("visionBV", prefs.getDouble("visionGV", -1.0));
+		jetsonTable.putNumber("visionGH", prefs.getDouble("visionGH", -1.0));
+		jetsonTable.putNumber("visionGS", prefs.getDouble("visionGS", -1.0));
+		jetsonTable.putNumber("visionGV", prefs.getDouble("visionGV", -1.0));
 		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", -1.0));
 		jetsonTable.putBoolean("camSwitch", prefs.getBoolean("camSwitch", true));
 	}
 
-	public boolean inRange(double distance, double angle){
-		final double RANGE = 100.0;
-		final double FIRING_ARC = 90.0;
+	public boolean boilerInRange() {
+		double distance = getBoilerDistance();
 
-		if(distance <= RANGE && Math.abs(angle) <= FIRING_ARC){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return ((distance != -1.0) && (Math.abs(distance - BOILER_RANGE) <= BOILER_TOLERANCE));
 	}
 
-	public boolean twentySecondsLeft(){
+	public boolean gearInRange() {
+		double distance = getGearDistance();
+		double gamma = getGearGamma();
+
+		return ((distance != -1.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
+	}
+
+	public double getBoilerDistance() {
+		return jetsonTable.getNumber("DistanceB", -1.0);
+	}
+
+	public double getBoilerAngle() {
+		return jetsonTable.getNumber("AngleB", 0.0);
+	}
+
+	public double getGearDistance() {
+		return jetsonTable.getNumber("DistanceG", -1.0);
+	}
+
+	public double getGearGamma() {
+		return jetsonTable.getNumber("Gamma", 0.0);
+	}
+
+	public double getGearTheta() {
+		return jetsonTable.getNumber("Theta", 0.0);
+	}
+
+	public boolean twentySecondsLeft() {
 		DriverStation driverStation = DriverStation.getInstance();
 
 		double timeLeft = driverStation.getMatchTime();
 
-		if(timeLeft<=20){
+		if (timeLeft <= 20) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -489,13 +485,11 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 
 		updateDashboard();
-		setTarget(output, -output);	
+		setTarget(output, -output);
 	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveSplitArcade());
 	}
-
-
 
 }

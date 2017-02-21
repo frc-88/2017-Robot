@@ -37,7 +37,7 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = Robot.drive.getDistance() - prefs.getDouble("driveGearOffset", 1.0);
+		targetDistance = Robot.drive.getGearDistance() - prefs.getDouble("driveGearOffset", 1.0);
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
@@ -51,7 +51,7 @@ public class DriveDeliverGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		curve = (Robot.drive.getAngle() * direction) * 0.03;
+		curve = (Robot.drive.getGearGamma() * direction) * 0.03;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
