@@ -33,6 +33,6 @@ public class RobotMap {
 	//Gearage
 	public static final int pusherSolenoidIn = 1;
 	public static final int pusherSolenoidOut = 0;
-	public static final int receiverSolenoidIn = 6;
-	public static final int receiverSolenoidOut = 7;
+	public static final int receiverSolenoidIn = 7;
+	public static final int receiverSolenoidOut = 6;
 }

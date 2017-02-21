@@ -47,7 +47,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 2.0;
 	private final static double ROTATE_MAX = 0.4;
-	private final static double ROTATE_MIN = 0.03;
+	private final static double ROTATE_MIN = 0.02;
 
 	public final static double DFT_SENSITIVITY = 0.15;
 	public PIDController rotateController;

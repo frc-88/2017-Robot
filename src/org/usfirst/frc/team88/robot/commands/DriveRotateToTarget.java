@@ -21,7 +21,7 @@ public class DriveRotateToTarget extends Command {
         if (Robot.drive.getDistance() == -1.0) {
         	noTargetFound = true;
         } else {
-        	targetAngle = Robot.drive.getYaw() + Robot.drive.getAngle();
+        	targetAngle = Robot.drive.getYaw() + Robot.drive.getAngle() - 2.0;
         	Robot.drive.rotateController.setSetpoint(targetAngle);
     		//Robot.drive.setOpenLoop();
         	Robot.drive.disableRampRate();
