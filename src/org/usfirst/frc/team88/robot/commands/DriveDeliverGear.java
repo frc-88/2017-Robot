@@ -37,7 +37,7 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = Robot.drive.getGearDistance() - prefs.getDouble("driveGearOffset", 1.0);
+		targetDistance = Robot.drive.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0);
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
