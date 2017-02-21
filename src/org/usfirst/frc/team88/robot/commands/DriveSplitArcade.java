@@ -12,8 +12,8 @@ public class DriveSplitArcade extends Command {
 	private static final int PREP = 2;
 	private static final int SHIFT = 3;
 	public final static double SENSITIVITY = 0.5;
-	private static final double DOWNSHIFTSPEED = 300.0;
-	private static final double UPSHIFTSPEED = 400.0;
+	private static final double DOWNSHIFTSPEED = 275.0;
+	private static final double UPSHIFTSPEED = 350.0;
 	
 	private int state;
 	private int lastShift;
