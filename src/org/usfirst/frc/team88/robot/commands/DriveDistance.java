@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
@@ -18,7 +19,7 @@ public class DriveDistance extends Command {
 	private static final int END = 5;
 
 	private static final double MAX_SPEED = 1.0;
-	private static final double ACCELERATION_SCALE = 0.01;
+	private static final double ACCELERATION_SCALE = 0.03;
 
 	private int state;
 	private boolean usePrefs = false;
