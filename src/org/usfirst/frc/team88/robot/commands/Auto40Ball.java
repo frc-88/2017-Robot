@@ -39,7 +39,6 @@ public class Auto40Ball extends CommandGroup {
 		double deltaDistanceB = prefs.getDouble("DeltaDistanceB", 0.0);
 		double deltaCurveB = prefs.getDouble("DeltaCurve B", 0.0);
 		double deltaDistanceC = prefs.getDouble("DeltaDistanceC", 0.0);
-		double deltaCurveC = prefs.getDouble("DeltaCurveC", 0.0);
 		
 		addParallel(new GearReceiverOut());
 		addParallel(new PlaySound("hopper"));
