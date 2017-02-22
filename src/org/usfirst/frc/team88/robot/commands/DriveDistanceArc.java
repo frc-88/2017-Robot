@@ -57,8 +57,8 @@ public class DriveDistanceArc extends Command {
 			targetDistance = inputDistance;
 		}
 		
+		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
-		Robot.drive.resetEncoders();
 		speed = 0.0;
 	}
 

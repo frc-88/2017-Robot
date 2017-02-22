@@ -59,12 +59,8 @@ public class DriveDistance extends Command {
 			state = STOP;
 		}
 
-		if (!Robot.drive.isLowGear()) {
-			Robot.drive.shift();
-		}
-		Robot.drive.setClosedLoopSpeed();
+		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
-		Robot.drive.resetEncoders();
 		targetYaw = Robot.drive.getYaw();
 		speed = 0.0;
 	}
