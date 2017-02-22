@@ -45,9 +45,9 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 45;
 
-	private final static double ROTATE_P = 0.00772;
-	private final static double ROTATE_I = 0.000078;
-	private final static double ROTATE_D = 0.0077;
+	private final static double ROTATE_P = 0.1;
+	private final static double ROTATE_I = 0.0;
+	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 2.0;
 	private final static double ROTATE_MAX = 0.4;
@@ -399,6 +399,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		SmartDashboard.putBoolean("lowGear", isLowGear());
+		SmartDashboard.putBoolean("Autoshift", autoShift);
 
 		// NavX stuff
 		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
