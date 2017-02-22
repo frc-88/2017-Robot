@@ -40,6 +40,7 @@ public class DriveRotateToAngle2 extends Command {
     	state = PREP;
     	speed = 0.0;
     	initialYaw = Robot.drive.getYaw();
+    	
     	if (targetAngle < 0) {
     		targetAngle = -targetAngle;
     		direction = -1.0;
@@ -119,6 +120,7 @@ public class DriveRotateToAngle2 extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+		Robot.drive.rotateController.disable();    	
 		Robot.drive.enableRampRate();
    }
 
