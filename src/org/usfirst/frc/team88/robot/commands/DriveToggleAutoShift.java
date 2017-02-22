@@ -18,6 +18,7 @@ public class DriveToggleAutoShift extends InstantCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.toggleAutoShift();
+    	Robot.drive.resetDrive();
     }
 
 }
