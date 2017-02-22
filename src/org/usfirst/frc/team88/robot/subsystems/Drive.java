@@ -399,6 +399,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		SmartDashboard.putBoolean("lowGear", isLowGear());
+		SmartDashboard.putBoolean("Autoshift", autoShift);
 
 		// NavX stuff
 		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());

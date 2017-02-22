@@ -16,8 +16,8 @@ public class DriveRotateToAngle2 extends Command {
 	private static final int STOP = 4;
 	private static final int END = 5;
 
-	private static final double MAX_SPEED = 4.0;
-	private static final double ACCELERATION = 0.5;
+	private static final double MAX_SPEED = 10.0;
+	private static final double ACCELERATION = 2.0;
 
 	private int state;
 	private double targetYaw;
