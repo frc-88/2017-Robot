@@ -11,7 +11,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Intake
+ * 
+ *  do we write haiku
+ *  for a subsystem that is
+ *  not on the robot?
+ *  
  */
 public class Intake extends Subsystem {
 

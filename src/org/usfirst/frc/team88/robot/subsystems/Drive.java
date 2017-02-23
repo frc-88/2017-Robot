@@ -18,7 +18,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Drive
+ * 
+ *  racing down the field
+ *  stopping on a dime to get
+ *       a bright yellow gear
+ * 
  */
 public class Drive extends Subsystem implements PIDOutput {
 	// Constants

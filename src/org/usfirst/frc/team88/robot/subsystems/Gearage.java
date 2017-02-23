@@ -7,7 +7,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Gearage
+ * 
+ *  a gear sliding down
+ *  a gear racing all around
+ *  a gear for Amy
+ *  
  */
 public class Gearage extends Subsystem {
 	DoubleSolenoid pusher, receiver;
