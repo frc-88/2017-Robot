@@ -460,7 +460,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public double getBoilerAngle() {
-		return jetsonTable.getNumber("AngleB", 0.0);
+		return getBoilerDistance() < 0 ? 0.0 : jetsonTable.getNumber("AngleB", 0.0);
 	}
 
 	public double getGearDistance() {
@@ -468,11 +468,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public double getGearGamma() {
-		return jetsonTable.getNumber("Gamma", 0.0);
+		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Gamma", 0.0);
 	}
 
 	public double getGearTheta() {
-		return jetsonTable.getNumber("Theta", 0.0);
+		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Theta", 0.0);
 	}
 
 	public boolean twentySecondsLeft() {
