@@ -20,14 +20,14 @@ public class DriveRotateToAngle2 extends Command {
 	private static final double ACCELERATION = 2.0;
 
 	private int state;
-	private double targetYaw;
 	private double direction;
 	private double rampupDistance;
 	private double speed;
+	private double distance;
 	private double initialYaw;
 	private double currentYaw;
-
-	double targetAngle;
+	private double targetYaw;
+	private double targetAngle;
 	
     public DriveRotateToAngle2(double angle) {
         requires(Robot.drive);
@@ -39,7 +39,14 @@ public class DriveRotateToAngle2 extends Command {
     protected void initialize() {
     	state = PREP;
     	speed = 0.0;
-    	initialYaw = Robot.drive.getYaw();
+		initialYaw = Robot.drive.getYaw();
+		targetYaw = initialYaw + targetAngle;
+		
+		if (targetYaw > 180) {
+			targetYaw -= 360;
+		} else if (targetYaw < -180) {
+			targetYaw += 360;
+		}
     	
     	if (targetAngle < 0) {
     		targetAngle = -targetAngle;
@@ -59,18 +66,20 @@ public class DriveRotateToAngle2 extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	currentYaw = Robot.drive.getYaw();
+    	distance = Math.abs(currentYaw - initialYaw);
     	
     	switch (state) {
     	case PREP:
+    		state = ACCELERATE;
     		break;
     	case ACCELERATE:
     		speed = speed +(ACCELERATION * direction);
     		
-			if (Math.abs(currentYaw - initialYaw) > targetAngle / 2.0) {
+			if (distance > targetAngle / 2.0) {
 				state = DECELERATE;
 			} else if (Math.abs(speed) >= MAX_SPEED) {
 				speed = MAX_SPEED * direction;
-				rampupDistance = Math.abs(currentYaw - initialYaw);
+				rampupDistance = distance;
 				state = CRUISE;
 			}
 			
@@ -81,7 +90,7 @@ public class DriveRotateToAngle2 extends Command {
     	case CRUISE:
 			Robot.drive.rotateController.setSetpoint(currentYaw + speed);
 
-			if (Math.abs(currentYaw - initialYaw) > targetAngle - rampupDistance) {
+			if (distance > targetAngle - rampupDistance) {
 				state = DECELERATE;
 			}
 			break;
@@ -95,14 +104,14 @@ public class DriveRotateToAngle2 extends Command {
 				state = STOP;
 			}
 			
-			if (Math.abs(currentYaw - initialYaw) - targetYaw < speed) {
+			if (distance - targetAngle < speed) {
 				state = STOP;
 			}
 			
 			break;
 
 		case STOP: // stop
-			Robot.drive.rotateController.setSetpoint(initialYaw - targetAngle);
+			Robot.drive.rotateController.setSetpoint(targetYaw);
 			state = END;
 			break;
 
