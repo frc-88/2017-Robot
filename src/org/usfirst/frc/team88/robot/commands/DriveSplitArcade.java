@@ -18,6 +18,8 @@ public class DriveSplitArcade extends Command {
 	private int state;
 	private int lastShift;
 	private int count;
+	private boolean stabilize;
+	private double targetYaw;
 
 	public DriveSplitArcade() {
 		requires(Robot.drive);
@@ -27,6 +29,7 @@ public class DriveSplitArcade extends Command {
 	protected void initialize() {
 		Robot.drive.setClosedLoopSpeed();
 		Robot.drive.enableRampRate();
+		stabilize = false;
 		state = DRIVING;
 	}
 
@@ -40,6 +43,17 @@ public class DriveSplitArcade extends Command {
 			magnitude = Robot.oi.applySquare(Robot.oi.getDriverLeftY());
 			
 			curve = Robot.oi.applySquare(Robot.oi.getDriverRightX());
+
+			// stabilize yaw when driving straight
+			if (curve < 0.1) {
+				if (!stabilize) {
+					stabilize = true;
+					targetYaw = Robot.drive.getYaw();
+				}
+				curve = (targetYaw - Robot.drive.getYaw()) * 0.03;
+			} else {
+				stabilize = false;
+			}
 			
 			if(magnitude < 0){
 				Robot.drive.driveCurve(magnitude, -curve, SENSITIVITY);

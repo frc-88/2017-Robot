@@ -220,8 +220,8 @@ public class Drive extends Subsystem implements PIDOutput {
 				curve = -minimum;
 			}
 
-			leftOutput = curve;
-			rightOutput = -curve;
+			leftOutput = curve * (isLowGear() ? 0.5 : 1.0);
+			rightOutput = -curve * (isLowGear() ? 0.5 : 1.0);
 		} else if (curve < 0) {
 			double value = Math.log(-curve);
 			double ratio = (value - sensitivity) / (value + sensitivity);
