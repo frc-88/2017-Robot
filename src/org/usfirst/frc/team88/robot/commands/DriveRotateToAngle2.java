@@ -104,7 +104,7 @@ public class DriveRotateToAngle2 extends Command {
 				state = STOP;
 			}
 			
-			if (distance < speed) {
+			if (distance - targetAngle < speed) {
 				state = STOP;
 			}
 			
