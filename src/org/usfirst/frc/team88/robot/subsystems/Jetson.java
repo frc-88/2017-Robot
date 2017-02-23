@@ -7,7 +7,12 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Jetson
+ * 
+ *  sure it can manage
+ *  more than one teraflops but
+ *  can it fry an egg?
+ *  
  */
 public class Jetson extends Subsystem {
 

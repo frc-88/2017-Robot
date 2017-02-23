@@ -10,7 +10,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Shooter
+ * 
+ *  look what we have here
+ *  a tank that is full of fuel
+ *  we should make it rain
+ *  
  */
 public class Shooter extends Subsystem {
 
