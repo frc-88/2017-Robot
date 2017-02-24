@@ -81,6 +81,7 @@ public class OI {
 		driverButtonLeftBumper.whenPressed(new DriveTank());
 		driverButtonRightBumper.whenPressed(new DriveFieldOrientated());
 		driverButtonA.whenPressed(new DriveRotateToBoiler());
+		driverButtonB.whenPressed(new DriveToggleAutoShift());
 		driverButtonY.whenPressed(new PlaySound("hopper"));
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());

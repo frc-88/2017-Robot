@@ -18,7 +18,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Drive
+ * 
+ *  racing down the field
+ *  stopping on a dime to get
+ *       a bright yellow gear
+ * 
  */
 public class Drive extends Subsystem implements PIDOutput {
 	// Constants
@@ -220,8 +225,8 @@ public class Drive extends Subsystem implements PIDOutput {
 				curve = -minimum;
 			}
 
-			leftOutput = curve;
-			rightOutput = -curve;
+			leftOutput = curve * (isLowGear() ? 0.5 : 1.0);
+			rightOutput = -curve * (isLowGear() ? 0.5 : 1.0);
 		} else if (curve < 0) {
 			double value = Math.log(-curve);
 			double ratio = (value - sensitivity) / (value + sensitivity);
@@ -399,6 +404,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		SmartDashboard.putBoolean("lowGear", isLowGear());
+		SmartDashboard.putBoolean("Autoshift", autoShift);
 
 		// NavX stuff
 		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
@@ -454,7 +460,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public double getBoilerAngle() {
-		return jetsonTable.getNumber("AngleB", 0.0);
+		return getBoilerDistance() < 0 ? 0.0 : jetsonTable.getNumber("AngleB", 0.0);
 	}
 
 	public double getGearDistance() {
@@ -462,11 +468,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public double getGearGamma() {
-		return jetsonTable.getNumber("Gamma", 0.0);
+		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Gamma", 0.0);
 	}
 
 	public double getGearTheta() {
-		return jetsonTable.getNumber("Theta", 0.0);
+		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Theta", 0.0);
 	}
 
 	public boolean twentySecondsLeft() {

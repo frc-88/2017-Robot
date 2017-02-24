@@ -10,7 +10,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Hanger
+ * 
+ *  knot just a frayed rope
+ *  it will cling to the carding
+ *  and we will all rise
+ *  
  */
 public class Hanger extends Subsystem {
 	private CANTalon hangerMotor;
