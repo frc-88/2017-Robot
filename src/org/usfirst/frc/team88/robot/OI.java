@@ -80,7 +80,10 @@ public class OI {
 		// Add these commands here
 		driverButtonA.whenPressed(new DriveRotateToBoiler());
 		driverButtonB.whenPressed(new DriveToggleAutoShift());
+		driverButtonLeftBumper.whenPressed(new DriveReceiveGear());
+		driverButtonLeftBumper.whenReleased(new DriveStop());
 		driverButtonRightBumper.whenPressed(new DriveDeliverGear());
+		driverButtonRightBumper.whenReleased(new DriveStop());
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
