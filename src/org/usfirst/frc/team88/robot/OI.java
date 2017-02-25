@@ -78,11 +78,9 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
-		driverButtonLeftBumper.whenPressed(new DriveTank());
-		driverButtonRightBumper.whenPressed(new DriveFieldOrientated());
 		driverButtonA.whenPressed(new DriveRotateToBoiler());
 		driverButtonB.whenPressed(new DriveToggleAutoShift());
-		driverButtonY.whenPressed(new PlaySound("hopper"));
+		driverButtonRightBumper.whenPressed(new DriveDeliverGear());
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
