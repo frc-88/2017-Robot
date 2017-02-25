@@ -30,7 +30,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double BOILER_RANGE = 12.0;
 	private final static double BOILER_TOLERANCE = 1.0;
 	private final static double GEAR_RANGE = 90.0;
-	private final static double GEAR_TOLERANCE = 25.0;
+	private final static double GEAR_TOLERANCE = 15.0;
 
 	private final static int LOW_PROFILE = 0;
 	private final static double LOW_P = 1.0;
@@ -417,7 +417,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Jerk_Y", getJerkY());
 		SmartDashboard.putNumber("Jerk_X", getJerkX());
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
-
+		SmartDashboard.putBoolean("Gear Lock", gearInRange());
+		SmartDashboard.putBoolean("Chute Lock", chuteInRange());
+		
 		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
 
 		robotTable.putBoolean("inLow", isLowGear());
@@ -431,6 +433,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG", -1.0));
 		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta", 0.0));
 		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma", 0.0));
+		SmartDashboard.putNumber("J DistanceH", jetsonTable.getNumber("DistanceH", -1.0));
+		SmartDashboard.putNumber("J Beta", jetsonTable.getNumber("Beta", 0.0));
 
 		jetsonTable.putNumber("visionBH", prefs.getDouble("visionGH", -1.0));
 		jetsonTable.putNumber("visionBS", prefs.getDouble("visionGS", -1.0));
@@ -451,8 +455,16 @@ public class Drive extends Subsystem implements PIDOutput {
 	public boolean gearInRange() {
 		double distance = getGearDistance();
 		double gamma = getGearGamma();
+		
 
-		return ((distance != -1.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
+		return ((distance > 15.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
+	}
+
+	public boolean chuteInRange() {
+		double distance = getChuteDistance();
+		double angle = getChuteAngle();
+
+		return ((distance > 15.0) && (Math.abs(angle) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
 	}
 
 	public double getBoilerDistance() {
@@ -473,6 +485,14 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	public double getGearTheta() {
 		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Theta", 0.0);
+	}
+
+	public double getChuteDistance() {
+		return jetsonTable.getNumber("DistanceH", -1.0);
+	}
+
+	public double getChuteAngle() {
+		return getChuteDistance() < 0 ? 0.0 : jetsonTable.getNumber("Beta", 0.0);
 	}
 
 	public boolean twentySecondsLeft() {
