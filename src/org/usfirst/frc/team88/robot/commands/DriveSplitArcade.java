@@ -45,7 +45,7 @@ public class DriveSplitArcade extends Command {
 			curve = Robot.oi.applySquare(Robot.oi.getDriverRightX());
 
 			// stabilize yaw when driving straight
-			if (curve < 0.1) {
+			if ((curve < 0.1) && (magnitude > 0.3) && !Robot.drive.isLowGear()) {
 				if (!stabilize) {
 					stabilize = true;
 					targetYaw = Robot.drive.getYaw();

@@ -94,7 +94,7 @@ public class DriveDistance extends Command {
 		case CRUISE: // consistent speed until we get close
 			Robot.drive.driveCurve(speed, curve);
 
-			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance) {
+			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance * 1.33) {
 				state = DECELERATE;
 			}
 			break;
@@ -105,6 +105,10 @@ public class DriveDistance extends Command {
 			Robot.drive.driveCurve(speed, curve);
 
 			if (Math.abs(speed) < ACCELERATION_SCALE) {
+				state = STOP;
+			}
+
+			if (Math.abs(Robot.drive.getAvgPosition()) - 0.1 > targetDistance) {
 				state = STOP;
 			}
 			break;

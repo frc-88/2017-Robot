@@ -29,8 +29,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	// Constants
 	private final static double BOILER_RANGE = 12.0;
 	private final static double BOILER_TOLERANCE = 1.0;
-	private final static double GEAR_RANGE = 15.0;
-	private final static double GEAR_TOLERANCE = 5.0;
+	private final static double GEAR_RANGE = 90.0;
+	private final static double GEAR_TOLERANCE = 25.0;
 
 	private final static int LOW_PROFILE = 0;
 	private final static double LOW_P = 1.0;
@@ -50,8 +50,8 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 45;
 
-	private final static double ROTATE_P = 0.1;
-	private final static double ROTATE_I = 0.0;
+	private final static double ROTATE_P = 0.0035;
+	private final static double ROTATE_I = 0.00004;
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 2.0;
@@ -125,7 +125,7 @@ public class Drive extends Subsystem implements PIDOutput {
 				talons[i].setPID(LOW_P, LOW_I, LOW_D, LOW_F, LOW_IZONE, RAMPRATE, LOW_PROFILE);
 				talons[i].setPID(HIGH_P, HIGH_I, HIGH_D, HIGH_F, HIGH_IZONE, RAMPRATE, HIGH_PROFILE);
 				talons[i].setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-				talons[i].configEncoderCodesPerRev(360);
+				talons[i].configEncoderCodesPerRev(420);
 				talons[i].configNominalOutputVoltage(+0.0f, -0.0f);
 				talons[i].configPeakOutputVoltage(+10.0f, -10.0f);
 				talons[i].reverseSensor(reverseSensor);
@@ -423,7 +423,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("collision", collisionDetected());
 		robotTable.putBoolean("lessthan20", twentySecondsLeft());
-		robotTable.putBoolean("boilerLock", boilerInRange());
+		//robotTable.putBoolean("boilerLock", boilerInRange());
 		robotTable.putBoolean("gearLock", gearInRange());
 
 		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB", -1.0));
