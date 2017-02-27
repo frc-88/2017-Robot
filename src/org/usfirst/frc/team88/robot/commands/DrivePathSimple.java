@@ -3,6 +3,7 @@ package org.usfirst.frc.team88.robot.commands;
 import org.usfirst.frc.team88.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
@@ -79,13 +80,20 @@ public class DrivePathSimple extends Command {
 		double l = left.calculate(Robot.drive.getLeftEncPosition());
 		double r = right.calculate(Robot.drive.getRightEncPosition());
 
+		/*
 		double gyro_heading = Robot.drive.getYaw() - yawOffset; // Assuming the gyro is giving a value in degrees
 		double desired_heading = Pathfinder.r2d(left.getHeading()); // Should also be in degrees
 
 		double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
 		double turn = 0.8 * (-1.0 / 80.0) * angleDifference;
-
-		Robot.drive.setTarget( l + turn, r - turn);
+*/
+		
+		
+		// first, just output values to SmartDashboard to see if they make sense
+		SmartDashboard.putNumber("path left", l);
+		SmartDashboard.putNumber("path right", r);
+		
+		//Robot.drive.setTarget( l + turn, r - turn);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
