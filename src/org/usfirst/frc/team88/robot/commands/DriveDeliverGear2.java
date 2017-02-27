@@ -90,7 +90,8 @@ public class DriveDeliverGear2 extends Command {
 		double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
 		double turn = 0.8 * (-1.0 / 80.0) * angleDifference;
 
-		Robot.drive.setTarget(l + turn, r + turn);
+		// invert paths because we are driving backwards
+		Robot.drive.setTarget( -r - turn, -l + turn);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
