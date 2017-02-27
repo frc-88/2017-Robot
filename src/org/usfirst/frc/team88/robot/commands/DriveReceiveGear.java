@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
@@ -9,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveDistance extends Command {
+public class DriveReceiveGear extends Command {
 	// states
 	private static final int PREP = 0;
 	private static final int ACCELERATE = 1;
@@ -18,56 +17,41 @@ public class DriveDistance extends Command {
 	private static final int STOP = 4;
 	private static final int END = 5;
 
-	private static final double MAX_SPEED = 1.0;
-	private static final double ACCELERATION_SCALE = 0.03;
+	private static final double MAX_SPEED = 0.4;
+	private static final double ACCELERATION_SCALE = 0.01;
 
 	private int state;
-	private boolean usePrefs = false;
-	private double direction;
 	private double targetDistance;
-	private double targetYaw;
+	private double direction;
 	private double rampupDistance;
 	private double speed;
 	private double curve;
 
-	public DriveDistance() {
-		requires(Robot.drive);
-		usePrefs = true;
-	}
+	public DriveReceiveGear() {
+    	requires(Robot.drive);
+    }
 
-	public DriveDistance(double distance) {
-		requires(Robot.drive);
-		targetDistance = distance;
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
+    // Called just before this Command runs the first time
+    protected void initialize() {
 		Preferences prefs = Preferences.getInstance();
 
 		state = PREP;
 
-		if (usePrefs) {
-			targetDistance = prefs.getDouble("driveDistance", 1.0);
-		}
+		targetDistance = (Robot.drive.getChuteDistance() - prefs.getDouble("driveChuteStandoff", 1.0)) / 12.0;
+		direction = -1.0;
 
-		if (targetDistance > 0) {
-			direction = 1.0;
-		} else if (targetDistance < 0) {
-			direction = -1.0;
-			targetDistance = -targetDistance;
-		} else {
-			state = STOP;
+		if (targetDistance < 0.0) {
+			state = END;
 		}
-
+		
 		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
-		targetYaw = Robot.drive.getYaw();
 		speed = 0.0;
-	}
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		curve = (targetYaw - (Robot.drive.getYaw() * direction)) * 0.03;
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+		curve = (Robot.drive.getChuteAngle() * direction) * 0.03;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
@@ -94,7 +78,7 @@ public class DriveDistance extends Command {
 		case CRUISE: // consistent speed until we get close
 			Robot.drive.driveCurve(speed, curve);
 
-			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance * 1.33) {
+			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance) {
 				state = DECELERATE;
 			}
 			break;
@@ -107,36 +91,33 @@ public class DriveDistance extends Command {
 			if (Math.abs(speed) < ACCELERATION_SCALE) {
 				state = STOP;
 			}
-
-			if (Math.abs(Robot.drive.getAvgPosition()) - 0.1 > targetDistance) {
-				state = STOP;
-			}
 			break;
 
 		case STOP: // stop
-			Robot.drive.driveCurve(0.0, 0.0);
+			Robot.drive.driveCurve(0.0, curve);
 			state = END;
 			break;
 
 		case END: // targetDistance = 0, do nothing
 			break;
 		}
-	}
+    	
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
 		return state == END;
-	}
+    }
 
-	// Called once after is Finished returns true
-	protected void end() {
+    // Called once after isFinished returns true
+    protected void end() {
 		Robot.drive.enableRampRate();
-	}
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
 		Robot.drive.driveCurve(0.0, 0.0);
 		Robot.drive.enableRampRate();
-	}
+    }
 }

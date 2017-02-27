@@ -16,8 +16,8 @@ public class DriveRotateToAngle2 extends Command {
 	private static final int STOP = 4;
 	private static final int END = 5;
 
-	private static final double MAX_SPEED = 10.0;
-	private static final double ACCELERATION = 2.0;
+	private static final double MAX_SPEED = 2.5;
+	private static final double ACCELERATION = 0.25;
 
 	private int state;
 	private double direction;
@@ -33,6 +33,13 @@ public class DriveRotateToAngle2 extends Command {
         requires(Robot.drive);
 
         targetAngle = angle;
+        
+    	if (targetAngle < 0) {
+    		targetAngle = -targetAngle;
+    		direction = -1.0;
+    	} else if (targetAngle > 0) {
+    		direction = 1.0;
+    	}
     }
 
     // Called just before this Command runs the first time
@@ -40,21 +47,14 @@ public class DriveRotateToAngle2 extends Command {
     	state = PREP;
     	speed = 0.0;
 		initialYaw = Robot.drive.getYaw();
-		targetYaw = initialYaw + targetAngle;
+		targetYaw = initialYaw + targetAngle * direction;
 		
 		if (targetYaw > 180) {
 			targetYaw -= 360;
 		} else if (targetYaw < -180) {
 			targetYaw += 360;
 		}
-    	
-    	if (targetAngle < 0) {
-    		targetAngle = -targetAngle;
-    		direction = -1.0;
-    	} else if (targetAngle > 0) {
-    		direction = 1.0;
-    	}
-    	
+    	    	
 		Robot.drive.resetDrive();
     	Robot.drive.disableRampRate();
 
@@ -68,10 +68,15 @@ public class DriveRotateToAngle2 extends Command {
     	currentYaw = Robot.drive.getYaw();
     	distance = Math.abs(currentYaw - initialYaw);
     	
+    	if (distance > 180) {
+    		distance = Math.abs(distance - 360);
+    	}
+    	
     	switch (state) {
     	case PREP:
     		state = ACCELERATE;
     		break;
+    		
     	case ACCELERATE:
     		speed = speed +(ACCELERATION * direction);
     		
@@ -90,7 +95,7 @@ public class DriveRotateToAngle2 extends Command {
     	case CRUISE:
 			Robot.drive.rotateController.setSetpoint(currentYaw + speed);
 
-			if (distance > targetAngle - rampupDistance) {
+			if (distance > targetAngle - rampupDistance * 2) {
 				state = DECELERATE;
 			}
 			break;
@@ -107,7 +112,7 @@ public class DriveRotateToAngle2 extends Command {
 			if (distance - targetAngle < speed) {
 				state = STOP;
 			}
-			
+						
 			break;
 
 		case STOP: // stop
@@ -130,6 +135,7 @@ public class DriveRotateToAngle2 extends Command {
     // Called once after isFinished returns true
     protected void end() {
 		Robot.drive.rotateController.disable();    	
+		Robot.drive.resetDrive();
 		Robot.drive.enableRampRate();
    }
 
@@ -137,6 +143,7 @@ public class DriveRotateToAngle2 extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
 		Robot.drive.rotateController.disable();    	
+		Robot.drive.resetDrive();
 		Robot.drive.enableRampRate();
    }
    

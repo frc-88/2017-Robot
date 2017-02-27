@@ -13,7 +13,7 @@ public class DriveSplitArcade extends Command {
 	private static final int SHIFT = 3;
 	public final static double SENSITIVITY = 0.5;
 	private static final double DOWNSHIFTSPEED = 275.0;
-	private static final double UPSHIFTSPEED = 350.0;
+	private static final double UPSHIFTSPEED = 325.0;
 	
 	private int state;
 	private int lastShift;
@@ -44,8 +44,9 @@ public class DriveSplitArcade extends Command {
 			
 			curve = Robot.oi.applySquare(Robot.oi.getDriverRightX());
 
+			/*
 			// stabilize yaw when driving straight
-			if (curve < 0.1) {
+			if ((curve < 0.1) && (magnitude > 0.3) && !Robot.drive.isLowGear()) {
 				if (!stabilize) {
 					stabilize = true;
 					targetYaw = Robot.drive.getYaw();
@@ -54,6 +55,7 @@ public class DriveSplitArcade extends Command {
 			} else {
 				stabilize = false;
 			}
+			*/
 			
 			if(magnitude < 0){
 				Robot.drive.driveCurve(magnitude, -curve, SENSITIVITY);

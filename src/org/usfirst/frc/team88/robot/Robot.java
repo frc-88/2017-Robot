@@ -46,7 +46,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		chooser.addDefault("40 Ball", new Auto40Ball());
-		chooser.addObject("Drive Forward", new DriveDistance(2.0));
+		chooser.addObject("Boiler Lift", new AutoBoilerLift());
+		chooser.addObject("Center Lift", new AutoDeliverGear());
+		chooser.addObject("Far Lift", new AutoFarLift());
+		chooser.addObject("Drive Forward", new DriveDistance(6));
 		
 		SmartDashboard.putData("Auto mode", chooser);
 
@@ -60,7 +63,8 @@ public class Robot extends IterativeRobot {
 	
 		SmartDashboard.putData("Drive Distance", new DriveDistance());
 		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
-	
+		SmartDashboard.putData("Drive Deliver Gear", new DriveDeliverGear());
+		
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
 		SmartDashboard.putData("Rotate to 90", new DriveRotateToAngle(90.0));
@@ -101,6 +105,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
+		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLift());
+		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
+		SmartDashboard.putData("Far Lift Auto", new AutoFarLift());
+
 	}
 
 	/**

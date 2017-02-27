@@ -17,7 +17,7 @@ public class DriveDeliverGear extends Command {
 	private static final int STOP = 4;
 	private static final int END = 5;
 
-	private static final double MAX_SPEED = 1.0;
+	private static final double MAX_SPEED = 0.4;
 	private static final double ACCELERATION_SCALE = 0.01;
 
 	private int state;
@@ -37,7 +37,7 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = Robot.drive.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0);
+		targetDistance = (Robot.drive.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0)) / 12.0;
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
