@@ -316,6 +316,14 @@ public class Drive extends Subsystem implements PIDOutput {
 		rTalons[0].setPosition(0);
 	}
 
+	public int getLeftEncPosition() {
+		return lTalons[0].getEncPosition();
+	}
+	
+	public int getRightEncPosition() {
+		return rTalons[0].getEncPosition();
+	}
+	
 	public double getAvgPosition() {
 		return (lTalons[0].getPosition() + rTalons[0].getPosition()) / 2.0;
 	}
@@ -383,6 +391,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		int i;
 
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
+		SmartDashboard.putNumber("LeftEncPosition: ", lTalons[0].getEncPosition());
 		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
 		SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
@@ -393,6 +402,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 
 		SmartDashboard.putNumber("RightPosition: ", rTalons[0].getPosition());
+		SmartDashboard.putNumber("RightEncPosition: ", rTalons[0].getEncPosition());
 		SmartDashboard.putNumber("RightEncVel: ", rTalons[0].getEncVelocity());
 		SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
 		SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
