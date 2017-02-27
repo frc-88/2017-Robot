@@ -43,8 +43,8 @@ public class Shooter extends Subsystem {
 		flywheelTalon.configEncoderCodesPerRev(80);
 		flywheelTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		flywheelTalon.configPeakOutputVoltage(+12.0f, -12.0f);
-		flywheelTalon.reverseSensor(false);
-		flywheelTalon.reverseOutput(false);
+		flywheelTalon.reverseSensor(!RobotMap.isJetFuel);
+		flywheelTalon.reverseOutput(!RobotMap.isJetFuel);
 		flywheelTalon.enableBrakeMode(false);
 		flywheelTalon.setPID(FLY_P, FLY_I, FLY_D, FLY_F, 0, 0, 0);
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
