@@ -5,6 +5,7 @@ import org.usfirst.frc.team88.robot.Robot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -31,22 +32,21 @@ public class DriveDeliverGear extends Command {
 	private double rampupDistance;
 	private double speed;
 	private double curve;
-
+	NetworkTable robotTable;
 
 	public DriveDeliverGear() {
-    	requires(Robot.drive);
-    	
-    	originator = null;
-    }
-	
-	public DriveDeliverGear(CommandGroup group) {
-    	requires(Robot.drive);
-    	
-    	originator = group;
-    }
+		this(null);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
+	public DriveDeliverGear(CommandGroup group) {
+		requires(Robot.drive);
+
+		robotTable = NetworkTable.getTable("robot");
+		originator = group;
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
 		Preferences prefs = Preferences.getInstance();
 
 		state = PREP;
@@ -55,20 +55,20 @@ public class DriveDeliverGear extends Command {
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
-			if(originator!=null) {
+			if (originator != null) {
 				originator.cancel();
 			}
 			state = END;
 		}
-		
+
 		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
 		speed = 0.0;
-    }
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double gamma = Robot.drive.getGearGamma();
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		double gamma = Robot.drive.getGearGamma();
 		curve = (gamma * direction) * 0.03;
 
 		switch (state) {
@@ -86,7 +86,7 @@ public class DriveDeliverGear extends Command {
 				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
 			} else if (gamma < 0) {
 				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
-			}			
+			}
 			break;
 
 		case ACCELERATE: // gradually increase velocity until we get to desired speed
@@ -128,25 +128,26 @@ public class DriveDeliverGear extends Command {
 			break;
 
 		case END: // targetDistance = 0, do nothing
+			robotTable.putString("sound", "work-complete");
 			break;
 		}
-    	
-    }
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
 		return state == END;
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
+	// Called once after isFinished returns true
+	protected void end() {
 		Robot.drive.enableRampRate();
-    }
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
 		Robot.drive.driveCurve(0.0, 0.0);
 		Robot.drive.enableRampRate();
-    }
+	}
 }
