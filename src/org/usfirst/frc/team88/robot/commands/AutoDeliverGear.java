@@ -9,10 +9,10 @@ public class AutoDeliverGear extends CommandGroup {
 
 	public AutoDeliverGear() {
 		addSequential(new DriveDeliverGear());
-		addParallel(new GearReceiverOut());
+		addSequential(new GearReceiverOut());
 		
 		addSequential(new GearPusherOut());
-		addSequential(new Delay(0.5));
+		addSequential(new Delay(0.75));
 		addSequential(new DriveDistance(1.5));
 		addSequential(new GearPusherIn());
 	}

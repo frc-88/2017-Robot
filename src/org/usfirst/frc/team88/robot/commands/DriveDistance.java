@@ -24,6 +24,7 @@ public class DriveDistance extends Command {
 	private int state;
 	private boolean usePrefs = false;
 	private double direction;
+	private double inputDistance;
 	private double targetDistance;
 	private double targetYaw;
 	private double rampupDistance;
@@ -37,7 +38,7 @@ public class DriveDistance extends Command {
 
 	public DriveDistance(double distance) {
 		requires(Robot.drive);
-		targetDistance = distance;
+		inputDistance = distance;
 	}
 
 	// Called just before this Command runs the first time
@@ -48,6 +49,8 @@ public class DriveDistance extends Command {
 
 		if (usePrefs) {
 			targetDistance = prefs.getDouble("driveDistance", 1.0);
+		} else {
+			targetDistance = inputDistance;
 		}
 
 		if (targetDistance > 0) {
