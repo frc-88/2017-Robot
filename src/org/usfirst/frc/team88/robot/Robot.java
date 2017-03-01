@@ -75,8 +75,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Turn Left 90 v2", new DriveRotateToAngle2(-90.0));
 		SmartDashboard.putData("Turn Right 90 v2", new DriveRotateToAngle2(90.0));
 
-		SmartDashboard.putData("Turn Left 90", new DriveTurnLeft90());
-		SmartDashboard.putData("Turn Right 90", new DriveTurnRight90());
+		SmartDashboard.putData("Turn Left 30", new DriveTurn(-30));
+		SmartDashboard.putData("Turn Right 30", new DriveTurn(30));
 
 		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
 		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
