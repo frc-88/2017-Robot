@@ -4,6 +4,7 @@ import org.usfirst.frc.team88.robot.Robot;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
@@ -11,15 +12,19 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveDeliverGear extends Command {
 	// states
 	private static final int PREP = 0;
-	private static final int ACCELERATE = 1;
-	private static final int CRUISE = 2;
-	private static final int DECELERATE = 3;
-	private static final int STOP = 4;
-	private static final int END = 5;
+	private static final int ALIGN = 1;
+	private static final int ACCELERATE = 2;
+	private static final int CRUISE = 3;
+	private static final int DECELERATE = 4;
+	private static final int STOP = 5;
+	private static final int END = 6;
 
 	private static final double MAX_SPEED = 0.4;
 	private static final double ACCELERATION_SCALE = 0.01;
+	private static final double SWEET_SPOT = 15.0;
+	private static final double ALIGN_SPEED = 0.3;
 
+	private CommandGroup originator;
 	private int state;
 	private double targetDistance;
 	private double direction;
@@ -27,8 +32,17 @@ public class DriveDeliverGear extends Command {
 	private double speed;
 	private double curve;
 
+
 	public DriveDeliverGear() {
     	requires(Robot.drive);
+    	
+    	originator = null;
+    }
+	
+	public DriveDeliverGear(CommandGroup group) {
+    	requires(Robot.drive);
+    	
+    	originator = group;
     }
 
     // Called just before this Command runs the first time
@@ -41,6 +55,9 @@ public class DriveDeliverGear extends Command {
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
+			if(originator!=null) {
+				originator.cancel();
+			}
 			state = END;
 		}
 		
@@ -51,13 +68,25 @@ public class DriveDeliverGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		curve = (Robot.drive.getGearGamma() * direction) * 0.03;
+    	double gamma = Robot.drive.getGearGamma();
+		curve = (gamma * direction) * 0.03;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
 			if (Math.abs(Robot.drive.getAvgPosition()) < 1) {
-				state = ACCELERATE;
+				state = ALIGN;
 			}
+			break;
+
+		case ALIGN: // rotate so that gamma is in our sweet spot
+			if (Math.abs(gamma) < SWEET_SPOT) {
+				Robot.drive.setTarget(0.0, 0.0);
+				state = ACCELERATE;
+			} else if (gamma > 0) {
+				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
+			} else if (gamma < 0) {
+				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
+			}			
 			break;
 
 		case ACCELERATE: // gradually increase velocity until we get to desired speed

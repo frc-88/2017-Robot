@@ -12,16 +12,23 @@ public class AutoBoilerLift extends CommandGroup {
     public AutoBoilerLift() {
 		DriverStation ds = DriverStation.getInstance();
 		Preferences prefs = Preferences.getInstance();
-		boolean redAlliance = prefs.getBoolean("RedAlliance", ds.getAlliance() == DriverStation.Alliance.Red);
-
-    	addSequential(new DriveDistance(-6));
+		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
+		
+		addSequential(new DriveZeroYaw());
     	addParallel(new ShooterSetHood());
+    	addSequential(new DriveDistance(-6));
+		addSequential(redAlliance ? new DriveRotateToAngle(-60) : new DriveRotateToAngle(60) );
+    	addSequential(new Delay(0.3));
+		addSequential(new AutoDeliverGear(this));
     	
-		addSequential(redAlliance ? new DriveRotateToAngle2(-30) : new DriveRotateToAngle2(30) );
-    	addSequential(new AutoDeliverGear());
-    	addSequential(new DriveDistance(3));
     	addParallel(new ShooterStartFlywheel());
+    	addSequential(new DriveDistance(3));
     	addSequential(new DriveRotateToBoiler());
     	addSequential(new ShooterStartAgitatorAndFeeder());
+    	addSequential(new Delay(2.0));
+
+    	addSequential(new ShooterStopAll());
+		addSequential(new DriveRotateToAngle(0));
+		addSequential(new DriveDistance(-10.0));
     }
 }
