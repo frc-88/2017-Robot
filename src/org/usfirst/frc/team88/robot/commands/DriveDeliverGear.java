@@ -83,9 +83,9 @@ public class DriveDeliverGear extends Command {
 				Robot.drive.setTarget(0.0, 0.0);
 				state = ACCELERATE;
 			} else if (gamma > 0) {
-				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
-			} else if (gamma < 0) {
 				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
+			} else if (gamma < 0) {
+				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
 			}			
 			break;
 

@@ -8,17 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveReceiveGear extends Command {
+public class DriveRetrieveGear extends Command {
 	// states
 	private static final int PREP = 0;
-	private static final int ACCELERATE = 1;
-	private static final int CRUISE = 2;
-	private static final int DECELERATE = 3;
-	private static final int STOP = 4;
-	private static final int END = 5;
+	private static final int ALIGN = 1;
+	private static final int ACCELERATE = 2;
+	private static final int CRUISE = 3;
+	private static final int DECELERATE = 4;
+	private static final int STOP = 5;
+	private static final int END = 6;
 
 	private static final double MAX_SPEED = 0.4;
 	private static final double ACCELERATION_SCALE = 0.01;
+	private static final double SWEET_SPOT = 15.0;
+	private static final double ALIGN_SPEED = 0.3;
 
 	private int state;
 	private double targetDistance;
@@ -27,7 +30,7 @@ public class DriveReceiveGear extends Command {
 	private double speed;
 	private double curve;
 
-	public DriveReceiveGear() {
+	public DriveRetrieveGear() {
     	requires(Robot.drive);
     }
 
@@ -51,13 +54,25 @@ public class DriveReceiveGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		curve = (Robot.drive.getChuteAngle() * direction) * 0.03;
+    	double chuteAngle = Robot.drive.getChuteAngle();
+		curve = (chuteAngle * direction) * 0.03;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
 			if (Math.abs(Robot.drive.getAvgPosition()) < 1) {
-				state = ACCELERATE;
+				state = ALIGN;
 			}
+			break;
+
+		case ALIGN: // rotate so that gamma is in our sweet spot
+			if (Math.abs(chuteAngle) < SWEET_SPOT) {
+				Robot.drive.setTarget(0.0, 0.0);
+				state = ACCELERATE;
+			} else if (chuteAngle > 0) {
+				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
+			} else if (chuteAngle < 0) {
+				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
+			}			
 			break;
 
 		case ACCELERATE: // gradually increase velocity until we get to desired speed
