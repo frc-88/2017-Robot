@@ -116,7 +116,7 @@ public class Auto40Ball extends CommandGroup {
 			addSequential(redAlliance ? new DriveDistanceArc(deltaDistanceB, deltaCurveB) : new DriveDistanceArc(deltaDistanceB, -deltaCurveB) );
 			addSequential(new Delay(hopperDelay));
 			
-			addSequential(new DriveDeliverGear());
+			addSequential(new DriveDeliverGear(this));
 			addSequential(new GearEject());
 			addSequential(new Delay(gearDelay));
 			

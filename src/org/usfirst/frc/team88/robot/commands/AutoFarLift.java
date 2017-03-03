@@ -13,11 +13,12 @@ public class AutoFarLift extends CommandGroup {
 		DriverStation ds = DriverStation.getInstance();
 		Preferences prefs = Preferences.getInstance();
 		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
+		
 		addSequential(new DriveZeroYaw());
-    	addSequential(new DriveDistance(-6));
+  	addSequential(new DriveDistance(-6));
 		addSequential(redAlliance ? new DriveRotateToAngle(50) : new DriveRotateToAngle(-50) );
-    	addSequential(new Delay(0.3));
-		addSequential(new AutoDeliverGear());
+   	addSequential(new Delay(0.3));
+		addSequential(new AutoDeliverGear(this));
 		addSequential(new DriveRotateToAngle(0));
 		addSequential(new DriveDistance(-10.0));
     }

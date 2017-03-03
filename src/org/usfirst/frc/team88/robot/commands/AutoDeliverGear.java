@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoDeliverGear extends CommandGroup {
 
 	public AutoDeliverGear() {
-		addSequential(new DriveDeliverGear());
+		this(null);
+	}
+	
+	public AutoDeliverGear(CommandGroup originator) {
+		addSequential(new DriveDeliverGear(originator != null ? originator : this));
 		addSequential(new GearReceiverOut());
 		
 		addSequential(new GearPusherOut());
