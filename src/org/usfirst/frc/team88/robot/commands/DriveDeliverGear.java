@@ -123,7 +123,7 @@ public class DriveDeliverGear extends Command {
 			break;
 
 		case STOP: // stop
-			Robot.drive.driveCurve(0.0, curve);
+			Robot.drive.driveCurve(0.0, 0.0);
 			state = END;
 			break;
 
