@@ -5,6 +5,7 @@ package org.usfirst.frc.team88.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * Jetson
@@ -18,13 +19,14 @@ public class Jetson extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-
+	NetworkTable jetsonTable;
 	private DigitalOutput power;
 
 	public Jetson() {
 		power = new DigitalOutput(0);
 		power.set(true);
-		
+		jetsonTable = NetworkTable.getTable("imfeelinglucky");
+
 		powerOn();
 	}
 
@@ -53,7 +55,14 @@ public class Jetson extends Subsystem {
 	//	Shell shell = new SSHByPassword("vision-frc88.local", 22, "ubuntu", "ubuntu");
 
 		//new Shell.Plain(shell).exec("sudo shutdown");
-
+	}
+	
+	public void setCam(double cam){
+		jetsonTable.putNumber("visionFeed", cam);
+	}
+	
+	public double getCam(){
+		return jetsonTable.getNumber("visionFeed");
 	}
 	
 	public void initDefaultCommand() {
