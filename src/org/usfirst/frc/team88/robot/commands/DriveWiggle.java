@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveWiggle extends Command {
 	private static final int WIGGLE_COUNT = 3;
 	private static final double WIGGLE_SPEED = 0.3;
-	private static final int WIGGLE_REPS = 4;
+	private static final int WIGGLE_REPS = 3;
 	
 	private int count;
 	private int direction;

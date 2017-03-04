@@ -23,7 +23,7 @@ public class DriveDeliverGear extends Command {
 	private static final double MAX_SPEED = 0.4;
 	private static final double ACCELERATION_SCALE = 0.01;
 	private static final double SWEET_SPOT = 15.0;
-	private static final double ALIGN_SPEED = 0.3;
+	private static final double ALIGN_SPEED = 0.1;
 
 	private CommandGroup originator;
 	private int state;
@@ -128,7 +128,6 @@ public class DriveDeliverGear extends Command {
 			break;
 
 		case END: // targetDistance = 0, do nothing
-			robotTable.putString("sound", "work-complete");
 			break;
 		}
 
@@ -141,6 +140,7 @@ public class DriveDeliverGear extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		robotTable.putString("sound", "work-complete");
 		Robot.drive.enableRampRate();
 	}
 

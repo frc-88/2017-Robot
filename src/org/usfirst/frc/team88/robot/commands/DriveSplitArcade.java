@@ -40,7 +40,7 @@ public class DriveSplitArcade extends Command {
 		switch (state) {
 		case DRIVING:
 			//magnitude = Robot.oi.applySquare(Robot.oi.getDriverZ());
-			magnitude = Robot.oi.applySquare(Robot.oi.getDriverLeftY());
+			magnitude = - Robot.oi.applySquare(Robot.oi.getDriverLeftY());
 			
 			curve = Robot.oi.applySquare(Robot.oi.getDriverRightX());
 
