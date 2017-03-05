@@ -466,9 +466,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	public boolean gearInRange() {
 		double distance = getGearDistance();
 		double gamma = getGearGamma();
-		
 
-		return ((distance > 15.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
+		return ((distance > 18.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
 	}
 
   public boolean chuteInRange() {

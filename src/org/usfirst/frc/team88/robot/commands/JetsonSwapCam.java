@@ -7,52 +7,39 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWiggle extends Command {
-	private static final int WIGGLE_COUNT = 3;
-	private static final double WIGGLE_SPEED = 0.3;
-	private static final int WIGGLE_REPS = 3;
-	
-	private int count;
-	private int direction;
-	private int reps;
-	
-    public DriveWiggle() {
-    	requires(Robot.drive);
+public class JetsonSwapCam extends Command {
+	private final double CAMMAX = 6;
+	private final double CAMMIN = 1;
+    public JetsonSwapCam() {
+    	requires(Robot.jetson);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	count = 0;
-    	reps = 0;
-    	direction = 1;
+    	double cam = Robot.jetson.getCam();
+    	if(cam == CAMMAX){
+    		cam = CAMMIN;
+    	} else{
+    		cam++;
+    	}
+    	Robot.jetson.setCam(cam);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.setTarget(WIGGLE_SPEED * direction, -WIGGLE_SPEED * direction);
-    	
-    	if (count++ > WIGGLE_COUNT) {
-    		count = 0;
-    		if (reps++ % 2 == 0) {
-    			direction = -direction;
-    		}
-    	}
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (reps == WIGGLE_REPS);
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.setTarget(0.0, 0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drive.setTarget(0.0, 0.0);
     }
 }
