@@ -44,7 +44,7 @@ public class DriveRetrieveGear extends Command {
 
 		state = PREP;
 
-		targetDistance = (Robot.drive.getChuteDistance() - prefs.getDouble("driveChuteStandoff", 1.0)) / 12.0;
+		targetDistance = (Robot.jetson.getChuteDistance() - prefs.getDouble("driveChuteStandoff", 1.0)) / 12.0;
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
@@ -58,7 +58,7 @@ public class DriveRetrieveGear extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double chuteAngle = Robot.drive.getChuteAngle();
+		double chuteAngle = Robot.jetson.getChuteAngle();
 		curve = (chuteAngle * direction) * 0.03;
 
 		switch (state) {

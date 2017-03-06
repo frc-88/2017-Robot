@@ -1,5 +1,6 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
+import org.usfirst.frc.team88.robot.Robot;
 import org.usfirst.frc.team88.robot.RobotMap;
 import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
 
@@ -27,11 +28,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Subsystem implements PIDOutput {
 	// Constants
-	private final static double BOILER_RANGE = 12.0;
-	private final static double BOILER_TOLERANCE = 1.0;
-	private final static double GEAR_RANGE = 90.0;
-	private final static double GEAR_TOLERANCE = 15.0;
-
 	private final static int LOW_PROFILE = 0;
 	private final static double LOW_P = 1.0;
 	private final static double LOW_I = 0.0;
@@ -388,7 +384,6 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void updateDashboard() {
-		Preferences prefs = Preferences.getInstance();
 		int i;
 
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
@@ -428,81 +423,12 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Jerk_Y", getJerkY());
 		SmartDashboard.putNumber("Jerk_X", getJerkX());
 		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
-		SmartDashboard.putBoolean("Gear Lock", gearInRange());
-		SmartDashboard.putBoolean("Chute Lock", chuteInRange());
 		
 		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
 
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("collision", collisionDetected());
 		robotTable.putBoolean("lessthan20", twentySecondsLeft());
-		//robotTable.putBoolean("boilerLock", boilerInRange());
-		robotTable.putBoolean("gearLock", gearInRange());
-
-		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB", -1.0));
-		SmartDashboard.putNumber("J AngleB", jetsonTable.getNumber("AngleB", 0.0));
-		SmartDashboard.putNumber("J DistanceG", jetsonTable.getNumber("DistanceG", -1.0));
-		SmartDashboard.putNumber("J Theta", jetsonTable.getNumber("Theta", 0.0));
-		SmartDashboard.putNumber("J Gamma", jetsonTable.getNumber("Gamma", 0.0));
-		SmartDashboard.putNumber("J DistanceH", jetsonTable.getNumber("DistanceH", -1.0));
-		SmartDashboard.putNumber("J Beta", jetsonTable.getNumber("Beta", 0.0));
-
-		jetsonTable.putNumber("visionBH", prefs.getDouble("visionGH", -1.0));
-		jetsonTable.putNumber("visionBS", prefs.getDouble("visionGS", -1.0));
-		jetsonTable.putNumber("visionBV", prefs.getDouble("visionGV", -1.0));
-		jetsonTable.putNumber("visionGH", prefs.getDouble("visionGH", -1.0));
-		jetsonTable.putNumber("visionGS", prefs.getDouble("visionGS", -1.0));
-		jetsonTable.putNumber("visionGV", prefs.getDouble("visionGV", -1.0));
-		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", -1.0));
-		jetsonTable.putBoolean("camSwitch", prefs.getBoolean("camSwitch", true));
-	}
-
-	public boolean boilerInRange() {
-		double distance = getBoilerDistance();
-
-		return ((distance != -1.0) && (Math.abs(distance - BOILER_RANGE) <= BOILER_TOLERANCE));
-	}
-
-	public boolean gearInRange() {
-		double distance = getGearDistance();
-		double gamma = getGearGamma();
-
-		return ((distance > 18.0) && (Math.abs(gamma) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
-	}
-
-  public boolean chuteInRange() {
-		double distance = getChuteDistance();
-		double angle = getChuteAngle();
-
-    return ((distance > 15.0) && (Math.abs(angle) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE));
-	}
-
-	public double getBoilerDistance() {
-		return jetsonTable.getNumber("DistanceB", -1.0);
-	}
-
-	public double getBoilerAngle() {
-		return getBoilerDistance() < 0 ? 0.0 : jetsonTable.getNumber("AngleB", 0.0);
-	}
-
-	public double getGearDistance() {
-		return jetsonTable.getNumber("DistanceG", -1.0);
-	}
-
-	public double getGearGamma() {
-		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Gamma", 0.0);
-	}
-
-	public double getGearTheta() {
-		return getGearDistance() < 0 ? 0.0 : jetsonTable.getNumber("Theta", 0.0);
-	}
-
-	public double getChuteDistance() {
-		return jetsonTable.getNumber("DistanceH", -1.0);
-	}
-
-	public double getChuteAngle() {
-		return getChuteDistance() < 0 ? 0.0 : jetsonTable.getNumber("Beta", 0.0);
 	}
 
 	public boolean twentySecondsLeft() {

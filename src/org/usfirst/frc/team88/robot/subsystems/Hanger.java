@@ -19,13 +19,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Hanger extends Subsystem {
 	private CANTalon hangerMotor;
-	private static final double CURRENT_LIMIT = 40.0;
+	private static final double HANGER_MAX_CURRENT = 50.0;
+	private boolean override;
+	private boolean isDone;
 	
 	NetworkTable robotTable;
 	public Hanger(){
 		hangerMotor = new CANTalon(RobotMap.hangerMotor);
 		hangerMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		hangerMotor.enableBrakeMode(true);
+		override = false;
+		isDone = false;
 		robotTable = NetworkTable.getTable("robot");
 	}
 	
@@ -37,11 +41,25 @@ public class Hanger extends Subsystem {
 		hangerMotor.set(0.0);
 	}
 	
+	public void setOverride(boolean OR){
+		override = OR;
+	}
+	
+	public boolean getOverride(){
+		return override;
+	}
+	
+	public boolean isDone(){
+		if(hangerMotor.getOutputCurrent() > HANGER_MAX_CURRENT){
+			isDone = true;
+		}
+		return isDone;
+	}
 	public void updateDashboard(){
 		SmartDashboard.putNumber("HangerMotorCurrent", hangerMotor.getOutputCurrent());
 		SmartDashboard.putNumber("HangerMotorVoltage", hangerMotor.getOutputVoltage());
 		
-		robotTable.putBoolean("readyForTakeoff", hangerMotor.getOutputCurrent() > CURRENT_LIMIT);
+		robotTable.putBoolean("readyForTakeoff", isDone());
 	}
 
     // Put methods for controlling this subsystem
