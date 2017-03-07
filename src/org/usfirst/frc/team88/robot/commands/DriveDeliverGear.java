@@ -51,7 +51,7 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = (Robot.drive.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0)) / 12.0;
+		targetDistance = (Robot.jetson.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0)) / 12.0;
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {
@@ -68,7 +68,7 @@ public class DriveDeliverGear extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double gamma = Robot.drive.getGearGamma();
+		double gamma = Robot.jetson.getGearGamma();
 		curve = (gamma * direction) * 0.03;
 
 		switch (state) {
@@ -140,6 +140,7 @@ public class DriveDeliverGear extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.jetson.deactivateTarget();
 		robotTable.putString("sound", "work-complete");
 		Robot.drive.enableRampRate();
 	}

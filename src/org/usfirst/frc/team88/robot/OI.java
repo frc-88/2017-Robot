@@ -89,9 +89,12 @@ public class OI {
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
 		operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
 
-		operatorButtonB.whenPressed(new BattleMode());
-		operatorButtonA.whenPressed(new ScavengerMode());
+		operatorButtonA.whenPressed(new JetsonSwapCam());
+		operatorButtonB.whenPressed(new JetsonToggleTarget());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
+		operatorButtonBack.whenPressed(new HangerOverride(true));
+		operatorButtonBack.whenReleased(new HangerOverride(false));
+
 		operatorButtonY.whenPressed(new GearPusherOut());
 		operatorButtonY.whenReleased(new GearPusherIn());
 		operatorButtonX.whenPressed(new GearReceiverIn());

@@ -2,44 +2,40 @@ package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class JetsonSwapCam extends Command {
-	private final double CAMMAX = 6;
-	private final double CAMMIN = 1;
-    public JetsonSwapCam() {
-    	requires(Robot.jetson);
-    }
+public class JetsonSwapCam extends InstantCommand {
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	double cam = Robot.jetson.getCam();
-    	if(cam == CAMMAX){
-    		cam = CAMMIN;
-    	} else{
-    		cam++;
-    	}
-    	Robot.jetson.setCam(cam);
-    }
+	private final int CAMMAX = 4;
+	private final int CAMMIN = 1;
+	private final int[] COMPLIST = {1, 3};
+	private int count = 0;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+	public JetsonSwapCam() {
+		super();
+		requires(Robot.jetson);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		int cam = Robot.jetson.getCam();
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		if(Robot.jetson.isDebug()){
+			if(cam == CAMMAX){
+				cam = CAMMIN;
+			} else{
+				cam++;
+			}
+		}else{
+			cam = COMPLIST[count];
+			count++;
+			if(count == COMPLIST.length){
+				count = 0;
+			}
+		}
+		Robot.jetson.setCam(cam);
+	}
 }
