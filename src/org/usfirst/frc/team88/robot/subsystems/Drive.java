@@ -427,10 +427,15 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
 
 		robotTable.putBoolean("inLow", isLowGear());
+		robotTable.putBoolean("climbing", isClimbing());
 		robotTable.putBoolean("collision", collisionDetected());
 		robotTable.putBoolean("lessthan20", twentySecondsLeft());
 	}
 
+	public boolean isClimbing() {
+		return Math.abs(navx.getPitch()) > 10.0;
+	}
+	
 	public boolean twentySecondsLeft() {
 		DriverStation driverStation = DriverStation.getInstance();
 
