@@ -82,9 +82,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Turn Left 30", new DriveTurn(-30));
 		SmartDashboard.putData("Turn Right 30", new DriveTurn(30));
 
-		SmartDashboard.putData("Jetson On", new JetsonPowerOn());
-		SmartDashboard.putData("Jetson Off", new JetsonPowerOffSsh());
-		
 		SmartDashboard.putData("Start Flywheel", new ShooterStartFlywheel());
 		SmartDashboard.putData("Start Feeder", new ShooterStartFeeder());
 		SmartDashboard.putData("Start Agitator", new ShooterStartAgitator());
@@ -113,6 +110,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
 		SmartDashboard.putData("Far Lift Auto", new AutoFarLift());
 
+		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
 
 	/**

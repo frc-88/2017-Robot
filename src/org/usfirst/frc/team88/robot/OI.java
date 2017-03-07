@@ -89,7 +89,7 @@ public class OI {
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
 		operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
 
-		operatorButtonA.whenPressed(new JetsonSwapCam());
+		operatorButtonA.whenPressed(new JetsonSwapView());
 		operatorButtonB.whenPressed(new JetsonToggleTarget());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
 		operatorButtonBack.whenPressed(new HangerOverride(true));
