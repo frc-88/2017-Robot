@@ -31,7 +31,6 @@ public class Jetson extends Subsystem {
 	
 	Preferences prefs;
 	NetworkTable jetsonTable;
-	private DigitalOutput power;
 	private int camNum;
 	private boolean targeting;
 	NetworkTable robotTable;
@@ -46,27 +45,6 @@ public class Jetson extends Subsystem {
 		camNum = 1;
 		
 		jetsonTable.putNumber("visionFeed", camNum);
-		powerOn();
-	}
-
-	public void setPower(boolean value) {
-		power.set(value);
-	}
-
-	public void powerOn() {
-		try {
-			Thread.sleep(5000);
-			power.set(false);
-			Thread.sleep(200);
-			power.set(true);
-			Thread.sleep(200);
-			power.set(false);
-			Thread.sleep(2000);
-			power.set(true);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void updateSmartdashboard(){
@@ -115,13 +93,6 @@ public class Jetson extends Subsystem {
 		return prefs.getBoolean("visionIsDebug", false);
 	}
 
-	public void powerOff() throws Exception {
-
-		//	Shell shell = new SSHByPassword("vision-frc88.local", 22, "ubuntu", "ubuntu");
-
-		//new Shell.Plain(shell).exec("sudo shutdown");
-	}
-
 	private boolean boilerInRange() {
 		double distance = getBoilerDistance();
 
@@ -141,6 +112,7 @@ public class Jetson extends Subsystem {
 
 		return ((distance > 15.0) && (Math.abs(angle) <= GEAR_TOLERANCE) && (distance <= GEAR_RANGE) && isTargetActive());
 	}
+	
 	public void setCam(int cam){
 		camNum = cam;
 		jetsonTable.putNumber("visionFeed", camNum);
@@ -150,7 +122,6 @@ public class Jetson extends Subsystem {
 			robotTable.putBoolean("isBoiler", false);
 		}
 	}
-
 
 	public double getBoilerDistance() {
 		return jetsonTable.getNumber("DistanceB", -1.0);
