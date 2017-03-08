@@ -57,6 +57,10 @@ public class DriveSplitArcade extends Command {
 			}
 			*/
 			
+			if (!Robot.drive.isLowGear()) {
+				curve = curve * 0.6;
+			}
+			
 			if(magnitude < 0){
 				Robot.drive.driveCurve(magnitude, -curve, SENSITIVITY);
 			} else{
