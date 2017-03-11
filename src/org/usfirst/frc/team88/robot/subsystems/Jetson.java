@@ -66,6 +66,7 @@ public class Jetson extends Subsystem {
 	public void updateSmartdashboard() {
 		robotTable.putBoolean("boilerLock", boilerInRange());
 		robotTable.putBoolean("gearLock", gearInRange());
+		robotTable.putBoolean("chuteLock", chuteInRange());
 		robotTable.putBoolean("VisionReady", jetsonTable.getBoolean("VisionReady", false));
 
 		SmartDashboard.putNumber("J DistanceB", jetsonTable.getNumber("DistanceB", -1.0));
@@ -88,6 +89,7 @@ public class Jetson extends Subsystem {
 		jetsonTable.putNumber("visionGH", prefs.getDouble("visionGH", -1.0));
 		jetsonTable.putNumber("visionGS", prefs.getDouble("visionGS", -1.0));
 		jetsonTable.putNumber("visionGV", prefs.getDouble("visionGV", -1.0));
+		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", 1.0));
 		jetsonTable.putBoolean("camSwitch", prefs.getBoolean("camSwitch", true));
 	}
 
