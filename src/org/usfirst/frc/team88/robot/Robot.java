@@ -53,6 +53,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Center Lift", new AutoDeliverGear());
 		chooser.addObject("Far Lift", new AutoFarLift());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
+		chooser.addObject("Drive Distance", new DriveDistance());
+		chooser.addObject("Gear Drive Distance", new AutoDeliverGearNoVision());
 		
 		SmartDashboard.putData("Auto mode", chooser);
 
