@@ -97,8 +97,8 @@ public class OI {
 		operatorButtonBack.whenPressed(new HangerOverride(true));
 		operatorButtonBack.whenReleased(new HangerOverride(false));
 
-		operatorButtonY.whenPressed(new GearPusherOut());
-		operatorButtonY.whenReleased(new GearPusherIn());
+		operatorButtonY.whenPressed(new GearPusherOut2());
+		operatorButtonY.whenReleased(new GearPusherIn2());
 		operatorButtonX.whenPressed(new GearReceiverIn());
 		operatorButtonX.whenReleased(new GearReceiverOut());
 	}

@@ -99,8 +99,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
 		
-		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
-		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		SmartDashboard.putData("Gear Pusher In", new GearPusherIn2());
+		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut2());
 		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
 		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
 		SmartDashboard.putData("Gear Eject",new GearEject());
