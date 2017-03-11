@@ -143,7 +143,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		// autonomousCommand = chooser.getSelected();
+		autonomousCommand = new AutoBoilerLift();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
