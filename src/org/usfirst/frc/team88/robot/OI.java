@@ -78,8 +78,10 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
-		driverButtonA.whenPressed(new DriveRotateToBoiler());
+		//driverButtonA.whenPressed(new DriveRotateToBoiler());
 		driverButtonB.whenPressed(new DriveToggleAutoShift());
+		//driverButtonX.whenPressed(new DriveToggleFront());
+
 		driverButtonLeftBumper.whenPressed(new DriveRetrieveGear());
 		driverButtonLeftBumper.whenReleased(new DriveStop());
 		driverButtonRightBumper.whenPressed(new DriveDeliverGear());

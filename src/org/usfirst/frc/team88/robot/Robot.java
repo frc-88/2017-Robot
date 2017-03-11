@@ -48,10 +48,10 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture();
 		
-		chooser.addDefault("40 Ball", new Auto40Ball());
+		chooser.addDefault("Far Lift", new AutoFarLift());
+		chooser.addObject("40 Ball", new Auto40Ball());
 		chooser.addObject("Boiler Lift", new AutoBoilerLift());
 		chooser.addObject("Center Lift", new AutoDeliverGear());
-		chooser.addObject("Far Lift", new AutoFarLift());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
 		
 		SmartDashboard.putData("Auto mode", chooser);
