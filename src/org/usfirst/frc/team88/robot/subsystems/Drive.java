@@ -213,7 +213,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		final double minimum = 0.02;
 		final double minRange = 0.008;
 
-		if (outputMagnitude == 0) {
+		if (outputMagnitude == 0 && Math.abs(getAvgSpeed()) < 200 ) {
 			if (curve < minRange && curve > -minRange) {
 				curve = 0;
 			} else if (curve < minimum && curve > 0) {
