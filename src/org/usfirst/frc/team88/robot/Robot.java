@@ -46,11 +46,11 @@ public class Robot extends IterativeRobot {
 		gearage = new Gearage();
 		oi = new OI();
 		
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 		
-		chooser.addDefault("Far Lift", new AutoFarLift());
+		chooser.addDefault("Far Lift", new AutoFarLiftBlue());
 		chooser.addObject("40 Ball", new Auto40Ball());
-		chooser.addObject("Boiler Lift", new AutoBoilerLift());
+		chooser.addObject("Boiler Lift", new AutoBoilerLiftBlue());
 		chooser.addObject("Center Lift", new AutoDeliverGear());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
 		
@@ -106,9 +106,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLift());
+		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftBlue());
+		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftRed());
 		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLift());
+		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftBlue());
+		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftRed());
 
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
@@ -144,8 +146,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// autonomousCommand = chooser.getSelected();
-		autonomousCommand = new AutoBoilerLift();
-
+		
+		
+//		autonomousCommand = new AutoDeliverGear();
+//		autonomousCommand = new AutoFarLiftBlue();
+//		autonomousCommand = new AutoFarLiftRed();
+		autonomousCommand = new AutoBoilerLiftBlue();
+//		autonomousCommand = new AutoBoilerLiftRed();		
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
