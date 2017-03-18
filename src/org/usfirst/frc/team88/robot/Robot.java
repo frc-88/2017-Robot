@@ -152,7 +152,9 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new AutoFarLiftBlue();
 //		autonomousCommand = new AutoFarLiftRed();
 		autonomousCommand = new AutoBoilerLiftBlue();
-//		autonomousCommand = new AutoBoilerLiftRed();		
+//		autonomousCommand = new AutoBoilerLiftRed();
+//		autonomousCommand = new AutoCenterLiftBlue();
+//		autonomousCommand = new AutoCenterLiftRed();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
