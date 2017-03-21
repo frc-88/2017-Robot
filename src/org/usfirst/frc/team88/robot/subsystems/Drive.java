@@ -72,6 +72,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double maxSpeed;
 	private double targetMaxSpeed;
 	private boolean autoShift;
+	private boolean isGearFront;
 	private CANTalon.TalonControlMode controlMode;
 	NetworkTable robotTable;
 	NetworkTable jetsonTable;
@@ -111,6 +112,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 
+		isGearFront = true;
 	}
 
 	private void initTalons(CANTalon[] talons, int[] ids, boolean reverseSensor, boolean reverseOutput,
@@ -349,6 +351,14 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	public void toggleAutoShift() {
 		autoShift = !autoShift;
+	}
+	
+	public boolean isGearFront() {
+		return isGearFront();
+	}
+	
+	public void toggleFront() {
+		isGearFront = !isGearFront;
 	}
 
 	public void enableBrakeMode(boolean value) {

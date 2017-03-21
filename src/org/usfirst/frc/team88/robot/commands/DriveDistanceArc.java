@@ -30,7 +30,7 @@ public class DriveDistanceArc extends Command {
 
 	public DriveDistanceArc() {
 		requires(Robot.drive);
-		inputDistance = -1;
+		inputDistance = 0;
 	}
 	
 	public DriveDistanceArc(double distance) {
@@ -51,8 +51,9 @@ public class DriveDistanceArc extends Command {
 
 		state = PREP;
 
-		if (inputDistance < 0) {
+		if (inputDistance == 0) {
 			targetDistance = prefs.getDouble("driveDistanceArc", 1.0);
+			CURVE = prefs.getDouble("driveDistanceArcCurve", 0.4);
 		} else {
 			targetDistance = inputDistance;
 		}

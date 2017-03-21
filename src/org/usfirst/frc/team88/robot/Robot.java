@@ -46,12 +46,12 @@ public class Robot extends IterativeRobot {
 		gearage = new Gearage();
 		oi = new OI();
 		
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 		
-		chooser.addDefault("40 Ball", new Auto40Ball());
-		chooser.addObject("Boiler Lift", new AutoBoilerLift());
+		chooser.addDefault("Far Lift", new AutoFarLiftBlue());
+		chooser.addObject("40 Ball", new Auto40Ball());
+		chooser.addObject("Boiler Lift", new AutoBoilerLiftBlue());
 		chooser.addObject("Center Lift", new AutoDeliverGear());
-		chooser.addObject("Far Lift", new AutoFarLift());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
 		chooser.addObject("Drive Distance", new DriveDistance());
 		chooser.addObject("Gear Drive Distance", new AutoDeliverGearNoVision());
@@ -101,16 +101,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
 		
-		SmartDashboard.putData("Gear Pusher In", new GearPusherIn());
-		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut());
+		SmartDashboard.putData("Gear Pusher In", new GearPusherIn2());
+		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut2());
 		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
 		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLift());
+		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftBlue());
+		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftRed());
 		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLift());
+		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftBlue());
+		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftRed());
 
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
@@ -145,8 +147,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		// autonomousCommand = chooser.getSelected();
+		
+		
+//		autonomousCommand = new AutoDeliverGear();
+//		autonomousCommand = new AutoFarLiftBlue();
+//		autonomousCommand = new AutoFarLiftRed();
+		autonomousCommand = new AutoBoilerLiftBlue();
+//		autonomousCommand = new AutoBoilerLiftRed();
+//		autonomousCommand = new AutoCenterLiftBlue();
+//		autonomousCommand = new AutoCenterLiftRed();
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

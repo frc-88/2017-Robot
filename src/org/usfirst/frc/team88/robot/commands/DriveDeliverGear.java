@@ -51,7 +51,7 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = (Robot.jetson.getGearDistance() - prefs.getDouble("driveGearStandoff", 1.0)) / 12.0;
+		targetDistance = (Robot.jetson.getGearDistance() - 5) / 12.0;
 		direction = -1.0;
 
 		if (targetDistance < 0.0) {

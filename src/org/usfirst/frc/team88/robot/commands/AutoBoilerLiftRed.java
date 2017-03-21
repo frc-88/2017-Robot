@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoBoilerLift extends CommandGroup {
+public class AutoBoilerLiftRed extends CommandGroup {
 
-    public AutoBoilerLift() {
+    public AutoBoilerLiftRed() {
 		DriverStation ds = DriverStation.getInstance();
 		Preferences prefs = Preferences.getInstance();
 		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
@@ -17,7 +17,7 @@ public class AutoBoilerLift extends CommandGroup {
 		addSequential(new DriveZeroYaw());
     	addParallel(new ShooterSetHood());
     	addSequential(new DriveDistance(-6));
-		addSequential(redAlliance ? new DriveRotateToAngle(-60) : new DriveRotateToAngle(60) );
+		addSequential(new DriveRotateToAngle(-60));
     	addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
     	

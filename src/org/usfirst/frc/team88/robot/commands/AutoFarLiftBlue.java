@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoFarLift extends CommandGroup {
+public class AutoFarLiftBlue extends CommandGroup {
 
-	public AutoFarLift() {
+	public AutoFarLiftBlue() {
 		DriverStation ds = DriverStation.getInstance();
 		Preferences prefs = Preferences.getInstance();
 		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
 
 		addSequential(new DriveZeroYaw());
 		addSequential(new DriveDistance(-6));
-		addSequential(redAlliance ? new DriveRotateToAngle(60) : new DriveRotateToAngle(-60) );
+		addSequential(new DriveRotateToAngle(-60) );
 		addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
 		addSequential(new DriveRotateToAngle(0));
