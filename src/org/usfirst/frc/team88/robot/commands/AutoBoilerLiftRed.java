@@ -16,8 +16,9 @@ public class AutoBoilerLiftRed extends CommandGroup {
 		
 		addSequential(new DriveZeroYaw());
     	addParallel(new ShooterSetHood());
-    	addSequential(new DriveDistance(-6));
-		addSequential(new DriveRotateToAngle(-60));
+//    	addSequential(new DriveDistance(-6));
+//		addSequential(new DriveRotateToAngle(-60));
+    	addSequential(new DriveDistanceAndCurve(-7.0, -0.4, 3.0));
     	addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
     	

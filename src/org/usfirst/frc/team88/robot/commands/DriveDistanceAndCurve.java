@@ -32,8 +32,10 @@ public class DriveDistanceAndCurve extends Command {
 	private double speed;
 	private double curve;
 	private double finalDistance;
+	private double sensitivity;
 	
 	public DriveDistanceAndCurve(){
+		requires(Robot.drive);
 		usePrefs = true;
 	}
 	public DriveDistanceAndCurve(double distance, double arc){
@@ -83,8 +85,10 @@ public class DriveDistanceAndCurve extends Command {
 	protected void execute() {
 		if(Math.abs(Robot.drive.getAvgPosition()) > Math.abs(finalDistance)){
 			curve = finalCurve * direction;
+			sensitivity = 0.5;
 		}else{
 			curve = (targetYaw - (Robot.drive.getYaw() * direction)) * 0.03;
+			sensitivity = 0.15;
 		}
 
 		switch (state) {
@@ -105,12 +109,12 @@ public class DriveDistanceAndCurve extends Command {
 				state = CRUISE;
 			}
 
-			Robot.drive.driveCurve(speed, curve);
+			Robot.drive.driveCurve(speed, curve, sensitivity);
 
 			break;
 
 		case CRUISE: // consistent speed until we get close
-			Robot.drive.driveCurve(speed, curve);
+			Robot.drive.driveCurve(speed, curve, sensitivity);
 
 			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance * 1.33) {
 				state = DECELERATE;
@@ -120,7 +124,7 @@ public class DriveDistanceAndCurve extends Command {
 		case DECELERATE: // slow down as we approach target, gradually decrease velocity
 			speed = speed - (ACCELERATION_SCALE * direction);
 
-			Robot.drive.driveCurve(speed, curve);
+			Robot.drive.driveCurve(speed, curve, sensitivity);
 
 			if (Math.abs(speed) < ACCELERATION_SCALE) {
 				state = STOP;

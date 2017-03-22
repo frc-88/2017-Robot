@@ -8,7 +8,7 @@ package org.usfirst.frc.team88.robot;
  */
 public class RobotMap {
 
-	public static final boolean isJetFuel = false;
+	public static final boolean isJetFuel = true;
 	
 	// Drive
 	public static final int[] driveLeft = {13, 9, 10, 15};
