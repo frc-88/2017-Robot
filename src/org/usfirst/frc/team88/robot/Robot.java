@@ -66,6 +66,7 @@ public class Robot extends IterativeRobot {
 	
 		SmartDashboard.putData("Drive Distance", new DriveDistance());
 		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
+		SmartDashboard.putData("DDAC", new DriveDistanceAndCurve());
 		SmartDashboard.putData("Drive Deliver Gear", new DriveDeliverGear());
 		SmartDashboard.putData("Drive Wiggle", new DriveWiggle());
 		
