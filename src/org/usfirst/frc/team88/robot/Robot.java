@@ -48,10 +48,13 @@ public class Robot extends IterativeRobot {
 		
 //		CameraServer.getInstance().startAutomaticCapture();
 		
-		chooser.addDefault("Far Lift", new AutoFarLiftBlue());
+		chooser.addDefault("Far LiftB", new AutoFarLiftBlue());
+		chooser.addDefault("Far LiftR", new AutoFarLiftRed());
 		chooser.addObject("40 Ball", new Auto40Ball());
-		chooser.addObject("Boiler Lift", new AutoBoilerLiftBlue());
-		chooser.addObject("Center Lift", new AutoDeliverGear());
+		chooser.addObject("Boiler LiftB", new AutoBoilerLiftBlue());
+		chooser.addObject("Boiler LiftR", new AutoBoilerLiftRed());
+		chooser.addObject("Center LiftB", new AutoCenterLiftBlue());
+		chooser.addObject("Center LiftR", new AutoCenterLiftRed());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
 		
 		SmartDashboard.putData("Auto mode", chooser);
@@ -107,11 +110,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftBlue());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftRed());
-		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftBlue());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftRed());
+		SmartDashboard.putData("Boiler Lift Auto B", new AutoBoilerLiftBlue());
+		SmartDashboard.putData("Boiler Lift Auto R", new AutoBoilerLiftRed());
+		SmartDashboard.putData("Center Lift Auto B", new AutoCenterLiftBlue());
+		SmartDashboard.putData("Center Lift Auto R", new AutoCenterLiftRed());
+		SmartDashboard.putData("Far Lift Auto B", new AutoFarLiftBlue());
+		SmartDashboard.putData("Far Lift Auto R", new AutoFarLiftRed());
 
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
