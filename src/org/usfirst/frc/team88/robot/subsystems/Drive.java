@@ -89,7 +89,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
 		initTalons(lTalons, RobotMap.driveLeft, RobotMap.isJetFuel, RobotMap.isJetFuel, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, true, !RobotMap.isJetFuel, false);
+		initTalons(rTalons, RobotMap.driveRight, false, !RobotMap.isJetFuel, false);
 
 		setClosedLoopSpeed();
 
