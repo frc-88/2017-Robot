@@ -63,6 +63,14 @@ public class Jetson extends Subsystem {
 		cvsink2.setEnabled(true);
 	}
 
+	public void disableImage(){
+		jetsonTable.putBoolean("imageSave", false);
+	}
+
+	public void enableImage(){
+			jetsonTable.putBoolean("imageSave", true);
+		
+	}
 	public void updateSmartdashboard() {
 		robotTable.putBoolean("boilerLock", boilerInRange());
 		robotTable.putBoolean("gearLock", gearInRange());
