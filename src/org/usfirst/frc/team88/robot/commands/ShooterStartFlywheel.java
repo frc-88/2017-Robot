@@ -19,7 +19,7 @@ public class ShooterStartFlywheel extends InstantCommand {
 	}
 	
 	public ShooterStartFlywheel() {
-		this(false);
+		this(true);
 	}
 
 	// Called once when the command executes
@@ -31,15 +31,9 @@ public class ShooterStartFlywheel extends InstantCommand {
 		if (!dynamicSpeed) {
 			speed = prefs.getDouble("flywheelSpeed", 0.0);
 		} else if (distance < 0) {
-			speed = prefs.getDouble("flywheelSpeed", 0.0);
-		} else if (distance < 40) {
-			speed = 700;
-		} else if (distance < 50) {
-			speed = 750;
-		} else if (distance < 60) {
-			speed = 800;
-		} else if (distance < 70) {
-			speed = 850;
+			speed = 750.0;
+		} else{
+			speed = 50 * distance + 225;
 		}
 
 		Robot.shooter.setFlywheel(speed);
