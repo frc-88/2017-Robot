@@ -47,7 +47,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 //		CameraServer.getInstance().startAutomaticCapture();
-		
+
+		/*
 		chooser.addDefault("Far LiftB", new AutoFarLiftBlue());
 		chooser.addDefault("Far LiftR", new AutoFarLiftRed());
 		chooser.addObject("40 Ball", new Auto40Ball());
@@ -60,7 +61,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Gear Drive Distance", new AutoDeliverGearNoVision());
 		
 		SmartDashboard.putData("Auto mode", chooser);
-
+		 */
+		
         SmartDashboard.putData(Scheduler.getInstance());
 
         SmartDashboard.putData("Drive Tank", new DriveTank());

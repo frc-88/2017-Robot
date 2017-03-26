@@ -14,9 +14,9 @@ public class AutoBoilerLiftBlue extends CommandGroup {
 		Preferences prefs = Preferences.getInstance();
 		
 		addSequential(new DriveZeroYaw());
-    	addParallel(new ShooterSetHood());
+    	addParallel(new ShooterSetHood(4.2));
 //    	addSequential(new DriveDistance(-6));
-    	addSequential(new DriveDistanceAndCurve(-6.6, 0.405, 2.75));
+    	addSequential(new DriveDistanceAndCurve(-6.8, 0.405, 2.95));
 		addSequential(new DriveRotateToAngle(60));
     	addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
