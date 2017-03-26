@@ -154,7 +154,6 @@ public class Robot extends IterativeRobot {
 		jetson.enableImage();
 		// autonomousCommand = chooser.getSelected();
 		
-		
 //		autonomousCommand = new AutoDeliverGear();
 //		autonomousCommand = new AutoFarLiftBlue();
 //		autonomousCommand = new AutoFarLiftRed();
@@ -162,6 +161,7 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new AutoBoilerLiftRed();
 //		autonomousCommand = new AutoCenterLiftBlue();
 //		autonomousCommand = new AutoCenterLiftRed();
+		
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -189,6 +189,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		shooter.setHood(0.42);
 		jetson.enableImage();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

@@ -21,7 +21,7 @@ public class DriveRotateToBoiler extends Command {
         if (Robot.jetson.getBoilerDistance() == -1.0) {
         	noTargetFound = true;
         } else {
-        	targetAngle = Robot.drive.getYaw() + Robot.jetson.getBoilerAngle() - 2.0;
+        	targetAngle = Robot.drive.getYaw() + Robot.jetson.getBoilerAngle();
         	Robot.drive.rotateController.setSetpoint(targetAngle);
     		//Robot.drive.setOpenLoop();
         	Robot.drive.disableRampRate();
