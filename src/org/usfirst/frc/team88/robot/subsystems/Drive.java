@@ -51,11 +51,13 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 3.0;
+	private final static double ROTATE_BOILER_TOLERANCE = 1.0;
 	private final static double ROTATE_MAX = 0.4;
 	private final static double ROTATE_MIN = 0.05;
 
 	public final static double DFT_SENSITIVITY = 0.15;
 	public PIDController rotateController;
+	public PIDController rotateBoilerController;
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
@@ -87,7 +89,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
 		initTalons(lTalons, RobotMap.driveLeft, RobotMap.isJetFuel, RobotMap.isJetFuel, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, true, !RobotMap.isJetFuel, false);
+		initTalons(rTalons, RobotMap.driveRight, false, !RobotMap.isJetFuel, false);
 
 		setClosedLoopSpeed();
 
@@ -107,6 +109,12 @@ public class Drive extends Subsystem implements PIDOutput {
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
 		rotateController.setContinuous(true);
+		
+//		rotateBoilerController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
+//		rotateBoilerController.setInputRange(-180.0f, 180.0f);
+//		rotateBoilerController.setOutputRange(-1.0, 1.0);
+//		rotateBoilerController.setAbsoluteTolerance(ROTATE_BOILER_TOLERANCE);
+//		rotateBoilerController.setContinuous(true);
 
 		// init NetworkTables
 		robotTable = NetworkTable.getTable("robot");

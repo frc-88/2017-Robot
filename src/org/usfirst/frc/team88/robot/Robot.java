@@ -48,10 +48,13 @@ public class Robot extends IterativeRobot {
 		
 //		CameraServer.getInstance().startAutomaticCapture();
 		
-		chooser.addDefault("Far Lift", new AutoFarLiftBlue());
+		chooser.addDefault("Far LiftB", new AutoFarLiftBlue());
+		chooser.addDefault("Far LiftR", new AutoFarLiftRed());
 		chooser.addObject("40 Ball", new Auto40Ball());
-		chooser.addObject("Boiler Lift", new AutoBoilerLiftBlue());
-		chooser.addObject("Center Lift", new AutoDeliverGear());
+		chooser.addObject("Boiler LiftB", new AutoBoilerLiftBlue());
+		chooser.addObject("Boiler LiftR", new AutoBoilerLiftRed());
+		chooser.addObject("Center LiftB", new AutoCenterLiftBlue());
+		chooser.addObject("Center LiftR", new AutoCenterLiftRed());
 		chooser.addObject("Drive Forward", new DriveDistance(6));
 		chooser.addObject("Drive Distance", new DriveDistance());
 		chooser.addObject("Gear Drive Distance", new AutoDeliverGearNoVision());
@@ -68,9 +71,10 @@ public class Robot extends IterativeRobot {
 	
 		SmartDashboard.putData("Drive Distance", new DriveDistance());
 		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
+		SmartDashboard.putData("DDAC", new AutoBoilerLiftRed());
 		SmartDashboard.putData("Drive Deliver Gear", new DriveDeliverGear());
 		SmartDashboard.putData("Drive Wiggle", new DriveWiggle());
-		
+
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
 		SmartDashboard.putData("Rotate to 90", new DriveRotateToAngle(90.0));
@@ -108,11 +112,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Eject",new GearEject());
 		
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftBlue());
-		SmartDashboard.putData("Boiler Lift Auto", new AutoBoilerLiftRed());
-		SmartDashboard.putData("Center Lift Auto", new AutoDeliverGear());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftBlue());
-		SmartDashboard.putData("Far Lift Auto", new AutoFarLiftRed());
+		SmartDashboard.putData("Boiler Lift Auto B", new AutoBoilerLiftBlue());
+		SmartDashboard.putData("Boiler Lift Auto R", new AutoBoilerLiftRed());
+		SmartDashboard.putData("Center Lift Auto B", new AutoCenterLiftBlue());
+		SmartDashboard.putData("Center Lift Auto R", new AutoCenterLiftRed());
+		SmartDashboard.putData("Far Lift Auto B", new AutoFarLiftBlue());
+		SmartDashboard.putData("Far Lift Auto R", new AutoFarLiftRed());
 
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
@@ -125,6 +130,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		Command disabledCommand = new ShutDownAll();
+		jetson.disableImage();
 		
 		disabledCommand.start();
 	}
@@ -147,8 +153,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		jetson.enableImage();
 		// autonomousCommand = chooser.getSelected();
-		
 		
 //		autonomousCommand = new AutoDeliverGear();
 //		autonomousCommand = new AutoFarLiftBlue();
@@ -157,6 +163,7 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new AutoBoilerLiftRed();
 //		autonomousCommand = new AutoCenterLiftBlue();
 //		autonomousCommand = new AutoCenterLiftRed();
+		
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -184,6 +191,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		shooter.setHood(0.42);
+		jetson.enableImage();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}

@@ -78,7 +78,7 @@ public class OI {
 		//    until it is finished as determined by it's isFinished method.
 
 		// Add these commands here
-		//driverButtonA.whenPressed(new DriveRotateToBoiler());
+		driverButtonA.whenPressed(new DriveRotateToBoiler());
 		driverButtonB.whenPressed(new DriveToggleAutoShift());
 		//driverButtonX.whenPressed(new DriveToggleFront());
 
@@ -86,6 +86,7 @@ public class OI {
 		driverButtonLeftBumper.whenReleased(new DriveStop());
 		driverButtonRightBumper.whenPressed(new DriveDeliverGear());
 		driverButtonRightBumper.whenReleased(new DriveStop());
+		driverButtonX.whenPressed(new DriveDistance(0.05));
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
@@ -97,8 +98,8 @@ public class OI {
 		operatorButtonBack.whenPressed(new HangerOverride(true));
 		operatorButtonBack.whenReleased(new HangerOverride(false));
 
-		operatorButtonY.whenPressed(new GearPusherOut2());
-		operatorButtonY.whenReleased(new GearPusherIn2());
+		operatorButtonY.whenPressed(new GearPusherOut());
+		operatorButtonY.whenReleased(new GearPusherIn());
 		operatorButtonX.whenPressed(new GearReceiverIn());
 		operatorButtonX.whenReleased(new GearReceiverOut());
 	}

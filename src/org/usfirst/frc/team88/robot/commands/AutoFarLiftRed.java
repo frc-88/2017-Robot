@@ -15,7 +15,7 @@ public class AutoFarLiftRed extends CommandGroup {
 		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
 
 		addSequential(new DriveZeroYaw());
-		addSequential(new DriveDistance(-6));
+    	addSequential(new DriveDistanceAndCurve(-6.6, 0.405, 2.75));
 		addSequential(new DriveRotateToAngle(60));
 		addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
