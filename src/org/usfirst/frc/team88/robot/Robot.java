@@ -157,12 +157,13 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		jetson.enableImage();
 		// autonomousCommand = chooser.getSelected();
-		
+	
+//		autonomousCommand = new Auto40Ball();
 //		autonomousCommand = new AutoDeliverGear();
 //		autonomousCommand = new AutoFarLiftBlue();
 //		autonomousCommand = new AutoFarLiftRed();
-//		autonomousCommand = new AutoBoilerLiftBlue();
-		autonomousCommand = new AutoBoilerLiftRed();
+		autonomousCommand = new AutoBoilerLiftBlue();
+//		autonomousCommand = new AutoBoilerLiftRed();
 //		autonomousCommand = new AutoCenterLiftBlue();
 //		autonomousCommand = new AutoCenterLiftRed();
 		

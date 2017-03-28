@@ -42,29 +42,27 @@ public class Auto40Ball extends CommandGroup {
 		
 		addParallel(new GearReceiverOut());
 		addParallel(new PlaySound("hopper"));
-		addParallel(new ShooterSetHood());
+		addParallel(new ShooterSetHood(.42));
 		
 		switch(version){
 		case "Alpha":
 			addSequential(new DriveDistance(alphaDistanceA));
 			
-			addSequential(redAlliance ? new DriveTurnRight90() : new DriveTurnLeft90() );
+			addSequential(new DriveTurnLeft90());
 			
 			addSequential(new DriveDistance(alphaDistanceB));
 						
 			addSequential(new Delay(hopperDelay));
 			
 			addSequential(new DriveDistance(alphaDistanceC));
-			addSequential(redAlliance ? new DriveTurnRight90() : new DriveTurnLeft90() );
+			addSequential(new DriveTurnLeft90());
 
 			addSequential(new DriveRotateToBoiler());
 
-			if (shoot) {
 				addSequential(new ShooterStartFlywheel());
 				addSequential(new Delay(0.2));
 				addSequential(new ShooterStartFeeder());
 				addSequential(new ShooterStartAgitator());
-			}
 			
 			break;
 			
