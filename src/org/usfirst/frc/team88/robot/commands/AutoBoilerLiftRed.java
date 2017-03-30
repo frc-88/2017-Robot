@@ -15,16 +15,16 @@ public class AutoBoilerLiftRed extends CommandGroup {
 		boolean redAlliance = ds.getAlliance() == DriverStation.Alliance.Red;
 		
 		addSequential(new DriveZeroYaw());
-    	addParallel(new ShooterSetHood(4.2));
+		addParallel(new ShooterSetHood(.42));
 //    	addSequential(new DriveDistance(-6));
     	addSequential(new DriveDistanceAndCurve(-6.6, -0.405, 2.75));
 		addSequential(new DriveRotateToAngle(-60));
     	addSequential(new Delay(0.3));
 		addSequential(new AutoDeliverGear(this));
     	
-    	addParallel(new ShooterStartFlywheel());
-    	addSequential(new DriveDistance(2.0));
     	addSequential(new DriveRotateToBoiler());
+    	addSequential(new ShooterStartFlywheel());
+    	addSequential(new Delay(0.3));
     	addSequential(new ShooterStartAgitatorAndFeeder());
     	addSequential(new Delay(4.0));
 

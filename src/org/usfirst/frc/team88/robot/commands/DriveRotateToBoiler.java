@@ -18,6 +18,8 @@ public class DriveRotateToBoiler extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	noTargetFound = false;
+    	
         if (Robot.jetson.getBoilerDistance() == -1.0) {
         	noTargetFound = true;
         } else {
