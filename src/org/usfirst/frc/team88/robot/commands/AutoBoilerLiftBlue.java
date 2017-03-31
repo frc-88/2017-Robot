@@ -16,17 +16,8 @@ public class AutoBoilerLiftBlue extends CommandGroup {
 
 		addSequential(new AutoDeliverGear(this));
 
-		addSequential(new DriveToBoiler());
-		addSequential(new Delay(0.1));
-		addSequential(new DriveRotateToBoiler());
-		addSequential(new Delay(0.1));
-
-		addSequential(new ShooterStartFlywheel());
-		addSequential(new Delay(0.3));
-		addSequential(new ShooterStartAgitatorAndFeeder());
-		addSequential(new Delay(4.0));
-
-		addSequential(new ShooterStopAll());
+		addSequential(new AutoShoot());
+		
 		addSequential(new DriveRotateToAngle(0));
 		addSequential(new DriveDistance(-14.0));
 	}

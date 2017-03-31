@@ -9,10 +9,17 @@ public class AutoShoot extends CommandGroup {
 
     public AutoShoot() {
     	addSequential(new ShooterSetHood(0.42));
-    	addSequential(new ShooterStartFlywheel());
-    	addSequential(new DriveRotateToBoiler());
-    	addSequential(new Delay(0.05));
-    	addSequential(new ShooterStartAgitatorAndFeeder());
     	
+		addSequential(new DriveToBoiler());
+    	addSequential(new Delay(0.1));
+    	addSequential(new DriveRotateToBoiler());
+    	addSequential(new Delay(0.1));
+
+    	addSequential(new ShooterStartFlywheel());
+    	addSequential(new Delay(0.3));
+    	addSequential(new ShooterStartAgitatorAndFeeder());
+    	addSequential(new Delay(4.0));
+
+    	addSequential(new ShooterStopAll());    	
     }
 }
