@@ -4,12 +4,10 @@ package org.usfirst.frc.team88.robot;
 import org.usfirst.frc.team88.robot.commands.*;
 import org.usfirst.frc.team88.robot.subsystems.*;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -30,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,32 +42,15 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		gearage = new Gearage();
 		oi = new OI();
-		
-//		CameraServer.getInstance().startAutomaticCapture();
 
-		/*
-		chooser.addDefault("Far LiftB", new AutoFarLiftBlue());
-		chooser.addDefault("Far LiftR", new AutoFarLiftRed());
-		chooser.addObject("40 Ball", new Auto40Ball());
-		chooser.addObject("Boiler LiftB", new AutoBoilerLiftBlue());
-		chooser.addObject("Boiler LiftR", new AutoBoilerLiftRed());
-		chooser.addObject("Center LiftB", new AutoCenterLiftBlue());
-		chooser.addObject("Center LiftR", new AutoCenterLiftRed());
-		chooser.addObject("Drive Forward", new DriveDistance(6));
-		chooser.addObject("Drive Distance", new DriveDistance());
-		chooser.addObject("Gear Drive Distance", new AutoDeliverGearNoVision());
-		
-		SmartDashboard.putData("Auto mode", chooser);
-		 */
-		
-        SmartDashboard.putData(Scheduler.getInstance());
+		SmartDashboard.putData(Scheduler.getInstance());
 
-        SmartDashboard.putData("Drive Tank", new DriveTank());
+		SmartDashboard.putData("Drive Tank", new DriveTank());
 		SmartDashboard.putData("Drive Field Orientated", new DriveFieldOrientated());
 		SmartDashboard.putData("Drive Split Arcade", new DriveSplitArcade());
 		SmartDashboard.putData("Toggle Autoshift", new DriveToggleAutoShift());
 		SmartDashboard.putData("Manual Shift", new DriveShift());
-	
+
 		SmartDashboard.putData("Drive Distance", new DriveDistance());
 		SmartDashboard.putData("Drive Distance Arc", new DriveDistanceArc());
 		SmartDashboard.putData("DDAC", new AutoBoilerLiftRed());
@@ -100,21 +80,21 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Stop Agitator", new ShooterStopAgitator());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
-		
+
 		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
 		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
 		SmartDashboard.putData("Intake In", new IntakeIn());
 		SmartDashboard.putData("Intake Out", new IntakeOut());
-		
+
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
-		
+
 		SmartDashboard.putData("Gear Pusher In", new GearPusherIn2());
 		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut2());
 		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
 		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
-		SmartDashboard.putData("Gear Eject",new GearEject());
-		
+		SmartDashboard.putData("Gear Eject", new GearEject());
+
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
 		SmartDashboard.putData("Boiler Lift Auto B", new AutoBoilerLiftBlue());
 		SmartDashboard.putData("Boiler Lift Auto R", new AutoBoilerLiftRed());
@@ -135,7 +115,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		Command disabledCommand = new ShutDownAll();
 		jetson.disableImage();
-		
+
 		disabledCommand.start();
 	}
 
@@ -159,23 +139,15 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		jetson.enableImage();
 		// autonomousCommand = chooser.getSelected();
-	
-//		autonomousCommand = new Auto40Ball();
-//		autonomousCommand = new AutoDeliverGear();
-//		autonomousCommand = new AutoFarLiftBlue();
-//		autonomousCommand = new AutoFarLiftRed();
+
+		// autonomousCommand = new Auto40Ball();
+		// autonomousCommand = new AutoDeliverGear();
+		// autonomousCommand = new AutoFarLiftBlue();
+		// autonomousCommand = new AutoFarLiftRed();
 		autonomousCommand = new AutoBoilerLiftBlue();
-//		autonomousCommand = new AutoBoilerLiftRed();
-//		autonomousCommand = new AutoCenterLiftBlue();
-//		autonomousCommand = new AutoCenterLiftRed();
-		
-		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		// autonomousCommand = new AutoBoilerLiftRed();
+		// autonomousCommand = new AutoCenterLiftBlue();
+		// autonomousCommand = new AutoCenterLiftRed();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
