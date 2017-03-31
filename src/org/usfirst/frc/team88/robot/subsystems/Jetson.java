@@ -12,7 +12,10 @@ import edu.wpi.first.wpilibj.CameraServer;
 //import com.jcabi.ssh.Shell;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * sure it can manage more than one teraflops but can it fry an egg?
  * 
  */
-public class Jetson extends Subsystem {
+public class Jetson extends Subsystem implements PIDSource{
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -196,5 +199,23 @@ public class Jetson extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new JetsonUpdateSmartDashboard());
+	}
+
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return PIDSourceType.kDisplacement;
+	}
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return getBoilerAngle();
 	}
 }
