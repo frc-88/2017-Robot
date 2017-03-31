@@ -56,7 +56,7 @@ public class Shooter extends Subsystem {
 		feederTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		feederTalon.configPeakOutputVoltage(+12.0f, -12.0f);
 		feederTalon.reverseSensor(true);
-		feederTalon.reverseOutput(false);
+		feederTalon.reverseOutput(!RobotMap.isJetFuel);
 		feederTalon.enableBrakeMode(false);
 		feederTalon.setPID(FEEDER_P, FEEDER_I, FEEDER_D, FEEDER_F, 0, 0, 0);
 		feederTalon.changeControlMode(CANTalon.TalonControlMode.Speed);

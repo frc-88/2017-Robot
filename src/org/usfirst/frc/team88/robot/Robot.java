@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		jetson = new Jetson();
 		drive = new Drive();
 		shooter = new Shooter();
-		jetson = new Jetson();
 		intake = new Intake();
 		hanger = new Hanger();
 		gearage = new Gearage();
@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("DDAC", new AutoBoilerLiftRed());
 		SmartDashboard.putData("Drive Deliver Gear", new DriveDeliverGear());
 		SmartDashboard.putData("Drive Wiggle", new DriveWiggle());
+		SmartDashboard.putData("Drive Scan", new DriveScanForGear(-160.0));
 
 		SmartDashboard.putData("Zero Yaw", new DriveZeroYaw());
 		SmartDashboard.putData("Rotate to 0", new DriveRotateToAngle(0.0));
@@ -83,6 +84,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Rotate to 180", new DriveRotateToAngle(180.0));
 		SmartDashboard.putData("Rotate to -90", new DriveRotateToAngle(-90.0));
 		SmartDashboard.putData("Rotate to Boiler", new DriveRotateToBoiler());
+		SmartDashboard.putData("Drive to Boiler", new DriveToBoiler());
 
 		SmartDashboard.putData("Turn Left 90 v2", new DriveRotateToAngle2(-90.0));
 		SmartDashboard.putData("Turn Right 90 v2", new DriveRotateToAngle2(90.0));

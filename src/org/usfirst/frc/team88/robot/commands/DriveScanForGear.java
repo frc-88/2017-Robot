@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveScanForGear extends Command {
 	double maxAngle;
+	double targetAngle;
 	
     public DriveScanForGear(double angle) {
         requires(Robot.drive);
@@ -18,9 +19,17 @@ public class DriveScanForGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	targetAngle = Robot.drive.getYaw() + maxAngle;
+    	if(targetAngle > 180){
+    		targetAngle = targetAngle - 360;
+    	}else if(targetAngle < -180){
+    		targetAngle = targetAngle + 360;
+    	}
+		
     	Robot.drive.disableRampRate();
     	Robot.drive.rotateController.reset();
-    	Robot.drive.rotateController.setSetpoint(maxAngle);
+        Robot.drive.setRotateSpeedSlow();
+    	Robot.drive.rotateController.setSetpoint(targetAngle);
     	Robot.drive.rotateController.enable();    	
         Robot.drive.enableBrakeMode(true);
     }
@@ -33,7 +42,7 @@ public class DriveScanForGear extends Command {
     protected boolean isFinished() {
     	boolean gearFound = false;
     	
-    	if ( (Robot.jetson.getGearDistance() > 0.0) && (Math.abs(Robot.jetson.getGearGamma()) < 10) ) {
+    	if ( (Robot.jetson.getGearDistance() > 0.0) && (Math.abs(Robot.jetson.getGearGamma()) < 24) ) {
     		gearFound = true;
     	}
     	
@@ -43,6 +52,8 @@ public class DriveScanForGear extends Command {
     // Called once after isFinished returns true
     protected void end() {
 		Robot.drive.rotateController.disable();
+		Robot.drive.setTarget(0, 0);
+		Robot.drive.setRotateSpeedFast();
 		Robot.drive.enableRampRate();
         Robot.drive.enableBrakeMode(false);
    }
@@ -51,6 +62,8 @@ public class DriveScanForGear extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
 		Robot.drive.rotateController.disable();    	
+		Robot.drive.setTarget(0, 0);
+		Robot.drive.setRotateSpeedFast();
 		Robot.drive.enableRampRate();
         Robot.drive.enableBrakeMode(false);
    }

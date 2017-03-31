@@ -46,23 +46,29 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 45;
 
-	private final static double ROTATE_P = 0.0035;
-	private final static double ROTATE_I = 0.00004;
+	private final static double ROTATE_P = 0.003;
+	private final static double ROTATE_I = 0.00015;
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
-	private final static double ROTATE_TOLERANCE = 3.0;
+	private final static double ROTATE_TOLERANCE = 0.3;
 	private final static double ROTATE_BOILER_TOLERANCE = 1.0;
-	private final static double ROTATE_MAX = 0.4;
-	private final static double ROTATE_MIN = 0.05;
+	private final static double FAST_ROTATE_MAX = 0.4;
+	private final static double SLOW_ROTATE_MAX = 0.15;
+	
+	private final static double ROTATE_MIN = 0.01;
 
 	public final static double DFT_SENSITIVITY = 0.15;
 	public PIDController rotateController;
+	
+	
 	public PIDController rotateBoilerController;
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
 
 	private AHRS navx;
+	
+	
 	private final static double COLLISION_THRESHOLD = 0.5f;
 	private double lastAccelX = 0;
 	private double lastAccelY = 0;
@@ -70,6 +76,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double currentAccelY;
 	private double currentJerkX;
 	private double currentJerkY;
+	
+	private double maxRotate;
 
 	private double maxSpeed;
 	private double targetMaxSpeed;
@@ -87,9 +95,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		// left talons are reversed for comp bot
 		// right talons are reversed for practice bot
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(lTalons, RobotMap.driveLeft, RobotMap.isJetFuel, RobotMap.isJetFuel, false);
+		initTalons(lTalons, RobotMap.driveLeft, true, RobotMap.isJetFuel, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, false, !RobotMap.isJetFuel, false);
+		initTalons(rTalons, RobotMap.driveRight, !RobotMap.isJetFuel, !RobotMap.isJetFuel, false);
 
 		setClosedLoopSpeed();
 
@@ -104,7 +112,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		navx = new AHRS(SerialPort.Port.kMXP);
 
 		// init rotateController
-		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
+		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, Robot.jetson, this);
 		rotateController.setInputRange(-180.0f, 180.0f);
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
@@ -120,6 +128,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 
+		setRotateSpeedFast();
 		isGearFront = true;
 	}
 
@@ -466,10 +475,18 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 	}
 
+	public void setRotateSpeedSlow(){
+		maxRotate = SLOW_ROTATE_MAX;
+	}
+	
+	public void setRotateSpeedFast(){
+		maxRotate = FAST_ROTATE_MAX;
+	}
+	
 	@Override
 	public void pidWrite(double output) {
-		if (output > ROTATE_MAX) {
-			output = ROTATE_MAX;
+		if (output > maxRotate) {
+			output = maxRotate;
 		} else if (output > ROTATE_MIN) {
 			// no change
 		} else if (output > 0) {
@@ -478,12 +495,12 @@ public class Drive extends Subsystem implements PIDOutput {
 			output = 0;
 		} else if (output > (0 - ROTATE_MIN)) {
 			output = 0 - ROTATE_MIN;
-		} else if (output < (0 - ROTATE_MAX)) {
-			output = 0 - ROTATE_MAX;
+		} else if (output < (0 - maxRotate)) {
+			output = 0 - maxRotate;
 		}
 
 		updateDashboard();
-		setTarget(output, -output);
+		setTarget(-output, output);
 	}
 
 	public void initDefaultCommand() {
