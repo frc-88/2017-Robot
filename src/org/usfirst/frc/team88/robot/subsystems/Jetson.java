@@ -1,10 +1,8 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
-import org.opencv.core.Mat;
 import org.usfirst.frc.team88.robot.commands.JetsonUpdateSmartDashboard;
 
 import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
