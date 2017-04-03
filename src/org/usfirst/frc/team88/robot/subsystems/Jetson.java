@@ -1,8 +1,10 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
+import org.opencv.core.Mat;
 import org.usfirst.frc.team88.robot.commands.JetsonUpdateSmartDashboard;
 
 import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -37,29 +39,31 @@ public class Jetson extends Subsystem implements PIDSource {
 	private boolean targeting, viewGearside;
 	NetworkTable robotTable;
 	UsbCamera camera1, camera2;
-	VideoSink server;
+	CvSource outputStream;
 	CvSink cvsink1, cvsink2;
+	Mat image;
 
 	public Jetson() {
 		prefs = Preferences.getInstance();
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 		targeting = false;
-		viewGearside = false;
+		viewGearside = true;
 		camNum = 1;
 		jetsonTable.putNumber("visionFeed", camNum);
 
 		// set up cameras used for driver/operator view
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+		camera1.setResolution(320, 240);
+		camera1.setFPS(30);
 		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-		server = CameraServer.getInstance().getServer();
-		// dummy sinks to keep camera connections open
-		cvsink1 = new CvSink("cam1cv");
-		cvsink1.setSource(camera1);
-		cvsink1.setEnabled(true);
-		cvsink2 = new CvSink("cam2cv");
-		cvsink2.setSource(camera2);
-		cvsink2.setEnabled(true);
+		camera2.setResolution(320, 240);
+		camera2.setFPS(30);
+
+		cvsink1 = CameraServer.getInstance().getVideo(camera1);
+		cvsink2 = CameraServer.getInstance().getVideo(camera2);
+		outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
+		image = new Mat();
 	}
 
 	public void disableImage() {
@@ -99,6 +103,17 @@ public class Jetson extends Subsystem implements PIDSource {
 		jetsonTable.putNumber("visionGV", prefs.getDouble("visionGV", -1.0));
 		jetsonTable.putNumber("visionFeed", prefs.getDouble("visionFeed", 1.0));
 		jetsonTable.putBoolean("camSwitch", prefs.getBoolean("camSwitch", true));
+
+		if (viewGearside) {
+			cvsink2.setEnabled(false);
+			cvsink1.setEnabled(true);
+			cvsink1.grabFrame(image);
+		} else {
+			cvsink1.setEnabled(false);
+			cvsink2.setEnabled(true);
+			cvsink2.grabFrame(image);
+		}
+		outputStream.putFrame(image);
 	}
 
 	public void activateTarget() {
@@ -152,11 +167,6 @@ public class Jetson extends Subsystem implements PIDSource {
 	}
 
 	public void toggleView() {
-		if (viewGearside) {
-			server.setSource(camera2);
-		} else {
-			server.setSource(camera1);
-		}
 		viewGearside = !viewGearside;
 	}
 
