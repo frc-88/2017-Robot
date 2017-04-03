@@ -10,7 +10,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -46,29 +45,32 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	private final static double RAMPRATE = 45;
 
-	private final static double ROTATE_P = 0.003;
-	private final static double ROTATE_I = 0.00015;
+	private final static double ROTATE_P = 0.0035;
+	private final static double ROTATE_I = 0.00004;
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
-	private final static double ROTATE_TOLERANCE = 0.3;
-	private final static double ROTATE_BOILER_TOLERANCE = 1.0;
-	private final static double FAST_ROTATE_MAX = 0.4;
-	private final static double SLOW_ROTATE_MAX = 0.15;
+	private final static double ROTATE_TOLERANCE = 3.0;
 	
-	private final static double ROTATE_MIN = 0.01;
+	private final static double ROTATE_BOILER_P = 0.0035;
+	private final static double ROTATE_BOILER_I = 0.00004;
+	private final static double ROTATE_BOILER_D = 0.0;
+	private final static double ROTATE_BOILER_F = 0.0;
+	private final static double ROTATE_BOILER_TOLERANCE = 0.3;
+	
+	private final static double ROTATE_FAST_MAX = 0.4;
+	private final static double ROTATE_SLOW_MAX = 0.15;
+	private final static double ROTATE_MIN = 0.05;
+	private final static double ROTATE_BOILER_MIN = 0.015;
 
 	public final static double DFT_SENSITIVITY = 0.15;
+	
 	public PIDController rotateController;
-	
-	
 	public PIDController rotateBoilerController;
 
 	private final CANTalon[] lTalons, rTalons;
 	private final DoubleSolenoid shifter;
 
 	private AHRS navx;
-	
-	
 	private final static double COLLISION_THRESHOLD = 0.5f;
 	private double lastAccelX = 0;
 	private double lastAccelY = 0;
@@ -76,8 +78,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double currentAccelY;
 	private double currentJerkX;
 	private double currentJerkY;
-	
 	private double maxRotate;
+	private boolean rotateBoilerMode = false;
 
 	private double maxSpeed;
 	private double targetMaxSpeed;
@@ -112,23 +114,24 @@ public class Drive extends Subsystem implements PIDOutput {
 		navx = new AHRS(SerialPort.Port.kMXP);
 
 		// init rotateController
-		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, Robot.jetson, this);
+		rotateController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
 		rotateController.setInputRange(-180.0f, 180.0f);
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
 		rotateController.setContinuous(true);
 		
-//		rotateBoilerController = new PIDController(ROTATE_P, ROTATE_I, ROTATE_D, ROTATE_F, navx, this);
-//		rotateBoilerController.setInputRange(-180.0f, 180.0f);
-//		rotateBoilerController.setOutputRange(-1.0, 1.0);
-//		rotateBoilerController.setAbsoluteTolerance(ROTATE_BOILER_TOLERANCE);
-//		rotateBoilerController.setContinuous(true);
+		rotateBoilerController = new PIDController(ROTATE_BOILER_P, ROTATE_BOILER_I, ROTATE_BOILER_D, ROTATE_BOILER_F, Robot.jetson, this);
+		rotateBoilerController.setInputRange(-180.0f, 180.0f);
+		rotateBoilerController.setOutputRange(-1.0, 1.0);
+		rotateBoilerController.setAbsoluteTolerance(ROTATE_BOILER_TOLERANCE);
+		rotateBoilerController.setContinuous(true);
 
 		// init NetworkTables
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 
 		setRotateSpeedFast();
+		setRotateModeNormal();
 		isGearFront = true;
 	}
 
@@ -476,31 +479,46 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void setRotateSpeedSlow(){
-		maxRotate = SLOW_ROTATE_MAX;
+		maxRotate = ROTATE_SLOW_MAX;
 	}
 	
 	public void setRotateSpeedFast(){
-		maxRotate = FAST_ROTATE_MAX;
+		maxRotate = ROTATE_FAST_MAX;
+	}
+
+	public void setRotateModeNormal(){
+		rotateBoilerMode = false;
+	}
+	
+	public void setRotateModeBoiler(){
+		rotateBoilerMode = true;
 	}
 	
 	@Override
 	public void pidWrite(double output) {
+		double minRotate = rotateBoilerMode ? ROTATE_BOILER_MIN : ROTATE_MIN;
+		
 		if (output > maxRotate) {
 			output = maxRotate;
-		} else if (output > ROTATE_MIN) {
+		} else if (output > minRotate) {
 			// no change
 		} else if (output > 0) {
-			output = ROTATE_MIN;
+			output = minRotate;
 		} else if (output == 0) {
 			output = 0;
-		} else if (output > (0 - ROTATE_MIN)) {
-			output = 0 - ROTATE_MIN;
+		} else if (output > (0 - minRotate)) {
+			output = 0 - minRotate;
 		} else if (output < (0 - maxRotate)) {
 			output = 0 - maxRotate;
 		}
 
+		if (rotateBoilerMode) {
+			setTarget(-output, output);
+		} else {
+			setTarget(output, -output);
+		}
+
 		updateDashboard();
-		setTarget(-output, output);
 	}
 
 	public void initDefaultCommand() {

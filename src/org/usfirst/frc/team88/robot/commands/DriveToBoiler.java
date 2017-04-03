@@ -2,11 +2,7 @@ package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,11 +28,9 @@ public class DriveToBoiler extends Command {
 	private double rampupDistance;
 	private double speed;
 	private double curve;
-	NetworkTable robotTable;
 
 	public DriveToBoiler() {
-		robotTable = NetworkTable.getTable("robot");
-
+		requires(Robot.drive);
 	}
 
 	// Called just before this Command runs the first time
@@ -44,8 +38,8 @@ public class DriveToBoiler extends Command {
 		state = PREP;
 
 		targetDistance = Robot.jetson.getBoilerDistance() - 10.5;
-		if(targetDistance < 0){
-			targetDistance = 1.0;
+		if (targetDistance < 0) {
+			state = END;
 		}
 		direction = 1.0;
 
@@ -59,18 +53,14 @@ public class DriveToBoiler extends Command {
 		double angle = Robot.jetson.getBoilerAngle();
 		curve = (angle * direction) * 0.03;
 
-		SmartDashboard.putNumber("TEST DISTANCE", targetDistance);
-		SmartDashboard.putNumber("TEST ANGLE", angle);
-		SmartDashboard.putNumber("TEST STATE", state);
-
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
 			if (Math.abs(Robot.drive.getAvgPosition()) < 1) {
-				state = ACCELERATE;
+				state = ALIGN;
 			}
 			break;
 
-		case ALIGN: // rotate so that gamma is in our sweet spot
+		case ALIGN: // rotate so that angle is in our sweet spot
 			if (Math.abs(angle) < SWEET_SPOT) {
 				Robot.drive.setTarget(0.0, 0.0);
 				state = ACCELERATE;
@@ -83,7 +73,6 @@ public class DriveToBoiler extends Command {
 
 		case ACCELERATE: // gradually increase velocity until we get to desired speed
 			speed = speed + (ACCELERATION_SCALE * direction);
-
 
 			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance / 2.0) {
 				state = DECELERATE;
@@ -123,7 +112,6 @@ public class DriveToBoiler extends Command {
 		case END: // targetDistance = 0, do nothing
 			break;
 		}
-
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -133,8 +121,6 @@ public class DriveToBoiler extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.jetson.deactivateTarget();
-		robotTable.putString("sound", "work-complete");
 		Robot.drive.enableRampRate();
 	}
 

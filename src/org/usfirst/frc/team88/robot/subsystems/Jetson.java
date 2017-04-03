@@ -1,6 +1,5 @@
 package org.usfirst.frc.team88.robot.subsystems;
 
-import org.usfirst.frc.team88.robot.Robot;
 import org.usfirst.frc.team88.robot.commands.JetsonUpdateSmartDashboard;
 
 import edu.wpi.cscore.CvSink;
@@ -8,14 +7,9 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
 
-//import com.jcabi.ssh.SSHByPassword;
-//import com.jcabi.ssh.Shell;
-
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,10 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Jetson
  * 
- * sure it can manage more than one teraflops but can it fry an egg?
+ * sure it can manage 
+ * more than one teraflops but 
+ * can it fry an egg?
  * 
  */
-public class Jetson extends Subsystem implements PIDSource{
+public class Jetson extends Subsystem implements PIDSource {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -66,14 +62,15 @@ public class Jetson extends Subsystem implements PIDSource{
 		cvsink2.setEnabled(true);
 	}
 
-	public void disableImage(){
+	public void disableImage() {
 		jetsonTable.putBoolean("imageSave", false);
 	}
 
-	public void enableImage(){
-			jetsonTable.putBoolean("imageSave", true);
-		
+	public void enableImage() {
+		jetsonTable.putBoolean("imageSave", true);
+
 	}
+
 	public void updateSmartdashboard() {
 		robotTable.putBoolean("boilerLock", boilerInRange());
 		robotTable.putBoolean("gearLock", gearInRange());
@@ -204,7 +201,7 @@ public class Jetson extends Subsystem implements PIDSource{
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
