@@ -45,14 +45,20 @@ public class Jetson extends Subsystem implements PIDSource {
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 		targeting = false;
-		viewGearside = false;
+		viewGearside = true;
 		camNum = 1;
 		jetsonTable.putNumber("visionFeed", camNum);
 
 		// set up cameras used for driver/operator view
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+		camera1.setResolution(320, 240);
+		camera1.setFPS(30);
 		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+		camera2.setResolution(320, 240);
+		camera2.setFPS(30);
 		server = CameraServer.getInstance().getServer();
+		server.setSource(camera2);
+		
 		// dummy sinks to keep camera connections open
 		cvsink1 = new CvSink("cam1cv");
 		cvsink1.setSource(camera1);
