@@ -31,6 +31,7 @@ public class RobotMap {
 	
 	//Hanger
 	public static final int hangerMotor = 1;
+	public static final int hangerMotorFollower = 3;
 	
 	//Gearage
 	public static final int pusherSolenoidIn = 1;

@@ -16,7 +16,8 @@ public class DriveRotateToBoiler extends Command {
 	private static final int ROTATE_BOILER = 3;
 	private static final int STOP = 4;
 	private static final int END = 5;
-
+	private static final double SWEETSPOT = 10;
+	
 	private int state;
 	private double targetAngle;
 
@@ -28,6 +29,8 @@ public class DriveRotateToBoiler extends Command {
 	protected void initialize() {
 		if (Robot.jetson.getBoilerDistance() == -1.0) {
 			state = END;
+		} else if (Math.abs(Robot.jetson.getBoilerAngle()) < SWEETSPOT) {
+			state = PREP_BOILER;
 		} else {
 			state = PREP_NORMAL;
 		}
@@ -35,11 +38,12 @@ public class DriveRotateToBoiler extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
+		double boilerAngle = Robot.jetson.getBoilerAngle();
+		
 		switch (state) {
 		case PREP_NORMAL:
 			Robot.drive.disableRampRate();
-			targetAngle = Robot.drive.getYaw() + Robot.jetson.getBoilerAngle();
+			targetAngle = Robot.drive.getYaw() + ((Math.abs(boilerAngle) - 5) * (boilerAngle/Math.abs(boilerAngle)));
 			Robot.drive.setRotateModeNormal();
 			Robot.drive.rotateController.setSetpoint(targetAngle);
 			Robot.drive.rotateController.enable();
@@ -83,6 +87,7 @@ public class DriveRotateToBoiler extends Command {
 		SmartDashboard.putNumber("Rot On Target", Robot.drive.rotateController.onTarget() ? 1 : 0);
 		SmartDashboard.putNumber("RotB Error", Robot.drive.rotateBoilerController.getError());
 		SmartDashboard.putNumber("RotB On Target", Robot.drive.rotateBoilerController.onTarget() ? 1 : 0);
+		SmartDashboard.putNumber("RotB State", state);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -11,7 +11,7 @@ public class AutoShoot extends CommandGroup {
     	addSequential(new ShooterSetHood(0.42));
     	
 		addSequential(new DriveToBoiler());
-    	addSequential(new Delay(0.1));
+    	addSequential(new Delay(.25));
     	addSequential(new DriveRotateToBoiler());
     	addSequential(new Delay(0.1));
 
