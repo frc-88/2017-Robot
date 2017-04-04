@@ -15,6 +15,8 @@ public class AutoBoilerLiftRed extends CommandGroup {
     	addSequential(new Delay(0.1));
 		
     	addSequential(new AutoDeliverGear(this));
+
+    	addSequential(new Delay(0.2));
     	
 		addSequential(new AutoShoot());
 

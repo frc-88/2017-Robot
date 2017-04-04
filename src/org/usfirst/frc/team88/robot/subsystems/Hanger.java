@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *  
  */
 public class Hanger extends Subsystem {
-	private CANTalon hangerMotor;
+	private CANTalon hangerMotor, hangerMotorFollower;
 	private static final double HANGER_MAX_CURRENT = 50.0;
 	private boolean override;
 	private boolean isDone;
@@ -28,6 +28,12 @@ public class Hanger extends Subsystem {
 		hangerMotor = new CANTalon(RobotMap.hangerMotor);
 		hangerMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		hangerMotor.enableBrakeMode(true);
+		
+		hangerMotorFollower = new CANTalon(RobotMap.hangerMotorFollower);
+		hangerMotorFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
+		hangerMotorFollower.set(RobotMap.hangerMotor);
+		hangerMotorFollower.enableBrakeMode(true);
+		
 		override = false;
 		isDone = false;
 		robotTable = NetworkTable.getTable("robot");

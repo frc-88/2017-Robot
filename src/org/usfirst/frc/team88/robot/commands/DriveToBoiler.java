@@ -37,7 +37,7 @@ public class DriveToBoiler extends Command {
 	protected void initialize() {
 		state = PREP;
 
-		targetDistance = Robot.jetson.getBoilerDistance() - 10.5;
+		targetDistance = Robot.jetson.getBoilerDistance() - 12.5;
 		if (targetDistance < 0) {
 			state = END;
 		}
@@ -56,7 +56,7 @@ public class DriveToBoiler extends Command {
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
 			if (Math.abs(Robot.drive.getAvgPosition()) < 1) {
-				state = ALIGN;
+				state = ACCELERATE;
 			}
 			break;
 
@@ -64,9 +64,9 @@ public class DriveToBoiler extends Command {
 			if (Math.abs(angle) < SWEET_SPOT) {
 				Robot.drive.setTarget(0.0, 0.0);
 				state = ACCELERATE;
-			} else if (angle > 0) {
-				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
 			} else if (angle < 0) {
+				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
+			} else if (angle > 0) {
 				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
 			}
 			break;
@@ -77,6 +77,7 @@ public class DriveToBoiler extends Command {
 			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance / 2.0) {
 				state = DECELERATE;
 			} else if (Math.abs(speed) >= MAX_SPEED) {
+				
 				speed = MAX_SPEED * direction;
 				rampupDistance = Math.abs(Robot.drive.getAvgPosition());
 				state = CRUISE;
