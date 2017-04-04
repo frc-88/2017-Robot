@@ -9,13 +9,13 @@ public class ShutDownAll extends CommandGroup {
 
     public ShutDownAll() {
     	// Drive
-    	addParallel(new DriveStop());
+    	addSequential(new DriveStop());
     	// Gearage
-    	addParallel(new GearReceiverIn());
+    	addSequential(new GearReceiverIn());
     	// Hanger
-    	addParallel(new HangerStop());
+    	addSequential(new HangerStop());
     	// Intake
-    	addParallel(new IntakeStop());
+    	addSequential(new IntakeStop());
     	// Jetson
     	
     	// Shooter
