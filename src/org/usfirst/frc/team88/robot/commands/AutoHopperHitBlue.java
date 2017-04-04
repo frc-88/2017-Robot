@@ -24,6 +24,6 @@ public class AutoHopperHitBlue extends CommandGroup {
 
 		addSequential(new DriveRotateToAngle(0.0));
 		    	
-		addSequential(new AutoShoot());
+		addSequential(new AutoShoot(10.0));
     }
 }

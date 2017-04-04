@@ -6,8 +6,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoShoot extends CommandGroup {
-
-    public AutoShoot() {
+	private final static double DEFAULT_SHOOT_DELAY = 4.0;
+	
+	public AutoShoot() {
+		this(DEFAULT_SHOOT_DELAY);
+	}
+	
+    public AutoShoot(double shootDelay) {
     	addSequential(new ShooterSetHood(0.42));
     	
 		addSequential(new DriveToBoiler());
@@ -18,7 +23,7 @@ public class AutoShoot extends CommandGroup {
     	addSequential(new ShooterStartFlywheel());
     	addSequential(new Delay(0.3));
     	addSequential(new ShooterStartAgitatorAndFeeder());
-    	addSequential(new Delay(4.0));
+    	addSequential(new Delay(shootDelay));
 
     	addSequential(new ShooterStopAll());    	
     }
