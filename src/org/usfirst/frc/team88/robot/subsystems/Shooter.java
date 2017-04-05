@@ -33,7 +33,7 @@ public class Shooter extends Subsystem {
 	private static final double HOOD_INIT = 0.5;
 	private static final double HOOD_THRESHOLD = 0.05;
 
-	private CANTalon flywheelTalon, feederTalon, agitatorTalon;
+	private CANTalon flywheelTalon, flywheelTalonFollower, feederTalon, agitatorTalon;
 	private Servo hoodServo;
 
 	public Shooter() {
@@ -50,6 +50,11 @@ public class Shooter extends Subsystem {
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 		flywheelTalon.setVoltageRampRate(60.0);
 
+		flywheelTalonFollower = new CANTalon(RobotMap.flywheelMotorFollower);
+		flywheelTalonFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
+		flywheelTalonFollower.set(RobotMap.flywheelMotor);
+		flywheelTalonFollower.enableBrakeMode(false);
+		
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);
 		feederTalon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
