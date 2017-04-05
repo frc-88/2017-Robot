@@ -102,7 +102,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Center Lift Auto R", new AutoCenterLiftRed());
 		SmartDashboard.putData("Far Lift Auto B", new AutoFarLiftBlue());
 		SmartDashboard.putData("Far Lift Auto R", new AutoFarLiftRed());
-
+		SmartDashboard.putData("Hopper Auto R", new AutoHopperHitRed());
+		SmartDashboard.putData("Hopper Auto B", new AutoHopperHitBlue());
+		
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
 
