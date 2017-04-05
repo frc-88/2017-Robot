@@ -115,10 +115,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		Command disabledCommand = new ShutDownAll();
 		jetson.disableImage();
-
-		disabledCommand.start();
 	}
 
 	@Override
