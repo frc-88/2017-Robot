@@ -14,10 +14,6 @@ public class ShutDownAll extends CommandGroup {
     	addSequential(new GearReceiverIn());
     	// Hanger
     	addSequential(new HangerStop());
-    	// Intake
-    	addSequential(new IntakeStop());
-    	// Jetson
-    	
     	// Shooter
     	addSequential(new ShooterStopAll());
     }

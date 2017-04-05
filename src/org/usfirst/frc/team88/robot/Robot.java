@@ -22,7 +22,6 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Shooter shooter;
 	public static Jetson jetson;
-	public static Intake intake;
 	public static Hanger hanger;
 	public static Gearage gearage;
 	public static OI oi;
@@ -36,11 +35,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		jetson = new Jetson();
+
 		drive = new Drive();
 		shooter = new Shooter();
-		intake = new Intake();
 		hanger = new Hanger();
 		gearage = new Gearage();
+		
 		oi = new OI();
 
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -80,11 +80,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Stop Agitator", new ShooterStopAgitator());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
-
-		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
-		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
-		SmartDashboard.putData("Intake In", new IntakeIn());
-		SmartDashboard.putData("Intake Out", new IntakeOut());
 
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
