@@ -116,6 +116,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		jetson.disableImage();
+		shooter.setAgitator(0);
+		shooter.setFeeder(0);
+		shooter.setFlywheel(0);
 	}
 
 	@Override
