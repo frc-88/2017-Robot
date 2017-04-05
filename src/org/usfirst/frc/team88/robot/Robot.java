@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static Jetson jetson;
 	public static Hanger hanger;
 	public static Gearage gearage;
+	public static FuelFlap fuelFlap;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		hanger = new Hanger();
 		gearage = new Gearage();
+		fuelFlap = new FuelFlap();
 		
 		oi = new OI();
 
@@ -89,6 +91,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
 		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
 		SmartDashboard.putData("Gear Eject", new GearEject());
+		
+		SmartDashboard.putData("Fuel Flap In", new FuelFlapIn());
+		SmartDashboard.putData("Fuel Flap Out", new FuelFlapOut());
 
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
 		SmartDashboard.putData("Boiler Lift Auto B", new AutoBoilerLiftBlue());
@@ -167,6 +172,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		shooter.setHood(0.42);
 		jetson.enableImage();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}

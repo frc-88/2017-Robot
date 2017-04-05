@@ -34,8 +34,10 @@ public class RobotMap {
 	public static final int receiverSolenoidIn = isJetFuel ? 7 : 6;
 	public static final int receiverSolenoidOut = isJetFuel ? 6 : 7;
 
+	// FuelFlap
+	public static final int fuelFlapSolenoidIn = 3;
+	public static final int fuelFlapSolenoidOut = 2;
+	
 	// Unused - old intake stuff
 	public static final int unusedMotor = 5;
-	public static final int unusedSolenoidIn = 3;
-	public static final int unusedSolenoidOut = 2;
 }
