@@ -13,9 +13,9 @@ public class AutoDeliverGear extends CommandGroup {
 	
 	public AutoDeliverGear(CommandGroup originator) {
 		addParallel(new FuelFlapOut());
+		addParallel(new GearReceiverOut());
 		addSequential(new DriveDeliverGear(originator != null ? originator : this));
-		addSequential(new GearReceiverOut());
-		addSequential(new DriveWiggle());
+		//addSequential(new DriveWiggle());
 		addSequential(new GearPusherOut());
 		addSequential(new Delay(0.75));
 		addSequential(new DriveDistance(3.5));
