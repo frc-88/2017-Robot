@@ -14,16 +14,16 @@ public class FuelFlap extends Subsystem {
 	
 	public FuelFlap() {
 		flap = new DoubleSolenoid(RobotMap.fuelFlapSolenoidIn, RobotMap.fuelFlapSolenoidOut);
-		flap.set(Value.kForward);
+		flap.set(Value.kReverse);
 	}
 	
 	
 	public void flapIn(){
-		flap.set(Value.kForward);
+		flap.set(Value.kReverse);
 	}
 	
 	public void flapOut(){
-		flap.set(Value.kReverse);
+		flap.set(Value.kForward);
 	}
 	
 	public void initDefaultCommand() {

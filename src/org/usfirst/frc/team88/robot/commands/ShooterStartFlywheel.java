@@ -33,7 +33,7 @@ public class ShooterStartFlywheel extends InstantCommand {
 		} else if (distance < 0) {
 			speed = 750.0;
 		} else{
-			speed = 50 * distance + 225;
+			speed = 50 * distance + 250;
 		}
 
 		Robot.shooter.setFlywheel(speed);

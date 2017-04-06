@@ -10,6 +10,7 @@ public class AutoHopperHitBlue extends CommandGroup {
     public AutoHopperHitBlue() {
 		addSequential(new DriveZeroYaw());
 		addParallel(new ShooterSetHood(.42));
+		addParallel(new FuelFlapOut());
 
 		addSequential(new DriveDistance(-6.0));
 		

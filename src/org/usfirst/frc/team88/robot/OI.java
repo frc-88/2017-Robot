@@ -79,6 +79,7 @@ public class OI {
 
 		// Add these commands here
 		driverButtonA.whenPressed(new DriveRotateToBoiler());
+		driverButtonA.whenReleased(new DriveStop());
 		driverButtonB.whenPressed(new DriveToggleAutoShift());
 		//driverButtonX.whenPressed(new DriveToggleFront());
 
@@ -87,13 +88,13 @@ public class OI {
 		driverButtonRightBumper.whenPressed(new DriveDeliverGear());
 		driverButtonRightBumper.whenReleased(new DriveStop());
 		driverButtonX.whenPressed(new DriveDistance(0.05));
+		driverButtonY.whenPressed(new DriveDistance(0.02));
 
 		operatorButtonLeftBumper.whenPressed(new ShooterStartFlywheel());
 		operatorButtonRightBumper.whenPressed(new ShooterStartAgitatorAndFeeder());
 		operatorButtonRightBumper.whenReleased(new ShooterStopAgitatorAndFeeder());
 
-		operatorButtonA.whenPressed(new JetsonSwapView());
-		operatorButtonB.whenPressed(new JetsonToggleTarget());
+		operatorButtonB.whenPressed(new FuelFlapOut());
 		operatorButtonStart.whenPressed(new ShooterStopAll());
 		operatorButtonBack.whenPressed(new HangerOverride(true));
 		operatorButtonBack.whenReleased(new HangerOverride(false));

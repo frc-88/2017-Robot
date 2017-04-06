@@ -10,7 +10,12 @@ public class AutoBoilerLiftBlue extends CommandGroup {
 	public AutoBoilerLiftBlue() {
 		addSequential(new DriveZeroYaw());
 		addParallel(new ShooterSetHood(.42));
-    	addSequential(new DriveDistance(-6));
+		
+		// I change the distance below to -5.5 or blue boiler side to compensate for camera location
+		// this should not match red boiler side...camera is skewed to a different side
+		//     - Mr. Nick
+    	addSequential(new DriveDistance(-5.5));
+    	
 		addSequential(new DriveScanForGear(90));
     	addSequential(new Delay(0.1));
 		

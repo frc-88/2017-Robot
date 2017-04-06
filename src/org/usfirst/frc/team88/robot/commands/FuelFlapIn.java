@@ -16,7 +16,7 @@ public class FuelFlapIn extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.fuelFlap.flapOut();
+    	Robot.fuelFlap.flapIn();
     }
 
 }
