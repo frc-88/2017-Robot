@@ -5,20 +5,22 @@ import org.usfirst.frc.team88.robot.Robot;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
- *
+ * FuelFlap
+ * 
+ * if we are ever
+ * running hopper hit auto
+ * fuel flap will be key
+ * 
  */
-public class IntakeStop extends InstantCommand {
+public class FuelFlapOut extends InstantCommand {
 
-    public IntakeStop() {
+    public FuelFlapOut() {
         super();
-        requires(Robot.intake);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.fuelFlap);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.intake.setIntakeSpeed(0.0);
+    	Robot.fuelFlap.flapOut();
     }
-
 }

@@ -7,18 +7,16 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class IntakeIn extends InstantCommand {
+public class FuelFlapIn extends InstantCommand {
 
-    public IntakeIn() {
+    public FuelFlapIn() {
         super();
-        requires(Robot.intake);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.fuelFlap);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.intake.sliderIn();
+    	Robot.fuelFlap.flapOut();
     }
 
 }

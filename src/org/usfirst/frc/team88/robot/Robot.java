@@ -22,9 +22,9 @@ public class Robot extends IterativeRobot {
 	public static Drive drive;
 	public static Shooter shooter;
 	public static Jetson jetson;
-	public static Intake intake;
 	public static Hanger hanger;
 	public static Gearage gearage;
+	public static FuelFlap fuelFlap;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -36,11 +36,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		jetson = new Jetson();
+
 		drive = new Drive();
 		shooter = new Shooter();
-		intake = new Intake();
 		hanger = new Hanger();
 		gearage = new Gearage();
+		fuelFlap = new FuelFlap();
+		
 		oi = new OI();
 
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -81,11 +83,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
 
-		SmartDashboard.putData("Start Intake Motor", new IntakeStart());
-		SmartDashboard.putData("Stop Intake Motor", new IntakeStop());
-		SmartDashboard.putData("Intake In", new IntakeIn());
-		SmartDashboard.putData("Intake Out", new IntakeOut());
-
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
 
@@ -94,6 +91,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
 		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
 		SmartDashboard.putData("Gear Eject", new GearEject());
+		
+		SmartDashboard.putData("Fuel Flap In", new FuelFlapIn());
+		SmartDashboard.putData("Fuel Flap Out", new FuelFlapOut());
 
 		SmartDashboard.putData("40 Ball Auto", new Auto40Ball());
 		SmartDashboard.putData("Boiler Lift Auto B", new AutoBoilerLiftBlue());
@@ -115,10 +115,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		Command disabledCommand = new ShutDownAll();
 		jetson.disableImage();
-
-		disabledCommand.start();
+		shooter.setAgitator(0);
+		shooter.setFeeder(0);
+		shooter.setFlywheel(0);
 	}
 
 	@Override
@@ -172,6 +172,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		shooter.setHood(0.42);
 		jetson.enableImage();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
