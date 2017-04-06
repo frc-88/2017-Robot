@@ -50,10 +50,12 @@ public class Shooter extends Subsystem {
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 		flywheelTalon.setVoltageRampRate(60.0);
 
+		/* extra motor initialization for when that gets added
 		flywheelTalonFollower = new CANTalon(RobotMap.flywheelMotorFollower);
 		flywheelTalonFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
 		flywheelTalonFollower.set(RobotMap.flywheelMotor);
 		flywheelTalonFollower.enableBrakeMode(false);
+		*/
 		
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);

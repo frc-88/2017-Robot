@@ -8,7 +8,7 @@ package org.usfirst.frc.team88.robot;
  */
 public class RobotMap {
 
-	public static final boolean isJetFuel = false;
+	public static final boolean isJetFuel = true;
 	
 	// Drive
 	public static final int[] driveLeft = {13, 9, 10, 15};
@@ -18,7 +18,7 @@ public class RobotMap {
 	
 	//Shooter
 	public static final int flywheelMotor = 0;
-	public static final int flywheelMotorFollower = 5;
+	public static final int flywheelMotorFollower = isJetFuel ? 3 : 5;
 	public static final int feederMotor = 4;
 	public static final int hoodServo = 0;
 	
@@ -27,7 +27,7 @@ public class RobotMap {
 	
 	//Hanger
 	public static final int hangerMotor = 1;
-	public static final int hangerMotorFollower = 3;
+	public static final int hangerMotorFollower = isJetFuel ? 5 : 3;
 	
 	//Gearage
 	public static final int pusherSolenoidIn = 1;
