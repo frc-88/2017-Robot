@@ -18,7 +18,7 @@ public class AutoDeliverGear extends CommandGroup {
 		//addSequential(new DriveWiggle());
 		addSequential(new GearPusherOut());
 		addSequential(new Delay(0.75));
-		addSequential(new DriveDistance(3.5));
+		addSequential(new DriveDistanceSlow(3.5));
 		addSequential(new GearPusherIn());
 	}
 }

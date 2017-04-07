@@ -1,48 +1,44 @@
+
 package org.usfirst.frc.team88.robot.commands;
 
 import org.usfirst.frc.team88.robot.Robot;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
-public class DriveDeliverGear extends Command {
+public class DriveDistanceSlow extends Command {
 	// states
 	private static final int PREP = 0;
-	private static final int ALIGN = 1;
-	private static final int ACCELERATE = 2;
-	private static final int CRUISE = 3;
-	private static final int DECELERATE = 4;
-	private static final int STOP = 5;
-	private static final int END = 6;
+	private static final int ACCELERATE = 1;
+	private static final int CRUISE = 2;
+	private static final int DECELERATE = 3;
+	private static final int STOP = 4;
+	private static final int END = 5;
 
-	private static final double MAX_SPEED = 0.4;
-	private static final double ACCELERATION_SCALE = 0.01;
-	private static final double SWEET_SPOT = 15.0;
-	private static final double ALIGN_SPEED = 0.1;
+	private static final double MAX_SPEED = 0.5;
+	private static final double ACCELERATION_SCALE = 0.02;
 
-	private CommandGroup originator;
 	private int state;
-	private double targetDistance;
+	private boolean usePrefs = false;
 	private double direction;
+	private double inputDistance;
+	private double targetDistance;
+	private double targetYaw;
 	private double rampupDistance;
 	private double speed;
 	private double curve;
-	NetworkTable robotTable;
 
-	public DriveDeliverGear() {
-		this(null);
+	public DriveDistanceSlow() {
+		requires(Robot.drive);
+		usePrefs = true;
 	}
 
-	public DriveDeliverGear(CommandGroup group) {
+	public DriveDistanceSlow(double distance) {
 		requires(Robot.drive);
-
-		robotTable = NetworkTable.getTable("robot");
-		originator = group;
+		inputDistance = distance;
 	}
 
 	// Called just before this Command runs the first time
@@ -51,45 +47,35 @@ public class DriveDeliverGear extends Command {
 
 		state = PREP;
 
-		targetDistance = (Robot.jetson.getGearDistance()) / 12.0;
-		direction = -1.0;
+		if (usePrefs) {
+			targetDistance = prefs.getDouble("driveDistance", 1.0);
+		} else {
+			targetDistance = inputDistance;
+		}
 
-		if (targetDistance < 0.0) {
-			if (originator != null) {
-				originator.cancel();
-			}
-			state = END;
+		if (targetDistance > 0) {
+			direction = 1.0;
+		} else if (targetDistance < 0) {
+			direction = -1.0;
+			targetDistance = -targetDistance;
+		} else {
+			state = STOP;
 		}
 
 		Robot.drive.resetDrive();
 		Robot.drive.disableRampRate();
+		targetYaw = Robot.drive.getYaw();
 		speed = 0.0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double gamma = Robot.jetson.getGearGamma();
-		if (Math.abs(Robot.drive.getAvgPosition()) < targetDistance / 2.0) {
-			curve = (gamma * direction) * 0.03;
-		} else {
-			curve = 0;
-		}
+		curve = (targetYaw - (Robot.drive.getYaw() * direction)) * 0.03;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
 			if (Math.abs(Robot.drive.getAvgPosition()) < 1) {
-				state = ALIGN;
-			}
-			break;
-
-		case ALIGN: // rotate so that gamma is in our sweet spot
-			if (Math.abs(gamma) < SWEET_SPOT) {
-				Robot.drive.setTarget(0.0, 0.0);
 				state = ACCELERATE;
-			} else if (gamma > 0) {
-				Robot.drive.setTarget(ALIGN_SPEED, -ALIGN_SPEED);
-			} else if (gamma < 0) {
-				Robot.drive.setTarget(-ALIGN_SPEED, ALIGN_SPEED);
 			}
 			break;
 
@@ -111,7 +97,7 @@ public class DriveDeliverGear extends Command {
 		case CRUISE: // consistent speed until we get close
 			Robot.drive.driveCurve(speed, curve);
 
-			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance) {
+			if (Math.abs(Robot.drive.getAvgPosition()) > targetDistance - rampupDistance * 1.33) {
 				state = DECELERATE;
 			}
 			break;
@@ -124,6 +110,10 @@ public class DriveDeliverGear extends Command {
 			if (Math.abs(speed) < ACCELERATION_SCALE) {
 				state = STOP;
 			}
+
+			if (Math.abs(Robot.drive.getAvgPosition()) - 0.1 > targetDistance) {
+				state = STOP;
+			}
 			break;
 
 		case STOP: // stop
@@ -134,7 +124,6 @@ public class DriveDeliverGear extends Command {
 		case END: // targetDistance = 0, do nothing
 			break;
 		}
-
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -142,10 +131,8 @@ public class DriveDeliverGear extends Command {
 		return state == END;
 	}
 
-	// Called once after isFinished returns true
+	// Called once after is Finished returns true
 	protected void end() {
-		Robot.jetson.deactivateTarget();
-		robotTable.putString("sound", "work-complete");
 		Robot.drive.enableRampRate();
 	}
 

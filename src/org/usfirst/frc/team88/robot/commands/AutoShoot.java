@@ -13,15 +13,15 @@ public class AutoShoot extends CommandGroup {
 	}
 	
     public AutoShoot(double shootDelay) {
-    	addSequential(new ShooterSetHood(0.42));
+    	addParallel(new ShooterSetHood(0.42));
     	
-		addSequential(new DriveToBoiler());
-    	addSequential(new Delay(.25));
+		//addSequential(new DriveToBoiler());
+    	//addSequential(new Delay(.25));
     	addSequential(new DriveRotateToBoiler());
     	addSequential(new Delay(0.1));
 
     	addSequential(new ShooterStartFlywheel());
-    	addSequential(new Delay(0.3));
+    	addSequential(new Delay(0.2));
     	addSequential(new ShooterStartAgitatorAndFeeder());
     	addSequential(new Delay(shootDelay));
 

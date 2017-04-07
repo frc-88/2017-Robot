@@ -144,10 +144,10 @@ public class Robot extends IterativeRobot {
 
 		// autonomousCommand = new Auto40Ball();
 		// autonomousCommand = new AutoDeliverGear();
-		// autonomousCommand = new AutoFarLiftBlue();
-		autonomousCommand = new AutoFarLiftRed();
-		// autonomousCommand = new AutoBoilerLiftBlue();
-		// autonomousCommand = new AutoBoilerLiftRed();
+		   //autonomousCommand = new AutoFarLiftBlue();
+		// autonomousCommand = new AutoFarLiftRed();
+		//autonomousCommand = new AutoBoilerLiftBlue();
+		 autonomousCommand = new AutoBoilerLiftRed();
 		// autonomousCommand = new AutoCenterLiftBlue();
 		// autonomousCommand = new AutoCenterLiftRed();
 

@@ -11,8 +11,10 @@ public class AutoCenterLiftBlue extends CommandGroup {
     	addSequential(new DriveZeroYaw());
     	addSequential(new AutoDeliverGear());
     	addSequential(new Delay(0.1));
-    	addSequential(new DriveRotateToAngle(90));
-    	addSequential(new Delay(0.2));
+    	addSequential(new DriveRotateToAngle(85));
+    	addSequential(new Delay(0.1));
+    	addSequential(new DriveDistance(2.0));
+    	addSequential(new Delay(0.4));
     	addSequential(new AutoShoot());
     }
 }
