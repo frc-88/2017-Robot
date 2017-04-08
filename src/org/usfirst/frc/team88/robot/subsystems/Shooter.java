@@ -19,10 +19,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
 
-	private static final double FLY_P = 13.5;
+//	private static final double FLY_P = 13.5;
+//	private static final double FLY_I = 0.00;
+//	private static final double FLY_D = 2000.0;
+//	private static final double FLY_F = 1.78;
+//	private static final double FLY_THRESHOLD = 50.0;
+	
+	private static final double FLY_P = 0.0;
 	private static final double FLY_I = 0.00;
-	private static final double FLY_D = 2000.0;
-	private static final double FLY_F = 1.78;
+	private static final double FLY_D = 0.0;
+	private static final double FLY_F = 6.5;
 	private static final double FLY_THRESHOLD = 50.0;
 	
 	private static final double FEEDER_P = 0.05;
@@ -40,22 +46,24 @@ public class Shooter extends Subsystem {
 		// initialize flywheel
 		flywheelTalon = new CANTalon(RobotMap.flywheelMotor);
 		flywheelTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		flywheelTalon.configEncoderCodesPerRev(80);
+		flywheelTalon.configEncoderCodesPerRev(12);
 		flywheelTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		flywheelTalon.configPeakOutputVoltage(+12.0f, -12.0f);
 		flywheelTalon.reverseSensor(!RobotMap.isJetFuel);
 		flywheelTalon.reverseOutput(!RobotMap.isJetFuel);
 		flywheelTalon.enableBrakeMode(false);
 		flywheelTalon.setPID(FLY_P, FLY_I, FLY_D, FLY_F, 0, 0, 0);
+		flywheelTalon.reverseOutput(true);
+		flywheelTalon.reverseSensor(false);
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
 		flywheelTalon.setVoltageRampRate(60.0);
 
-		/* extra motor initialization for when that gets added
+		//extra motor initialization for when that gets added
 		flywheelTalonFollower = new CANTalon(RobotMap.flywheelMotorFollower);
 		flywheelTalonFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
 		flywheelTalonFollower.set(RobotMap.flywheelMotor);
 		flywheelTalonFollower.enableBrakeMode(false);
-		*/
+		
 		
 		// initialize feeder
 		feederTalon = new CANTalon(RobotMap.feederMotor);
@@ -140,7 +148,7 @@ public class Shooter extends Subsystem {
 
 		SmartDashboard.putNumber("HoodPosition", hoodServo.getPosition());
 		
-		SmartDashboard.putString("ShooterSpeed", flywheelTalon.getSpeed() + ":" + feederTalon.getSpeed());
+//		SmartDashboard.putNumber("ShooterSpeed", flywheelTalon.getSpeed() + ":" + feederTalon.getSpeed());
 	}
 
 	public void initDefaultCommand() {

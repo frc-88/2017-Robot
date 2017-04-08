@@ -49,6 +49,8 @@ public class Jetson extends Subsystem implements PIDSource {
 		camNum = 1;
 		jetsonTable.putNumber("visionFeed", camNum);
 
+		resetDistances();
+		
 		// set up cameras used for driver/operator view
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
 		camera1.setResolution(320, 240);
@@ -166,6 +168,12 @@ public class Jetson extends Subsystem implements PIDSource {
 		viewGearside = !viewGearside;
 	}
 
+	public void resetDistances() {
+		jetsonTable.putNumber("DistanceB", -1.0);
+		jetsonTable.putNumber("DistanceG", -1.0);
+	}
+
+	
 	public double getBoilerDistance() {
 		return jetsonTable.getNumber("DistanceB", -1.0);
 	}

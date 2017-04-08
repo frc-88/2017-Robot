@@ -55,7 +55,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_BOILER_I = 0.00033;
 	private final static double ROTATE_BOILER_D = 0.0;
 	private final static double ROTATE_BOILER_F = 0.0;
-	private final static double ROTATE_BOILER_TOLERANCE = 0.2;
+	private final static double ROTATE_BOILER_TOLERANCE = 0.7;
 	
 	private final static double ROTATE_FAST_MAX = 0.4;
 	private final static double ROTATE_SLOW_MAX = 0.15;

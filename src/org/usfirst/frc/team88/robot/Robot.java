@@ -82,6 +82,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Stop Agitator", new ShooterStopAgitator());
 		SmartDashboard.putData("Set Hood", new ShooterSetHood());
 		SmartDashboard.putData("Stop Shooter", new ShooterStopAll());
+		SmartDashboard.putData("Test Shooter", new ShooterStartFlywheel(false));
 
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
@@ -146,8 +147,8 @@ public class Robot extends IterativeRobot {
 		// autonomousCommand = new AutoDeliverGear();
 		// autonomousCommand = new AutoFarLiftBlue();
 		// autonomousCommand = new AutoFarLiftRed();
-		 autonomousCommand = new AutoBoilerLiftBlue();
-		// autonomousCommand = new AutoBoilerLiftRed();
+		// autonomousCommand = new AutoBoilerLiftBlue();
+		 autonomousCommand = new AutoBoilerLiftRed();
 		// autonomousCommand = new AutoCenterLiftBlue();
 		// autonomousCommand = new AutoCenterLiftRed();
 
@@ -172,6 +173,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		shooter.setHood(0.42);
 		jetson.enableImage();
+		Robot.gearage.pusherIn();
+		
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
