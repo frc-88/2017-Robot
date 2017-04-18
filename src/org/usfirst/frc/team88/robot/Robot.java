@@ -23,8 +23,8 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Jetson jetson;
 	public static Hanger hanger;
-	public static Gearage gearage;
 	public static FuelFlap fuelFlap;
+	public static GearPan gearPan;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -40,8 +40,8 @@ public class Robot extends IterativeRobot {
 		drive = new Drive();
 		shooter = new Shooter();
 		hanger = new Hanger();
-		gearage = new Gearage();
 		fuelFlap = new FuelFlap();
+		gearPan = new GearPan();
 		
 		oi = new OI();
 
@@ -86,12 +86,6 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Hanger Start", new HangerStart());
 		SmartDashboard.putData("Hanger Stop", new HangerStop());
-
-		SmartDashboard.putData("Gear Pusher In", new GearPusherIn2());
-		SmartDashboard.putData("Gear Pusher Out", new GearPusherOut2());
-		SmartDashboard.putData("Gear Receiver In", new GearReceiverIn());
-		SmartDashboard.putData("Gear Receiver Out", new GearReceiverOut());
-		SmartDashboard.putData("Gear Eject", new GearEject());
 		
 		SmartDashboard.putData("Fuel Flap In", new FuelFlapIn());
 		SmartDashboard.putData("Fuel Flap Out", new FuelFlapOut());
@@ -105,6 +99,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Far Lift Auto R", new AutoFarLiftRed());
 		SmartDashboard.putData("Hopper Auto R", new AutoHopperHitRed());
 		SmartDashboard.putData("Hopper Auto B", new AutoHopperHitBlue());
+		
+		SmartDashboard.putData("Get Gear", new GearPanGetGear(0.75));
+		SmartDashboard.putData("Release Gear", new GearPanReleaseGear());
+		SmartDashboard.putData("Reset Gear", new GearPanReset());
 		
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
@@ -172,9 +170,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		shooter.setHood(0.42);
-		jetson.enableImage();
-		Robot.gearage.pusherIn();
-		
+		jetson.enableImage();		
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

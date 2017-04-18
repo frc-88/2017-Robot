@@ -40,7 +40,6 @@ public class Auto40Ball extends CommandGroup {
 		double deltaCurveB = prefs.getDouble("DeltaCurve B", 0.0);
 		double deltaDistanceC = prefs.getDouble("DeltaDistanceC", 0.0);
 		
-		addParallel(new GearReceiverOut());
 		addParallel(new PlaySound("hopper"));
 		addParallel(new ShooterSetHood(.42));
 		
@@ -115,7 +114,6 @@ public class Auto40Ball extends CommandGroup {
 			addSequential(new Delay(hopperDelay));
 			
 			addSequential(new DriveDeliverGear(this));
-			addSequential(new GearEject());
 			addSequential(new Delay(gearDelay));
 			
 			if (shoot) {

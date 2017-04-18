@@ -98,11 +98,12 @@ public class OI {
 		operatorButtonStart.whenPressed(new ShooterStopAll());
 		operatorButtonBack.whenPressed(new HangerOverride(true));
 		operatorButtonBack.whenReleased(new HangerOverride(false));
+		
+		operatorButtonX.whenPressed(new GearPanGetGear(0.75));
+		operatorButtonX.whenReleased(new GearPanReset());
+		operatorButtonY.whenPressed(new GearPanReleaseGear());
+		operatorButtonY.whenReleased(new GearPanReset());
 
-		operatorButtonY.whenPressed(new GearPusherOut());
-		operatorButtonY.whenReleased(new GearPusherIn());
-		operatorButtonX.whenPressed(new GearReceiverIn());
-		operatorButtonX.whenReleased(new GearReceiverOut());
 	}
 
 
