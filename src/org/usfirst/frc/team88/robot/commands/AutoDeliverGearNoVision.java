@@ -15,7 +15,7 @@ public class AutoDeliverGearNoVision extends CommandGroup {
 		addSequential(new DriveDistance());
 		addSequential(new GearPanReleaseGear());
 		addParallel(new Delay(0.75));
-		addSequential(new GearPanReset());
 		addSequential(new DriveDistance(1.5));
+		addSequential(new GearPanReset());
 	}
 }
