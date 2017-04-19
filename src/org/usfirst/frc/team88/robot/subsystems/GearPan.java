@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * 
+ * This is a cool pan
+ * It makes gears go in and out
+ * Hopefully it works.
  */
 public class GearPan extends Subsystem {
 	private CANTalon intakeMotor;
