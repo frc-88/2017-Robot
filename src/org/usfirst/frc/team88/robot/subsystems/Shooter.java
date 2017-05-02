@@ -25,10 +25,10 @@ public class Shooter extends Subsystem {
 //	private static final double FLY_F = 1.78;
 //	private static final double FLY_THRESHOLD = 50.0;
 	
-	private static final double FLY_P = 0.0;
-	private static final double FLY_I = 0.00;
-	private static final double FLY_D = 0.0;
-	private static final double FLY_F = 6.5;
+	private static final double FLY_P = 6.3;
+	private static final double FLY_I = 0.0;
+	private static final double FLY_D = 2200.0;
+	private static final double FLY_F = 4.1;
 	private static final double FLY_THRESHOLD = 50.0;
 	
 	private static final double FEEDER_P = 0.05;
@@ -56,13 +56,16 @@ public class Shooter extends Subsystem {
 		flywheelTalon.reverseOutput(true);
 		flywheelTalon.reverseSensor(false);
 		flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-		flywheelTalon.setVoltageRampRate(60.0);
+		flywheelTalon.setVoltageRampRate(45.0);
+		flywheelTalon.EnableCurrentLimit(true);
+		flywheelTalon.setCurrentLimit(20);
+
 
 		//extra motor initialization for when that gets added
-//		flywheelTalonFollower = new CANTalon(RobotMap.flywheelMotorFollower);
-//		flywheelTalonFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
-//		flywheelTalonFollower.set(RobotMap.flywheelMotor);
-//		flywheelTalonFollower.enableBrakeMode(false);
+		flywheelTalonFollower = new CANTalon(RobotMap.flywheelMotorFollower);
+		flywheelTalonFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
+		flywheelTalonFollower.set(RobotMap.flywheelMotor);
+		flywheelTalonFollower.enableBrakeMode(false);
 		
 		
 		// initialize feeder
