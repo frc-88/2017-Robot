@@ -7,16 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearPanReleaseGear extends Command {
-	
-    public GearPanReleaseGear() {
+public class GearPanScoreGear extends Command {
+
+    public GearPanScoreGear() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     	requires(Robot.gearPan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.gearPan.panOut();
-    	Robot.gearPan.intakeSpeed(-0.3);
     }
 
     // Called repeatedly when this Command is scheduled to run
