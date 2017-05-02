@@ -32,7 +32,9 @@ public class RobotMap {
 	//Gearage
 	public static final int panSolenoidIn = 1;
 	public static final int panSolenoidOut = 0;
-	public static final int intakeMotor = 6;
+	public static final int intakeMotor = 1;
+	public static final int intakeChanel = 6;
+
 
 	// FuelFlap
 	public static final int fuelFlapSolenoidIn = 3;
