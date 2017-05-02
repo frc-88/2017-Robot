@@ -18,6 +18,7 @@ public class RobotMap {
 	
 	//Shooter
 	public static final int flywheelMotor = 0;
+	public static final int flywheelMotorFollower = isJetFuel ? 3 : 5;
 	public static final int feederMotor = 4;
 	public static final int hoodServo = 0;
 	
@@ -31,7 +32,7 @@ public class RobotMap {
 	//Gearage
 	public static final int panSolenoidIn = 1;
 	public static final int panSolenoidOut = 0;
-	public static final int intakeMotor = isJetFuel ? 3 : 5;;
+	public static final int intakeMotor = 6;
 
 	// FuelFlap
 	public static final int fuelFlapSolenoidIn = 3;
