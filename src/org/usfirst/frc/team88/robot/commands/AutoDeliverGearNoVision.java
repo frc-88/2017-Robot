@@ -13,7 +13,7 @@ public class AutoDeliverGearNoVision extends CommandGroup {
 	
 	public AutoDeliverGearNoVision(CommandGroup originator) {
 		addSequential(new DriveDistance());
-		addSequential(new GearPanReleaseGear());
+		addSequential(new GearPanReleaseGear(0.2));
 		addParallel(new Delay(0.75));
 		addSequential(new DriveDistance(1.5));
 		addSequential(new GearPanReset());

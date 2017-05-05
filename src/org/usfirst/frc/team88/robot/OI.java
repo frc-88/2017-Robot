@@ -99,12 +99,10 @@ public class OI {
 		operatorButtonBack.whenPressed(new HangerOverride(true));
 		operatorButtonBack.whenReleased(new HangerOverride(false));
 		
-		operatorButtonX.whenPressed(new GearPanGetGear(0.75));
+		operatorButtonX.whenPressed(new GearPanGetGear(-0.75));
 		operatorButtonX.whenReleased(new GearPanReset());
-		operatorButtonY.whenPressed(new GearPanScoreGear());
+		operatorButtonY.whenPressed(new GearPanReleaseGear(0.2));
 		operatorButtonY.whenReleased(new GearPanReset());
-		operatorButtonA.whenPressed(new GearPanReleaseGear());
-		operatorButtonA.whenReleased(new GearPanReset());
 
 	}
 

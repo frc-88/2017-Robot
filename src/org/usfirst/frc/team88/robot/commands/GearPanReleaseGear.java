@@ -9,18 +9,25 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearPanReleaseGear extends Command {
 	
-    public GearPanReleaseGear() {
+	private double delay;
+	private double count;
+    public GearPanReleaseGear(double d) {
     	requires(Robot.gearPan);
+    	delay = d * 100;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	count = 0;
     	Robot.gearPan.panOut();
-    	Robot.gearPan.intakeSpeed(-0.3);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(count++ > delay){
+        	Robot.gearPan.intakeSpeed(0.5);
+    	}
+    	Robot.gearPan.updateDashboard();
     }
 
     // Make this return true when this Command no longer needs to run execute()

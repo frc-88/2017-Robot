@@ -101,7 +101,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Hopper Auto B", new AutoHopperHitBlue());
 		
 		SmartDashboard.putData("Get Gear", new GearPanGetGear(0.75));
-		SmartDashboard.putData("Release Gear", new GearPanReleaseGear());
+		SmartDashboard.putData("Release Gear", new GearPanReleaseGear(0.2));
 		SmartDashboard.putData("Reset Gear", new GearPanReset());
 		
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());

@@ -30,8 +30,8 @@ public class RobotMap {
 	public static final int hangerMotorFollower = isJetFuel ? 5 : 3;
 	
 	//Gearage
-	public static final int panSolenoidIn = 1;
-	public static final int panSolenoidOut = 0;
+	public static final int panSolenoidIn = 7;
+	public static final int panSolenoidOut = 6;
 	public static final int intakeMotor = 1;
 	public static final int intakeChanel = 6;
 

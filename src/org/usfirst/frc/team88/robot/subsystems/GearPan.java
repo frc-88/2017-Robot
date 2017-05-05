@@ -22,8 +22,9 @@ public class GearPan extends Subsystem {
 	private Talon intakeMotor;
 	private DoubleSolenoid pan;
 	private PowerDistributionPanel pdp;
-	private static final double INTAKE_MAX_CURRENT = 50.0;
-	private boolean isDone;
+	private static final double INTAKE_MAX_CURRENT = 11.0;
+	private static final int IS_DONE_MAX = 5;
+	private int isDone;
 	
 	public GearPan(){
 		pdp = new PowerDistributionPanel();
@@ -32,7 +33,7 @@ public class GearPan extends Subsystem {
 		pan = new DoubleSolenoid(RobotMap.panSolenoidIn, RobotMap.panSolenoidOut);
 		pan.set(Value.kReverse);
 		
-		isDone = false;
+		isDone = 0;
 	}
 	
 	public void intakeSpeed(double speed){
@@ -44,14 +45,16 @@ public class GearPan extends Subsystem {
 	}
 	
 	public void resetIsDone(){
-		isDone = false;
+		isDone = 0;
 	}
 	
 	public boolean isDone(){
 		if(pdp.getCurrent(RobotMap.intakeChanel) > INTAKE_MAX_CURRENT){
-			isDone = true;
+			isDone++;
+		}else{
+			isDone = 0;
 		}
-		return isDone;
+		return isDone > IS_DONE_MAX;
 	}
 	
 	public void panIn(){
