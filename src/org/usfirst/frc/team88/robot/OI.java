@@ -101,7 +101,7 @@ public class OI {
 		
 		operatorButtonX.whenPressed(new GearPanGetGear(-0.75));
 		operatorButtonX.whenReleased(new GearPanReset());
-		operatorButtonY.whenPressed(new GearPanReleaseGear(0.2));
+		operatorButtonY.whenPressed(new GearPanReleaseGear());
 		operatorButtonY.whenReleased(new GearPanReset());
 
 	}

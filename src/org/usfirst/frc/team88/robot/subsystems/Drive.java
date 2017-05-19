@@ -20,9 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Drive
  * 
- *  racing down the field
- *  stopping on a dime to get
- *       a bright yellow gear
+ * racing down the field stopping on a dime to get a bright yellow gear
  * 
  */
 public class Drive extends Subsystem implements PIDOutput {
@@ -50,20 +48,20 @@ public class Drive extends Subsystem implements PIDOutput {
 	private final static double ROTATE_D = 0.0;
 	private final static double ROTATE_F = 0.0;
 	private final static double ROTATE_TOLERANCE = 3.0;
-	
+
 	private final static double ROTATE_BOILER_P = 0.003;
 	private final static double ROTATE_BOILER_I = 0.00033;
 	private final static double ROTATE_BOILER_D = 0.0;
 	private final static double ROTATE_BOILER_F = 0.0;
 	private final static double ROTATE_BOILER_TOLERANCE = 0.7;
-	
+
 	private final static double ROTATE_FAST_MAX = 0.4;
 	private final static double ROTATE_SLOW_MAX = 0.15;
 	private final static double ROTATE_MIN = 0.05;
 	private final static double ROTATE_BOILER_MIN = 0.015;
 
 	public final static double DFT_SENSITIVITY = 0.15;
-	
+
 	public PIDController rotateController;
 	public PIDController rotateBoilerController;
 
@@ -97,7 +95,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		// left talons are reversed for comp bot
 		// right talons are reversed for practice bot
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
-		initTalons(lTalons, RobotMap.driveLeft, true, RobotMap.isJetFuel, false);
+		initTalons(lTalons, RobotMap.driveLeft, false, RobotMap.isJetFuel, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
 		initTalons(rTalons, RobotMap.driveRight, !RobotMap.isJetFuel, !RobotMap.isJetFuel, false);
 
@@ -119,8 +117,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		rotateController.setOutputRange(-1.0, 1.0);
 		rotateController.setAbsoluteTolerance(ROTATE_TOLERANCE);
 		rotateController.setContinuous(true);
-		
-		rotateBoilerController = new PIDController(ROTATE_BOILER_P, ROTATE_BOILER_I, ROTATE_BOILER_D, ROTATE_BOILER_F, Robot.jetson, this);
+
+		rotateBoilerController = new PIDController(ROTATE_BOILER_P, ROTATE_BOILER_I, ROTATE_BOILER_D, ROTATE_BOILER_F,
+				Robot.jetson, this);
 		rotateBoilerController.setInputRange(-180.0f, 180.0f);
 		rotateBoilerController.setOutputRange(-1.0, 1.0);
 		rotateBoilerController.setAbsoluteTolerance(ROTATE_BOILER_TOLERANCE);
@@ -235,7 +234,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		final double minimum = 0.02;
 		final double minRange = 0.008;
 
-		if (outputMagnitude == 0 && Math.abs(getAvgSpeed()) < 200 ) {
+		if (outputMagnitude == 0 && Math.abs(getAvgSpeed()) < 200) {
 			if (curve < minRange && curve > -minRange) {
 				curve = 0;
 			} else if (curve < minimum && curve > 0) {
@@ -338,11 +337,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	public int getLeftEncPosition() {
 		return lTalons[0].getEncPosition();
 	}
-	
+
 	public int getRightEncPosition() {
 		return rTalons[0].getEncPosition();
 	}
-	
+
 	public double getAvgPosition() {
 		return (lTalons[0].getPosition() + rTalons[0].getPosition()) / 2.0;
 	}
@@ -372,11 +371,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void toggleAutoShift() {
 		autoShift = !autoShift;
 	}
-	
+
 	public boolean isGearFront() {
 		return isGearFront();
 	}
-	
+
 	public void toggleFront() {
 		isGearFront = !isGearFront;
 	}
@@ -417,44 +416,47 @@ public class Drive extends Subsystem implements PIDOutput {
 		int i;
 
 		SmartDashboard.putNumber("LeftPosition: ", lTalons[0].getPosition());
-		SmartDashboard.putNumber("LeftEncPosition: ", lTalons[0].getEncPosition());
-		SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
-		SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
-		SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
-		SmartDashboard.putNumber("LeftError: ", lTalons[0].getClosedLoopError());
-		for (i = 0; i < lTalons.length; i++) {
-			SmartDashboard.putNumber("LeftCurrent" + i, lTalons[i].getOutputCurrent());
-			SmartDashboard.putNumber("LeftVoltage" + i, lTalons[i].getOutputVoltage());
-		}
-
 		SmartDashboard.putNumber("RightPosition: ", rTalons[0].getPosition());
-		SmartDashboard.putNumber("RightEncPosition: ", rTalons[0].getEncPosition());
-		SmartDashboard.putNumber("RightEncVel: ", rTalons[0].getEncVelocity());
-		SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
-		SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
-		SmartDashboard.putNumber("RightError: ", rTalons[0].getClosedLoopError());
-		for (i = 0; i < rTalons.length; i++) {
-			SmartDashboard.putNumber("RightCurrent" + i, rTalons[i].getOutputCurrent());
-			SmartDashboard.putNumber("RightVoltage" + i, rTalons[i].getOutputVoltage());
-		}
 
-		SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
 		SmartDashboard.putBoolean("lowGear", isLowGear());
 		SmartDashboard.putBoolean("Autoshift", autoShift);
 
-		// NavX stuff
 		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
 		SmartDashboard.putBoolean("IMU_IsCalibrating", navx.isCalibrating());
 		SmartDashboard.putNumber("IMU_Yaw", navx.getYaw());
-		SmartDashboard.putNumber("IMU_Pitch", navx.getPitch());
-		SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
-		SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
-		SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
-		SmartDashboard.putNumber("Jerk_Y", getJerkY());
-		SmartDashboard.putNumber("Jerk_X", getJerkX());
-		SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
-		
-		SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
+
+		if (RobotMap.debugMode) {
+			SmartDashboard.putNumber("LeftEncPosition: ", lTalons[0].getEncPosition());
+			SmartDashboard.putNumber("LeftEncVel: ", lTalons[0].getEncVelocity());
+			SmartDashboard.putNumber("LeftSpeed: ", lTalons[0].getSpeed());
+			SmartDashboard.putNumber("LeftSetPoint", lTalons[0].getSetpoint());
+			SmartDashboard.putNumber("LeftError: ", lTalons[0].getClosedLoopError());
+			for (i = 0; i < lTalons.length; i++) {
+				SmartDashboard.putNumber("LeftCurrent" + i, lTalons[i].getOutputCurrent());
+				SmartDashboard.putNumber("LeftVoltage" + i, lTalons[i].getOutputVoltage());
+			}
+
+			SmartDashboard.putNumber("RightEncPosition: ", rTalons[0].getEncPosition());
+			SmartDashboard.putNumber("RightEncVel: ", rTalons[0].getEncVelocity());
+			SmartDashboard.putNumber("RightSpeed: ", rTalons[0].getSpeed());
+			SmartDashboard.putNumber("RightSetPoint", rTalons[0].getSetpoint());
+			SmartDashboard.putNumber("RightError: ", rTalons[0].getClosedLoopError());
+			for (i = 0; i < rTalons.length; i++) {
+				SmartDashboard.putNumber("RightCurrent" + i, rTalons[i].getOutputCurrent());
+				SmartDashboard.putNumber("RightVoltage" + i, rTalons[i].getOutputVoltage());
+			}
+
+			SmartDashboard.putString("Speed", lTalons[0].getSpeed() + ":" + rTalons[0].getSpeed());
+			SmartDashboard.putNumber("IMU_Pitch", navx.getPitch());
+			SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
+			SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
+			SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
+			SmartDashboard.putNumber("Jerk_Y", getJerkY());
+			SmartDashboard.putNumber("Jerk_X", getJerkX());
+			SmartDashboard.putBoolean("Collision_Detected", collisionDetected());
+
+			SmartDashboard.putBoolean("Red?", ds.getAlliance() == DriverStation.Alliance.Red);
+		}
 
 		robotTable.putBoolean("inLow", isLowGear());
 		robotTable.putBoolean("climbing", isClimbing());
@@ -465,7 +467,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public boolean isClimbing() {
 		return Math.abs(navx.getPitch()) > 10.0;
 	}
-	
+
 	public boolean twentySecondsLeft() {
 		DriverStation driverStation = DriverStation.getInstance();
 
@@ -478,26 +480,26 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 	}
 
-	public void setRotateSpeedSlow(){
+	public void setRotateSpeedSlow() {
 		maxRotate = ROTATE_SLOW_MAX;
 	}
-	
-	public void setRotateSpeedFast(){
+
+	public void setRotateSpeedFast() {
 		maxRotate = ROTATE_FAST_MAX;
 	}
 
-	public void setRotateModeNormal(){
+	public void setRotateModeNormal() {
 		rotateBoilerMode = false;
 	}
-	
-	public void setRotateModeBoiler(){
+
+	public void setRotateModeBoiler() {
 		rotateBoilerMode = true;
 	}
-	
+
 	@Override
 	public void pidWrite(double output) {
 		double minRotate = rotateBoilerMode ? ROTATE_BOILER_MIN : ROTATE_MIN;
-		
+
 		if (output > maxRotate) {
 			output = maxRotate;
 		} else if (output > minRotate) {

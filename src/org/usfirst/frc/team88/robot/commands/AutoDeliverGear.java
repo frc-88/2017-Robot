@@ -16,8 +16,7 @@ public class AutoDeliverGear extends CommandGroup {
 		addSequential(new DriveDeliverGear(originator != null ? originator : this));
 		// DO NOT REMOVE THE FOLLOWING DELAY!!!
 		addSequential(new Delay(0.1));
-		addSequential(new GearPanReleaseGear(0.2));
-		addParallel(new Delay(0.5));
+		addSequential(new GearPanReleaseGear());
 		addSequential(new DriveDistanceSlow(3.5));
 		addSequential(new GearPanReset());
 	}

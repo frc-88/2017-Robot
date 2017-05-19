@@ -2,11 +2,6 @@ package org.usfirst.frc.team88.robot.subsystems;
 
 import org.usfirst.frc.team88.robot.commands.JetsonUpdateSmartDashboard;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
-import edu.wpi.first.wpilibj.CameraServer;
-
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
@@ -34,40 +29,18 @@ public class Jetson extends Subsystem implements PIDSource {
 	Preferences prefs;
 	NetworkTable jetsonTable;
 	private int camNum;
-	private boolean targeting, viewGearside;
+	private boolean targeting;
 	NetworkTable robotTable;
-	UsbCamera camera1, camera2;
-	VideoSink server;
-	CvSink cvsink1, cvsink2;
 
 	public Jetson() {
 		prefs = Preferences.getInstance();
 		robotTable = NetworkTable.getTable("robot");
 		jetsonTable = NetworkTable.getTable("imfeelinglucky");
 		targeting = false;
-		viewGearside = true;
 		camNum = 1;
 		jetsonTable.putNumber("visionFeed", camNum);
 
 		resetDistances();
-		
-		// set up cameras used for driver/operator view
-		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-		camera1.setResolution(320, 240);
-		camera1.setFPS(30);
-		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-		camera2.setResolution(320, 240);
-		camera2.setFPS(30);
-		server = CameraServer.getInstance().getServer();
-		server.setSource(camera2);
-		
-		// dummy sinks to keep camera connections open
-		cvsink1 = new CvSink("cam1cv");
-		cvsink1.setSource(camera1);
-		cvsink1.setEnabled(true);
-		cvsink2 = new CvSink("cam2cv");
-		cvsink2.setSource(camera2);
-		cvsink2.setEnabled(true);
 	}
 
 	public void disableImage() {
@@ -159,21 +132,11 @@ public class Jetson extends Subsystem implements PIDSource {
 		}
 	}
 
-	public void toggleView() {
-		if (viewGearside) {
-			server.setSource(camera2);
-		} else {
-			server.setSource(camera1);
-		}
-		viewGearside = !viewGearside;
-	}
-
 	public void resetDistances() {
 		jetsonTable.putNumber("DistanceB", -1.0);
 		jetsonTable.putNumber("DistanceG", -1.0);
 	}
 
-	
 	public double getBoilerDistance() {
 		return jetsonTable.getNumber("DistanceB", -1.0);
 	}

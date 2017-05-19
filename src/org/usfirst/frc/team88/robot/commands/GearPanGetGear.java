@@ -39,6 +39,8 @@ public class GearPanGetGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.oi.rumbleOperator(1.0);
+    	Robot.oi.rumbleDriver(1.0);
     	Robot.gearPan.panIn();
     	Robot.gearPan.intakeStop();
     }

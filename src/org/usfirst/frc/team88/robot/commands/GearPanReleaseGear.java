@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class GearPanReleaseGear extends Command {
-	
-	private double delay;
+
+	private final static int START_DELAY = 20;
+	private final static int STOP_DELAY = 30;
 	private double count;
-    public GearPanReleaseGear(double d) {
+    public GearPanReleaseGear() {
     	requires(Robot.gearPan);
-    	delay = d * 100;
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class GearPanReleaseGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(count++ > delay){
+    	if(count++ > START_DELAY){
         	Robot.gearPan.intakeSpeed(0.5);
     	}
     	Robot.gearPan.updateDashboard();
@@ -32,7 +32,7 @@ public class GearPanReleaseGear extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return count > STOP_DELAY;
     }
 
     // Called once after isFinished returns true

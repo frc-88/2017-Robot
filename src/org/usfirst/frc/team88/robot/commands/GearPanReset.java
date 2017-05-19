@@ -15,6 +15,8 @@ public class GearPanReset extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.oi.rumbleOperator(0.0);
+    	Robot.oi.rumbleDriver(0.0);
     	Robot.gearPan.panIn();
     	Robot.gearPan.intakeStop();
     }
