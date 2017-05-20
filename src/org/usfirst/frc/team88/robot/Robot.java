@@ -105,6 +105,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Far Lift Auto R", new AutoFarLiftRed());
 		SmartDashboard.putData("Hopper Auto R", new AutoHopperHitRed());
 		SmartDashboard.putData("Hopper Auto B", new AutoHopperHitBlue());
+		SmartDashboard.putData("Dead Reckon", new AutoDeliverGearNoVision());
 		
 		SmartDashboard.putData("JetsonView", new JetsonSwapView());
 	}
@@ -148,10 +149,11 @@ public class Robot extends IterativeRobot {
 		// autonomousCommand = new AutoFarLiftBlue();
 		// autonomousCommand = new AutoFarLiftRed();
 		// autonomousCommand = new AutoBoilerLiftBlue();
-		 autonomousCommand = new AutoBoilerLiftRed();
+		// autonomousCommand = new AutoBoilerLiftRed();
 		// autonomousCommand = new AutoCenterLiftBlue();
 		// autonomousCommand = new AutoCenterLiftRed();
-
+		autonomousCommand = new AutoDeliverGearNoVision();
+		
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();

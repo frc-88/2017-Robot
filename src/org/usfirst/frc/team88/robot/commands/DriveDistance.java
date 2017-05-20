@@ -18,8 +18,8 @@ public class DriveDistance extends Command {
 	private static final int STOP = 4;
 	private static final int END = 5;
 
-	private static final double MAX_SPEED = 1.0;
-	private static final double ACCELERATION_SCALE = 0.03;
+	private static final double MAX_SPEED = 0.3;
+	private static final double ACCELERATION_SCALE = 0.01;
 
 	private int state;
 	private boolean usePrefs = false;
@@ -70,7 +70,7 @@ public class DriveDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		curve = (targetYaw - (Robot.drive.getYaw() * direction)) * 0.03;
+		curve = (targetYaw - (Robot.drive.getYaw() * direction)) * 0.02;
 
 		switch (state) {
 		case PREP: // be sure encoders have reset before we start
