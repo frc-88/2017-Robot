@@ -40,4 +40,12 @@ public class RobotMap {
 	// FuelFlap
 	public static final int fuelFlapSolenoidIn = 3;
 	public static final int fuelFlapSolenoidOut = 2;
+	
+	public static final int switch1 = 1;
+	public static final int switch2 = 2;
+	public static final int switch3 = 3;
+	public static final int switch4 = 4;
+	public static final int switch5 = 5;
+	public static final int switch6 = 6;
+	
 }

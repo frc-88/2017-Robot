@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static FuelFlap fuelFlap;
 	public static GearPan gearPan;
 	public static OI oi;
+	public static Switches switches;
 
 	Command autonomousCommand;
 
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		fuelFlap = new FuelFlap();
 		gearPan = new GearPan();
+		switches = new Switches();
 		
 		CameraServer.getInstance().startAutomaticCapture();
 		
@@ -140,6 +142,24 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		jetson.enableImage();
+		if (switches.isred() && switches.boilerside()){
+			autonomousCommand = new AutoBoilerLiftRed();
+		}
+		else if (switches.isred() && switches.farside()){
+			autonomousCommand = new AutoFarLiftRed();
+		}
+		else if (switches.isred() && switches.center()){
+			autonomousCommand = new AutoCenterLiftRed();
+		}
+		else if (!switches.isred() && switches.boilerside()){
+			autonomousCommand = new AutoBoilerLiftBlue();}
+		else if (!switches.isred() && switches.farside ()){
+			autonomousCommand = new AutoFarLiftBlue();
+		}
+		else if (!switches.isred() && switches.center()){
+			autonomousCommand = new AutoCenterLiftBlue();
+		}
+		
 		// autonomousCommand = chooser.getSelected();
 
 		// autonomousCommand = new Auto40Ball();
@@ -147,10 +167,10 @@ public class Robot extends IterativeRobot {
 		// autonomousCommand = new AutoFarLiftBlue();
 		// autonomousCommand = new AutoFarLiftRed();
 		// autonomousCommand = new AutoBoilerLiftBlue();
-		 autonomousCommand = new AutoBoilerLiftRed();
+		 //autonomousCommand = new AutoBoilerLiftRed();
 		// autonomousCommand = new AutoCenterLiftBlue();
 		// autonomousCommand = new AutoCenterLiftRed();
-
+		//autonomousCommand = new AutoBoilerLiftBlue();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
