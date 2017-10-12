@@ -32,6 +32,7 @@ public class Hanger extends Subsystem {
 		hangerMotorFollower.changeControlMode(CANTalon.TalonControlMode.Follower);
 		hangerMotorFollower.set(RobotMap.hangerMotor);
 		hangerMotorFollower.enableBrakeMode(true);
+		hangerMotor.set(0.0);
 
 		override = false;
 		isDone = false;

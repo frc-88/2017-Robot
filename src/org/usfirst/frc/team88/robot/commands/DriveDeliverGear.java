@@ -56,7 +56,11 @@ public class DriveDeliverGear extends Command {
 
 		if (targetDistance < 0.0) {
 			if (originator != null) {
-				originator.cancel();
+				try {
+					originator.cancel();
+				} catch (Exception e) {
+					//do nothing
+				}
 			}
 			state = END;
 		}

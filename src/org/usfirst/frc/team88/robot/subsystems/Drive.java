@@ -3,6 +3,7 @@ package org.usfirst.frc.team88.robot.subsystems;
 import org.usfirst.frc.team88.robot.Robot;
 import org.usfirst.frc.team88.robot.RobotMap;
 import org.usfirst.frc.team88.robot.commands.DriveSplitArcade;
+import org.usfirst.frc.team88.robot.commands.DriveTank;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -97,7 +98,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		lTalons = new CANTalon[RobotMap.driveLeft.length];
 		initTalons(lTalons, RobotMap.driveLeft, false, RobotMap.isJetFuel, false);
 		rTalons = new CANTalon[RobotMap.driveRight.length];
-		initTalons(rTalons, RobotMap.driveRight, !RobotMap.isJetFuel, !RobotMap.isJetFuel, false);
+		initTalons(rTalons, RobotMap.driveRight, RobotMap.isJetFuel, !RobotMap.isJetFuel, false);
 
 		setClosedLoopSpeed();
 
@@ -524,7 +525,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveSplitArcade());
+		//setDefaultCommand(new DriveSplitArcade());
+		setDefaultCommand(new DriveTank());
 	}
 
 }
